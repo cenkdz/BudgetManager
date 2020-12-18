@@ -5,6 +5,9 @@ target 'Budget Manager' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   pod 'Firebase/Analytics'
+  pod 'Firebase/Auth'
+  pod 'EmailValidator'
+  pod 'Firebase/Database'
 
 
   # Pods for Budget Manager
