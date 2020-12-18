@@ -37,9 +37,14 @@ class SignUpVC: UIViewController {
         }
         else {
             Auth.auth().createUser(withEmail: emailField.text!, password: passwordField.text!) { authResult, error in
-                // ...
+                if(error != nil) {
+                    self.displayAlert(message: "Signup Error", title: "Warning")
+                    print(error)
+                    return
+                }
+                self.displayDisappearingAlert(message: "Success", title: "Signup Successful")
             }
-            displayDisappearingAlert(message: "Success", title: "Signup Successful")
+            
             }
         }
     

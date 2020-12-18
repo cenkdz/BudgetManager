@@ -8,7 +8,7 @@ target 'Budget Manager' do
   pod 'Firebase/Auth'
   pod 'EmailValidator'
   pod 'Firebase/Database'
-
+  pod ‘Firebase/Core’
 
   # Pods for Budget Manager
 
