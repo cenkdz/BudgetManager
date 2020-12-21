@@ -16,11 +16,17 @@ class SignUpVC: UIViewController {
     var emailMessage = UIAlertController(title: "Attention", message: "", preferredStyle: .alert)
     var passwordMessage = UIAlertController(title: "Attention", message: "Password Missing", preferredStyle: .alert)
     
+    @IBOutlet weak var firstNameField: UITextField!
+    @IBOutlet weak var lastNameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     
     let password = NSPredicate(format: "SELF MATCHES %@ ", "^(?=.*[a-z])(?=.*[$@$#!%*?&]).{6,}$")
     
+    @IBAction func loginButtonPressed(_ sender: UIButton) {
+        self.goToLandingVC()
+        
+    }
     @IBAction func signUpButton(_ sender: UIButton) {
         
         if (emailField.text!.isEmpty) {
@@ -29,6 +35,12 @@ class SignUpVC: UIViewController {
         else if (passwordField.text!.isEmpty){
             displayAlert(message: "Password Missing", title: "Warning")
         }
+            else if (firstNameField.text!.isEmpty){
+                displayAlert(message: "Firstname Missing", title: "Warning")
+            }
+            else if (lastNameField.text!.isEmpty){
+                displayAlert(message: "Lastname Missing", title: "Warning")
+            }
         else if !(EmailValidator.validate(email: emailField.text!))  {
             displayAlert(message: "E-mail is not valid", title: "Warning")
         }
@@ -39,7 +51,7 @@ class SignUpVC: UIViewController {
             Auth.auth().createUser(withEmail: emailField.text!, password: passwordField.text!) { authResult, errorUser in
                 if(errorUser == nil) {
                     let db = Firestore.firestore()
-                    db.collection("users").addDocument(data: ["firstname":"User1","lastname":"UserLastname1","uid":authResult!.user.uid]) { (errorDatabase) in
+                    db.collection("users").addDocument(data: ["firstname":self.firstNameField.text!,"lastname":self.lastNameField.text!,"uid":authResult!.user.uid]) { (errorDatabase) in
                         if errorDatabase == nil{
                             self.displayDisappearingAlert(message: "Success", title: "Signup Successful")
                             self.goToHomeVC()
@@ -69,6 +81,11 @@ class SignUpVC: UIViewController {
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
     }
+    func goToLandingVC() {
+           let homeViewController = storyboard?.instantiateViewController(identifier: "LandingVC") as? LandingVC
+           view.window?.rootViewController = homeViewController
+           view.window?.makeKeyAndVisible()
+       }
     
     func displayAlert(message: String,title: String) {
         let dialogMessage = UIAlertController(title: title, message: message, preferredStyle: .alert)

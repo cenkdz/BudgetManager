@@ -23,7 +23,7 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         let ref = Database.database().reference(withPath: "user-info")
         var dataDictionary: [String: Any] = [:]
-        dataDictionary["First Name"] = "Cenk"
+        dataDictionary["First Name"] = "Kek"
         dataDictionary["Last name"] =  "Donmez"
         ref.setValue(dataDictionary)
 
