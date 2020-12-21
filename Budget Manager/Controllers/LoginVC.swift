@@ -40,8 +40,6 @@ class LoginVC: UIViewController {
                     return
                 }
                 strongSelf.displayDisappearingAlert(message: "Login sucesss for email \(self!.emailField.text)", title: "Success")
-                let homeVC = HomeVC()
-                present(homeVC, animated: true, completion: nil)
                 
             }
            

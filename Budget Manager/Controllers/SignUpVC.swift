@@ -36,22 +36,38 @@ class SignUpVC: UIViewController {
             displayAlert(message: "Your password must contain at least one special character and must be minimum six characters long.", title: "Warning")
         }
         else {
-            Auth.auth().createUser(withEmail: emailField.text!, password: passwordField.text!) { authResult, error in
-                if(error != nil) {
-                    self.displayAlert(message: "Signup Error", title: "Warning")
-                    print(error)
-                    return
+            Auth.auth().createUser(withEmail: emailField.text!, password: passwordField.text!) { authResult, errorUser in
+                if(errorUser == nil) {
+                    let db = Firestore.firestore()
+                    db.collection("users").addDocument(data: ["firstname":"User1","lastname":"UserLastname1","uid":authResult!.user.uid]) { (errorDatabase) in
+                        if errorDatabase == nil{
+                            self.displayDisappearingAlert(message: "Success", title: "Signup Successful")
+                            self.goToHomeVC()
+                        }
+                        else if errorDatabase != nil {
+                            self.displayAlert(message: "SignUp Completed!Check credentials in the settings.", title: "Error in Saving User Data")
+                            self.goToHomeVC()
+                        }
+                    }
                 }
-                self.displayDisappearingAlert(message: "Success", title: "Signup Successful")
+                else if (errorUser != nil){
+                    self.displayDisappearingAlert(message: "Check Credentials", title:"Signup Failed")
+                }
+                
             }
             
-            }
         }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    func goToHomeVC() {
+        let homeViewController = storyboard?.instantiateViewController(identifier: "HomeVC") as? HomeVC
+        view.window?.rootViewController = homeViewController
+        view.window?.makeKeyAndVisible()
     }
     
     func displayAlert(message: String,title: String) {
