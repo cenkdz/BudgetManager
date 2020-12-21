@@ -10,6 +10,7 @@ target 'Budget Manager' do
   pod 'Firebase/Database'
   pod ‘Firebase/Core’
   pod 'Firebase/Firestore'
+  pod 'iOSUtilitiesSource', :git => 'https://github.com/hasnine/iOSUtilitiesSource.git'
 
   # Pods for Budget Manager
 

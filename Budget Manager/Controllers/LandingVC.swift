@@ -10,14 +10,20 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import EmailValidator
+import iOSUtilitiesSource
+import Network
 
 class LandingVC: UIViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var forgotButtonLabel: UILabel!
+    
+    let monitor = NWPathMonitor()
+    let queue = DispatchQueue(label: "InternetConnectionMonitor")
     
     let password = NSPredicate(format: "SELF MATCHES %@ ", "^(?=.*[a-z])(?=.*[$@$#!%*?&]).{6,}$")
-
     
+    @IBAction func unwind( _ seg: UIStoryboardSegue) {}
     @IBAction func signUpButton(_ sender: UIButton) {
         print("sbp")
     }
@@ -29,34 +35,66 @@ class LandingVC: UIViewController {
             displayAlert(message: "Password Missing", title: "Warning")
         }
         else if !(EmailValidator.validate(email: emailField.text!))  {
-            displayAlert(message: "E-mail is not valid", title: "Warning")
+            displayAlert(message: "Wrong e-mail", title: "Warning")
         }
         else if !(password.evaluate(with: passwordField.text)){
-            displayAlert(message: "Your password must contain at least one special character and must be minimum six characters long.", title: "Warning")
+            displayAlert(message: "Wrong password", title: "Warning")
         }
         else {
             Auth.auth().signIn(withEmail: emailField.text!, password: passwordField.text!) { [weak self] user, error in
                 guard let strongSelf = self else { return }
                 if(error != nil) {
-                    strongSelf.displayAlert(message: "Error, check username and password", title: "Warning")
-                    print(error)
+                    strongSelf.displayAlert(message: "Username or password wrong", title: "Warning")
                 }
                 else if error == nil{
-                    strongSelf.displayDisappearingAlert(message: "Login sucesss for email \(String(describing: self!.emailField.text))", title: "Success")
                     self?.goToHomeVC()
                 }
-                
             }
-            
-            
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        monitor.pathUpdateHandler = { pathUpdateHandler in
+            DispatchQueue.main.async {
+                if pathUpdateHandler.status == .unsatisfied {
+                    self.displayAlert(message:"There's no internet connection.", title: "Warning")
+                }
+                
+            }
+        }
+        self.monitor.start(queue: self.queue)
         
-        
-        // Do any additional setup after loading the view.
+        let tap = UITapGestureRecognizer(target: self, action: #selector(LandingVC.tapFunction))
+        self.forgotButtonLabel.addGestureRecognizer(tap)
+    }
+    @objc func tapFunction(sender:UITapGestureRecognizer) {
+        if emailField.text == "" {
+            displayAlert(message: "Please enter your email in the email field", title: "Warning")
+        }
+        else if !(EmailValidator.validate(email: emailField.text!))  {
+            displayAlert(message: "E-mail is not valid", title: "Warning")
+        }
+        else if emailField.text != ""{
+            // After asking the user for their email.
+            Auth.auth().fetchSignInMethods(forEmail: emailField.text!) { signInMethods, error in
+                if ((error) != nil) {
+                    self.displayAlert(message: "Cant establish connection with the server", title: "Error")
+                }
+                else if ((error) == nil) {
+                    Auth.auth().sendPasswordReset(withEmail: self.emailField.text!) { (err) in
+                        if err == nil{
+                            self.displayAlert(message: "Reset e-mail will be sent to your e-mail adress.", title: "Check your e-mail")
+                            
+                        }
+                        else if err != nil {
+                            self.displayAlert(message: "Your e-mail is not registered", title: "Warning")
+                        }
+                    }
+                    
+                }
+            }
+        }
     }
     
     func goToHomeVC() {

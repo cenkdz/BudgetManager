@@ -13,6 +13,7 @@ import EmailValidator
 
 class SignUpVC: UIViewController {
     // Create a new alert
+    @IBOutlet weak var alreadyAccountLabel: UILabel!
     var emailMessage = UIAlertController(title: "Attention", message: "", preferredStyle: .alert)
     var passwordMessage = UIAlertController(title: "Attention", message: "Password Missing", preferredStyle: .alert)
     
@@ -28,21 +29,20 @@ class SignUpVC: UIViewController {
         
     }
     @IBAction func signUpButton(_ sender: UIButton) {
-        
-        if (emailField.text!.isEmpty) {
+        if (firstNameField.text!.isEmpty){
+            displayAlert(message: "Firstname Missing", title: "Warning")
+        }
+        else if (lastNameField.text!.isEmpty){
+            displayAlert(message: "Lastname Missing", title: "Warning")
+        }
+        else if (emailField.text!.isEmpty) {
             displayAlert(message: "E-mail Missing", title: "Warning")
+        }
+        else if !(EmailValidator.validate(email: emailField.text!))  {
+            displayAlert(message: "E-mail is not valid", title: "Warning")
         }
         else if (passwordField.text!.isEmpty){
             displayAlert(message: "Password Missing", title: "Warning")
-        }
-            else if (firstNameField.text!.isEmpty){
-                displayAlert(message: "Firstname Missing", title: "Warning")
-            }
-            else if (lastNameField.text!.isEmpty){
-                displayAlert(message: "Lastname Missing", title: "Warning")
-            }
-        else if !(EmailValidator.validate(email: emailField.text!))  {
-            displayAlert(message: "E-mail is not valid", title: "Warning")
         }
         else if !(password.evaluate(with: passwordField.text)){
             displayAlert(message: "Your password must contain at least one special character and must be minimum six characters long.", title: "Warning")
@@ -73,8 +73,14 @@ class SignUpVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(SignUpVC.tapFunction))
+        alreadyAccountLabel.addGestureRecognizer(tap)
         
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func tapFunction(){
+        performSegue(withIdentifier: "segueToLanding", sender: self)
     }
     func goToHomeVC() {
         let homeViewController = storyboard?.instantiateViewController(identifier: "HomeVC") as? HomeVC
@@ -82,10 +88,10 @@ class SignUpVC: UIViewController {
         view.window?.makeKeyAndVisible()
     }
     func goToLandingVC() {
-           let homeViewController = storyboard?.instantiateViewController(identifier: "LandingVC") as? LandingVC
-           view.window?.rootViewController = homeViewController
-           view.window?.makeKeyAndVisible()
-       }
+        let homeViewController = storyboard?.instantiateViewController(identifier: "LandingVC") as? LandingVC
+        view.window?.rootViewController = homeViewController
+        view.window?.makeKeyAndVisible()
+    }
     
     func displayAlert(message: String,title: String) {
         let dialogMessage = UIAlertController(title: title, message: message, preferredStyle: .alert)

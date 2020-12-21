@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA1471322590C4240053FAD7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA1471312590C4240053FAD7 /* GoogleService-Info.plist */; };
+		9BBF4ABA2590EC3400F1290C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */; };
 		BAC2998F257A6E6F00EE1511 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC2998E257A6E6F00EE1511 /* AppDelegate.swift */; };
 		BAC29991257A6E6F00EE1511 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC29990257A6E6F00EE1511 /* SceneDelegate.swift */; };
 		BAC29996257A6E6F00EE1511 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAC29994257A6E6F00EE1511 /* Main.storyboard */; };
@@ -15,14 +15,13 @@
 		BAC2999B257A6E7100EE1511 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAC29999257A6E7100EE1511 /* LaunchScreen.storyboard */; };
 		BAF01D40258CB32000E5BF62 /* LandingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF01D3F258CB32000E5BF62 /* LandingVC.swift */; };
 		BAF01D42258CB5CB00E5BF62 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF01D41258CB5CB00E5BF62 /* SignUpVC.swift */; };
-		BAF01D44258CC41000E5BF62 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF01D43258CC41000E5BF62 /* LoginVC.swift */; };
 		BAF01D46258CCF7000E5BF62 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF01D45258CCF7000E5BF62 /* HomeVC.swift */; };
 		E2F764C11B5DF02A608245FF /* Pods_Budget_Manager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15EED696A835B777F270A7F9 /* Pods_Budget_Manager.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		15EED696A835B777F270A7F9 /* Pods_Budget_Manager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Budget_Manager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA1471312590C4240053FAD7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BAC2998B257A6E6F00EE1511 /* Budget Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Budget Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC2998E257A6E6F00EE1511 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAC29990257A6E6F00EE1511 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -32,7 +31,6 @@
 		BAC2999C257A6E7100EE1511 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BAF01D3F258CB32000E5BF62 /* LandingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingVC.swift; sourceTree = "<group>"; };
 		BAF01D41258CB5CB00E5BF62 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
-		BAF01D43258CC41000E5BF62 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		BAF01D45258CCF7000E5BF62 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		BBE77EAD260E8456C4C02BD4 /* Pods-Budget Manager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Budget Manager.debug.xcconfig"; path = "Target Support Files/Pods-Budget Manager/Pods-Budget Manager.debug.xcconfig"; sourceTree = "<group>"; };
 		D47F8BB2EED2FA1014552490 /* Pods-Budget Manager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Budget Manager.release.xcconfig"; path = "Target Support Files/Pods-Budget Manager/Pods-Budget Manager.release.xcconfig"; sourceTree = "<group>"; };
@@ -95,7 +93,7 @@
 				BAC29990257A6E6F00EE1511 /* SceneDelegate.swift */,
 				BAC29997257A6E7100EE1511 /* Assets.xcassets */,
 				BAC29999257A6E7100EE1511 /* LaunchScreen.storyboard */,
-				BA1471312590C4240053FAD7 /* GoogleService-Info.plist */,
+				9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */,
 				BAC2999C257A6E7100EE1511 /* Info.plist */,
 			);
 			path = "Budget Manager";
@@ -121,7 +119,6 @@
 			children = (
 				BAF01D3F258CB32000E5BF62 /* LandingVC.swift */,
 				BAF01D41258CB5CB00E5BF62 /* SignUpVC.swift */,
-				BAF01D43258CC41000E5BF62 /* LoginVC.swift */,
 				BAF01D45258CCF7000E5BF62 /* HomeVC.swift */,
 			);
 			path = Controllers;
@@ -188,7 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAC2999B257A6E7100EE1511 /* LaunchScreen.storyboard in Resources */,
-				BA1471322590C4240053FAD7 /* GoogleService-Info.plist in Resources */,
+				9BBF4ABA2590EC3400F1290C /* GoogleService-Info.plist in Resources */,
 				BAC29998257A6E7100EE1511 /* Assets.xcassets in Resources */,
 				BAC29996257A6E6F00EE1511 /* Main.storyboard in Resources */,
 			);
@@ -248,7 +245,6 @@
 				BAF01D40258CB32000E5BF62 /* LandingVC.swift in Sources */,
 				BAF01D46258CCF7000E5BF62 /* HomeVC.swift in Sources */,
 				BAC29991257A6E6F00EE1511 /* SceneDelegate.swift in Sources */,
-				BAF01D44258CC41000E5BF62 /* LoginVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
