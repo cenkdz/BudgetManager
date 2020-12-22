@@ -14,29 +14,15 @@ import FirebaseDatabase
 
 class HomeVC: UIViewController {
     let db = Firestore.firestore()
-    var uid = ""
+    var users: [User] = []
     @IBOutlet weak var welcomeLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        db.collection("users").getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                //get name of the user
-                let docRef = self.db.collection("users").document(self.uid)
-                
-                docRef.getDocument { (document, error) in
-                    if let document = document, document.exists {
-                        let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                        print("Document data: \(dataDescription)")
-                    } else {
-                        print("Document does not exist")
-                    }
-                }
-                
-            }
-        }
         // Do any additional setup after loading the view.
+        for user in users {
+            user.printAll()
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,21 +30,12 @@ class HomeVC: UIViewController {
             // User is signed in.
             // ...
             let user = Auth.auth().currentUser
-            if let user = user {
-                // The user's ID, unique to the Firebase project.
-                // Do NOT use this value to authenticate with your backend server,
-                // if you have one. Use getTokenWithCompletion:completion: instead.
-                uid = user.uid
-                let email = user.email
-                let photoURL = user.photoURL
-                print(uid,email,photoURL)
-                var multiFactorString = "MultiFactor: "
-                for info in user.multiFactor.enrolledFactors {
-                    multiFactorString += info.displayName ?? "[DispayName]"
-                    multiFactorString += " "
-                }
-                // ...
-            }
+            getUserDetails(completionHandler: { (firstname, lastname, uid) in
+                let user = User(firstname: firstname, lastname: lastname, uid: uid)
+                self.users.append(user)
+                self.welcomeLabel.text = "Welcome \(firstname)!"
+            }, uid: user!.uid)
+
             
         } else {
             // No user is signed in.
@@ -72,6 +49,29 @@ class HomeVC: UIViewController {
         let homeViewController = storyboard?.instantiateViewController(identifier: "LandingVC") as? LandingVC
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
+    }
+    
+    func getUserDetails(completionHandler:@escaping(String, String, String)->(),uid: String){
+        db.collection("users").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                //get name of the user
+                self.db.collection("users").whereField("uid", isEqualTo: uid)
+                    .getDocuments() { (querySnapshot, err) in
+                        if let err = err {
+                            print("Error getting documents: \(err)")
+                        } else {
+                            for document in querySnapshot!.documents {
+                                let data = document.data()
+                                completionHandler ((data["firstname"] as? String)!, (data["lastname"]as? String)!, (data["uid"]as? String)!)
+                            }
+                        }
+                    }
+                
+                
+            }
+        }
     }
     
     

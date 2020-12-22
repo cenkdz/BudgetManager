@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B33DC9825916BD00004CA6D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33DC9725916BD00004CA6D /* User.swift */; };
 		9BBF4ABA2590EC3400F1290C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */; };
 		BAC2998F257A6E6F00EE1511 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC2998E257A6E6F00EE1511 /* AppDelegate.swift */; };
 		BAC29991257A6E6F00EE1511 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC29990257A6E6F00EE1511 /* SceneDelegate.swift */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		15EED696A835B777F270A7F9 /* Pods_Budget_Manager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Budget_Manager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B33DC9725916BD00004CA6D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = SOURCE_ROOT; };
 		9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BAC2998B257A6E6F00EE1511 /* Budget Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Budget Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC2998E257A6E6F00EE1511 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 		BAC299A2257A6E7C00EE1511 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9B33DC9725916BD00004CA6D /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 			files = (
 				BAF01D42258CB5CB00E5BF62 /* SignUpVC.swift in Sources */,
 				BAC2998F257A6E6F00EE1511 /* AppDelegate.swift in Sources */,
+				9B33DC9825916BD00004CA6D /* User.swift in Sources */,
 				BAF01D40258CB32000E5BF62 /* LandingVC.swift in Sources */,
 				BAF01D46258CCF7000E5BF62 /* HomeVC.swift in Sources */,
 				BAC29991257A6E6F00EE1511 /* SceneDelegate.swift in Sources */,
