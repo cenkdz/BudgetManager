@@ -13,12 +13,14 @@ import FirebaseDatabase
 
 
 class HomeVC: UIViewController {
+    var entries: [Entry] = []
     let db = Firestore.firestore()
     var users: [User] = []
     @IBOutlet weak var welcomeLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        entries = createArray()
         for user in users {
             user.printAll()
         }
@@ -42,6 +44,22 @@ class HomeVC: UIViewController {
             // ...
             goToLandingVC()
         }
+        
+    }
+    func createArray() -> [Entry] {
+        
+        var tempEntries: [Entry] = []
+        
+        let entry1 = Entry(categoryIcon: #imageLiteral(resourceName: "coins-512"), entryName: "Fuel for car",entryAmount: 120)
+        let entry2 = Entry(categoryIcon: #imageLiteral(resourceName: "coins-512"), entryName: "Cleaning for car",entryAmount: 30)
+        let entry3 = Entry(categoryIcon: #imageLiteral(resourceName: "coins-512"), entryName: "Parfume for car",entryAmount: 10)
+        let entry4 = Entry(categoryIcon: #imageLiteral(resourceName: "coins-512"), entryName: "Wheels for car",entryAmount: 900)
+        
+        tempEntries.append(entry1)
+        tempEntries.append(entry2)
+        tempEntries.append(entry3)
+        tempEntries.append(entry4)
+        return tempEntries
         
     }
     
@@ -86,4 +104,21 @@ class HomeVC: UIViewController {
      }
      */
     
+}
+
+extension HomeVC: UITableViewDataSource,UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return entries.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let entry = entries[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "entryCell", for: indexPath) as! EntryCellVC
+        
+        cell.setEntry(entry: entry)
+        return cell
+    }
 }
