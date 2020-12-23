@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Add Income ExpenseVC-->
+        <!--AddIncomeExpenseVC-->
         <scene sceneID="hjz-z2-XN4">
             <objects>
-                <viewController storyboardIdentifier="AddIncomeExpenseVC" id="zGw-z0-CJ1" customClass="AddIncomeExpenseVC" customModule="Budget_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddIncomeExpenseVC" title="AddIncomeExpenseVC" id="zGw-z0-CJ1" customClass="AddIncomeExpenseVC" customModule="Budget_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0On-HA-rki">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -117,10 +117,10 @@
             </objects>
             <point key="canvasLocation" x="4717.6000000000004" y="-136.28185907046478"/>
         </scene>
-        <!--I-->
+        <!--TableVC-->
         <scene sceneID="Kgd-bt-uTy">
             <objects>
-                <tableViewController title="I" id="UyD-CH-Yb5" customClass="TableVC" customModule="Budget_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TableVC" title="TableVC" id="UyD-CH-Yb5" customClass="TableVC" customModule="Budget_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="LtH-YW-I3G">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -180,7 +180,7 @@
         <!--HomeVC-->
         <scene sceneID="YCa-iJ-fRr">
             <objects>
-                <viewController storyboardIdentifier="HomeVC" id="E4x-4Y-Ovd" customClass="HomeVC" customModule="Budget_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeVC" title="HomeVC" id="E4x-4Y-Ovd" customClass="HomeVC" customModule="Budget_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8zk-6Z-4JT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -368,9 +368,10 @@
                                 <color key="textColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Forgot password?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CmY-L8-ReZ">
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Forgot password?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CmY-L8-ReZ">
                                 <rect key="frame" x="118" y="520" width="133" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
                                 <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="17"/>
                                 <color key="textColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -400,18 +401,19 @@
                     <navigationItem key="navigationItem" id="RTp-Ga-qBZ"/>
                     <connections>
                         <outlet property="emailField" destination="2BT-u8-o9N" id="sFl-ap-dc9"/>
-                        <outlet property="forgotButtonLabel" destination="CmY-L8-ReZ" id="ygS-oe-bpK"/>
+                        <outlet property="forgotButtonLabel" destination="CmY-L8-ReZ" id="qFo-XX-tY0"/>
                         <outlet property="passwordField" destination="XNz-jn-Vbn" id="CCc-dq-zXq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXr-yl-SIs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Tgv-vf-fXK"/>
             </objects>
             <point key="canvasLocation" x="2250" y="-136"/>
         </scene>
-        <!--LandingVC-->
+        <!--SignUpVC-->
         <scene sceneID="ghc-NV-F1t">
             <objects>
-                <viewController title="LandingVC" id="Dbu-ZT-1IC" customClass="SignUpVC" customModule="Budget_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="SignUpVC" id="Dbu-ZT-1IC" customClass="SignUpVC" customModule="Budget_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="z7q-Wx-Hos">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
