@@ -130,7 +130,8 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
         if editingStyle == .delete {
             userEntries.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            deleteUserEntry(selectedEntryID: userEntries[indexPath.row].entryID)
+            print(userEntries[indexPath.row].entryID)
+            //deleteUserEntry(selectedEntryID: userEntries[indexPath.row].entryID)
             tableView.reloadData()
             
         } else if editingStyle == .insert {
