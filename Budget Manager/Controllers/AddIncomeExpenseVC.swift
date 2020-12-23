@@ -38,7 +38,7 @@ class AddIncomeExpenseVC: UIViewController {
     @IBAction func addButtonPressed(_ sender: UIButton) {
         print("Add buttonPressed!")
         let user = Auth.auth().currentUser
-        let userEntry = UserEntry(category: catName, entryName: nameTextField.text!, entryAmount: Double(amountTextField.text!)!, uid: user!.uid, entryDate: Timestamp(date: Date()), entryType: selectedEntryType)
+        let userEntry = UserEntry(category: catName, entryName: nameTextField.text!, entryAmount: amountTextField.text!, uid: user!.uid, entryDate: Timestamp(date: Date()), entryType: selectedEntryType)
         let dictionary = userEntry.getDictionary()
 
         do {

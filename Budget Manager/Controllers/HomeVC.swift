@@ -16,8 +16,11 @@ class HomeVC: UIViewController {
     var entries: [Entry] = []
     let db = Firestore.firestore()
     var users: [User] = []
+    var userEntries: [UserEntry] = []
+
     var selectedCategories: [Category] = []
     @IBOutlet weak var welcomeLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         for selectedCategory in selectedCategories {
@@ -42,7 +45,14 @@ class HomeVC: UIViewController {
                 self.welcomeLabel.text = "Welcome \(firstname)!"
             }, uid: user!.uid)
 
-            
+            getUserEntries(completionHandler: { (category, entryName, entryAmount, uid, entryDate, entryType) in
+                let entry = UserEntry(category: category, entryName: entryName, entryAmount: entryAmount, uid: uid, entryDate: entryDate, entryType: entryType)
+                self.userEntries.append(entry)
+                for entry in self.userEntries {
+                    print(entry.entryName)
+                }
+            }, uid: user!.uid)
+
         } else {
             // No user is signed in.
             // ...
@@ -95,18 +105,24 @@ class HomeVC: UIViewController {
             }
         }
     }
-    
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func getUserEntries(completionHandler:@escaping(String, String, Any,String,Any,String)->(),uid: String){
+        userEntries = []
+      db.collection("entries").whereField("uid", isEqualTo: uid)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let data = document.data()
+                        completionHandler (data["category"] as! String, data["entryName"] as! String, data["entryAmount"], data["uid"] as! String, data["entryDate"], data["entryType"] as! String)
+                        self.tableView.reloadData()
+                        
+                    }
+                }
+        }
+
+
+    }
     
 }
 
@@ -114,12 +130,12 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return entries.count
+        return userEntries.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let entry = entries[indexPath.row]
+        let entry = userEntries[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "entryCell", for: indexPath) as! EntryCellVC
         
         cell.setEntry(entry: entry)

@@ -10,11 +10,11 @@ import Foundation
 class UserEntry {
     var category: String
     var entryName: String
-    var entryAmount: Double
+    var entryAmount: Any
     var uid: String
     var entryDate: Any
     var entryType: String
-    init(category: String,entryName:String,entryAmount: Double,uid: String,entryDate: Any,entryType: String) {
+    init(category: String,entryName:String,entryAmount: Any,uid: String,entryDate: Any,entryType: String) {
         self.category = category
         self.entryName = entryName
         self.entryAmount = entryAmount

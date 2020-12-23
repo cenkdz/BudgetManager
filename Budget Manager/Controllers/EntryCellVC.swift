@@ -15,10 +15,10 @@ class EntryCellVC: UITableViewCell {
     @IBOutlet weak var entryAmount: UILabel!
     
     
-    func setEntry(entry: Entry){
-        categoryIcon.image = entry.categoryIcon
+    func setEntry(entry: UserEntry){
+        categoryIcon.image = #imageLiteral(resourceName: "coins-512")
         entryNameLabel.text = entry.entryName
-        entryAmount.text = String(entry.entryAmount)
+        entryAmount.text = entry.entryAmount as! String
     }
     
     
