@@ -12,13 +12,18 @@ class UserEntry {
     var entryName: String
     var entryAmount: Double
     var uid: String
-    var entryDate: String
-    init(categoryIcon: String,entryName:String,entryAmount: Double,uid: String,entryDate: String) {
-        self.category = categoryIcon
+    var entryDate: Any
+    var entryType: String
+    init(category: String,entryName:String,entryAmount: Double,uid: String,entryDate: Any,entryType: String) {
+        self.category = category
         self.entryName = entryName
         self.entryAmount = entryAmount
         self.uid = uid
         self.entryDate = entryDate
-
+        self.entryType = entryType
+    }
+    
+    func getDictionary() -> [String: Any]{
+        return ["category": category,"entryName":entryName,"entryAmount":entryAmount,"uid":uid,"entryDate":entryDate,"entryType":entryType]
     }
 }

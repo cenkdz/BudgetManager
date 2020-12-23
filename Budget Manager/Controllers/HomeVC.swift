@@ -16,9 +16,13 @@ class HomeVC: UIViewController {
     var entries: [Entry] = []
     let db = Firestore.firestore()
     var users: [User] = []
+    var selectedCategories: [Category] = []
     @IBOutlet weak var welcomeLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        for selectedCategory in selectedCategories {
+            print(selectedCategory.categoryName)
+        }
         // Do any additional setup after loading the view.
         entries = createArray()
         for user in users {
@@ -68,7 +72,7 @@ class HomeVC: UIViewController {
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
     }
-    
+
     func getUserDetails(completionHandler:@escaping(String, String, String)->(),uid: String){
         db.collection("users").getDocuments() { (querySnapshot, err) in
             if let err = err {
