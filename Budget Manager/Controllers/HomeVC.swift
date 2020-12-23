@@ -17,27 +17,17 @@ class HomeVC: UIViewController {
     let db = Firestore.firestore()
     var users: [User] = []
     var userEntries: [UserEntry] = []
-
     var selectedCategories: [Category] = []
+    
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        for selectedCategory in selectedCategories {
-            print(selectedCategory.categoryName)
-        }
-        // Do any additional setup after loading the view.
-        entries = createArray()
-        for user in users {
-            user.printAll()
-        }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         if Auth.auth().currentUser != nil {
             // User is signed in.
-            // ...
             let user = Auth.auth().currentUser
             getUserDetails(completionHandler: { (firstname, lastname, uid) in
                 let user = User(firstname: firstname, lastname: lastname, uid: uid)
@@ -45,8 +35,8 @@ class HomeVC: UIViewController {
                 self.welcomeLabel.text = "Welcome \(firstname)!"
             }, uid: user!.uid)
 
-            getUserEntries(completionHandler: { (category, entryName, entryAmount, uid, entryDate, entryType) in
-                let entry = UserEntry(category: category, entryName: entryName, entryAmount: entryAmount, uid: uid, entryDate: entryDate, entryType: entryType)
+            getUserEntries(completionHandler: { (category, entryName, entryAmount, uid, entryDate, entryType,entryID) in
+                let entry = UserEntry(category: category, entryName: entryName, entryAmount: entryAmount, uid: uid, entryDate: entryDate, entryType: entryType, entryID: entryID)
                 self.userEntries.append(entry)
                 for entry in self.userEntries {
                     print(entry.entryName)
@@ -55,25 +45,8 @@ class HomeVC: UIViewController {
 
         } else {
             // No user is signed in.
-            // ...
             goToLandingVC()
         }
-        
-    }
-    func createArray() -> [Entry] {
-        
-        var tempEntries: [Entry] = []
-        
-        let entry1 = Entry(categoryIcon: #imageLiteral(resourceName: "coins-512"), entryName: "Fuel for car",entryAmount: 120)
-        let entry2 = Entry(categoryIcon: #imageLiteral(resourceName: "coins-512"), entryName: "Cleaning for car",entryAmount: 30)
-        let entry3 = Entry(categoryIcon: #imageLiteral(resourceName: "coins-512"), entryName: "Parfume for car",entryAmount: 10)
-        let entry4 = Entry(categoryIcon: #imageLiteral(resourceName: "coins-512"), entryName: "Wheels for car",entryAmount: 900)
-        
-        tempEntries.append(entry1)
-        tempEntries.append(entry2)
-        tempEntries.append(entry3)
-        tempEntries.append(entry4)
-        return tempEntries
         
     }
     
@@ -105,7 +78,7 @@ class HomeVC: UIViewController {
             }
         }
     }
-    func getUserEntries(completionHandler:@escaping(String, String, Any,String,Any,String)->(),uid: String){
+    func getUserEntries(completionHandler:@escaping(String, String, Any,String,Any,String,Any)->(),uid: String){
         userEntries = []
       db.collection("entries").whereField("uid", isEqualTo: uid)
             .getDocuments() { (querySnapshot, err) in
@@ -114,7 +87,7 @@ class HomeVC: UIViewController {
                 } else {
                     for document in querySnapshot!.documents {
                         let data = document.data()
-                        completionHandler (data["category"] as! String, data["entryName"] as! String, data["entryAmount"], data["uid"] as! String, data["entryDate"], data["entryType"] as! String)
+                        completionHandler (data["category"] as! String, data["entryName"] as! String, data["entryAmount"], data["uid"] as! String, data["entryDate"], data["entryType"] as! String, data["entryID"])
                         self.tableView.reloadData()
                         
                     }
@@ -122,6 +95,18 @@ class HomeVC: UIViewController {
         }
 
 
+    }
+    
+    func deleteUserEntry(selectedEntryID: Any){
+        db.collection("entries").whereField("entryID", isEqualTo: selectedEntryID).getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    document.reference.delete()
+                }
+            }
+        }
     }
     
 }
@@ -140,5 +125,16 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
         
         cell.setEntry(entry: entry)
         return cell
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            userEntries.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            deleteUserEntry(selectedEntryID: userEntries[indexPath.row].entryID)
+            tableView.reloadData()
+            
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
     }
 }
