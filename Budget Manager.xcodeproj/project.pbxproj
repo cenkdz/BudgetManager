@@ -18,6 +18,7 @@
 		9B173AD72592A5330049DC2D /* AddIncomeExpenseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B173AD62592A5330049DC2D /* AddIncomeExpenseVC.swift */; };
 		9B33DC9825916BD00004CA6D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33DC9725916BD00004CA6D /* User.swift */; };
 		9BBF4ABA2590EC3400F1290C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */; };
+		BAB3D9A4259360E400DA000F /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3D9A3259360E400DA000F /* TestViewController.swift */; };
 		BAC2998F257A6E6F00EE1511 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC2998E257A6E6F00EE1511 /* AppDelegate.swift */; };
 		BAC29991257A6E6F00EE1511 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC29990257A6E6F00EE1511 /* SceneDelegate.swift */; };
 		BAC29996257A6E6F00EE1511 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAC29994257A6E6F00EE1511 /* Main.storyboard */; };
@@ -42,6 +43,7 @@
 		9B173AD62592A5330049DC2D /* AddIncomeExpenseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIncomeExpenseVC.swift; sourceTree = "<group>"; };
 		9B33DC9725916BD00004CA6D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = SOURCE_ROOT; };
 		9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BAB3D9A3259360E400DA000F /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		BAC2998B257A6E6F00EE1511 /* Budget Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Budget Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC2998E257A6E6F00EE1511 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAC29990257A6E6F00EE1511 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				9B173ACD259290420049DC2D /* CategoryTableVC.swift */,
 				9B173AD32592918A0049DC2D /* CategoryCellVC.swift */,
 				9B173AD62592A5330049DC2D /* AddIncomeExpenseVC.swift */,
+				BAB3D9A3259360E400DA000F /* TestViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 			files = (
 				9B173AC7259281A90049DC2D /* Entry.swift in Sources */,
 				9B173AC4259280CA0049DC2D /* EntryCellVC.swift in Sources */,
+				BAB3D9A4259360E400DA000F /* TestViewController.swift in Sources */,
 				9B173AD42592918A0049DC2D /* CategoryCellVC.swift in Sources */,
 				9B173AC125927C540049DC2D /* Goal.swift in Sources */,
 				BAF01D42258CB5CB00E5BF62 /* SignUpVC.swift in Sources */,

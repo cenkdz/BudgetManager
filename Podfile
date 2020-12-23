@@ -11,6 +11,14 @@ target 'Budget Manager' do
   pod ‘Firebase/Core’
   pod 'Firebase/Firestore'
   pod 'iOSUtilitiesSource', :git => 'https://github.com/hasnine/iOSUtilitiesSource.git'
+  pod 'MaterialComponents/Buttons'
+  pod 'MaterialComponents/Buttons+Theming'
+  pod 'MaterialComponents/Dialogs'
+  pod 'MaterialComponents/ActionSheet'
+  pod 'MaterialComponents/TextControls+FilledTextAreas'
+  pod 'MaterialComponents/TextControls+FilledTextFields'
+  pod 'MaterialComponents/TextControls+OutlinedTextAreas'
+  pod 'MaterialComponents/TextControls+OutlinedTextFields'
 
   # Pods for Budget Manager
 
