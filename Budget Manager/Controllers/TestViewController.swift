@@ -18,6 +18,8 @@ class TestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let gold = UIColor(hex: "#17223bff")
+        view.backgroundColor = gold
     }
     
     override func viewDidLayoutSubviews() {
@@ -25,25 +27,30 @@ class TestViewController: UIViewController {
         let estimatedFrame = CGRect(x: 0, y: 100, width: (view.frame.size.width), height: 10)
         let textField = MDCFilledTextField(frame: estimatedFrame)
         textField.label.text = "Firstname"
+        textField.label.textColor = .systemRed
         textField.placeholder = "Please enter your firstname"
+        textField.setFilledBackgroundColor(UIColor(hex: "#263859ff")!, for: .normal)
         textField.sizeToFit()
         view.addSubview(textField)
         let estimatedFrame2 = CGRect(x: 0, y: 200, width: (view.frame.size.width), height: 10)
         let textField2 = MDCFilledTextField(frame: estimatedFrame2)
         textField2.label.text = "Lastname"
         textField2.placeholder = "Please enter your lastname"
+        textField2.setFilledBackgroundColor(UIColor(hex: "#263859ff")!, for: .normal)
         textField2.sizeToFit()
         view.addSubview(textField2)
         let estimatedFrame3 = CGRect(x: 0, y: 300, width: (view.frame.size.width), height: 10)
         let textField3 = MDCFilledTextField(frame: estimatedFrame3)
         textField3.label.text = "E-mail"
         textField3.placeholder = "Please enter your e-mail"
+        textField3.setFilledBackgroundColor(UIColor(hex: "#263859ff")!, for: .normal)
         textField3.sizeToFit()
         view.addSubview(textField3)
         let estimatedFrame4 = CGRect(x: 0, y: 400, width: (view.frame.size.width), height: 10)
         let textField4 = MDCFilledTextField(frame: estimatedFrame4)
         textField4.label.text = "Password"
         textField4.placeholder = "Please enter your password"
+        textField4.setFilledBackgroundColor(UIColor(hex: "#263859ff")!, for: .normal)
         textField4.sizeToFit()
         view.addSubview(textField4)
         
@@ -64,7 +71,6 @@ class TestViewController: UIViewController {
         let alreadyUserLabel = UILabel(frame: CGRect(x: 30, y: 600, width: 300, height: 50))
         alreadyUserLabel.text = "Already have an account?"
         view.addSubview(alreadyUserLabel)
-        
     }
     
     @objc private func didTapAlert() {
@@ -116,4 +122,32 @@ class TestViewController: UIViewController {
      }
      */
     
+}
+
+extension UIColor {
+    public convenience init?(hex: String) {
+        let r, g, b, a: CGFloat
+
+        if hex.hasPrefix("#") {
+            let start = hex.index(hex.startIndex, offsetBy: 1)
+            let hexColor = String(hex[start...])
+
+            if hexColor.count == 8 {
+                let scanner = Scanner(string: hexColor)
+                var hexNumber: UInt64 = 0
+
+                if scanner.scanHexInt64(&hexNumber) {
+                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                    a = CGFloat(hexNumber & 0x000000ff) / 255
+
+                    self.init(red: r, green: g, blue: b, alpha: a)
+                    return
+                }
+            }
+        }
+
+        return nil
+    }
 }
