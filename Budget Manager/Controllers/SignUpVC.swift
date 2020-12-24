@@ -58,7 +58,6 @@ class SignUpVC: UIViewController {
                         }
                         else if errorDatabase != nil {
                             self.displayAlert(message: "SignUp Completed!Check credentials in the settings.", title: "Error in Saving User Data")
-                            self.goToHomeVC()
                         }
                     }
                 }

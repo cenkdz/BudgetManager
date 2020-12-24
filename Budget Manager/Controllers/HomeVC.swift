@@ -21,8 +21,12 @@ class HomeVC: UIViewController {
     
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    @IBAction func editButtonPressed(_ sender: UIButton) {
+        print("Edit pressed!!")
     }
     
     override func viewWillAppear(_ animated: Bool) {
