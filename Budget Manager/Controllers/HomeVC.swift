@@ -21,43 +21,54 @@ class HomeVC: UIViewController {
     var editName = ""
     var editCategory = ""
     var editAmount = ""
+    var selectedEntryID: Any!
     
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        getAll(completion: ())
+
     }
+    @IBAction func unwindFromAddVC(_ sender: UIStoryboardSegue){
+        if sender.source is AddIncomeExpenseVC {
+            if let senderVC = sender.source as? AddIncomeExpenseVC{
+                print("Came from AddVC")
+            }
+                    DispatchQueue.main.async {
+                        self.getAll(completion: ())
+                
+            }
+            tableView.reloadData()
+            
+        }
+    }
+    @IBAction func unwindFromEditVC(_ sender: UIStoryboardSegue){
+        if sender.source is EditVC {
+            if let senderVC = sender.source as? EditVC{
+                print("Came from EditVC")
+            }
+                    DispatchQueue.main.async {
+                        self.getAll(completion: ())
+                
+            }
+            tableView.reloadData()
+        }
+    }
+//     func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+//        let destinationVC = segue.destination as! EditVC
+//        destinationVC.entryID = selectedEntryID
+//    }
     @objc func editButtonPressed(_ sender: UIButton) {
-        DispatchQueue.main.async {
+      
             let indexPathRow = sender.tag
             self.editName = self.userEntries[indexPathRow].entryName
             self.editAmount = self.userEntries[indexPathRow].entryAmount as! String
             self.editCategory = self.userEntries[indexPathRow].category
+            self.selectedEntryID = self.userEntries[indexPathRow].entryID
+
             self.performSegue(withIdentifier: "goToEditVC", sender: self)
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        if Auth.auth().currentUser != nil {
-            // User is signed in.
-            let user = Auth.auth().currentUser
-            getUserDetails(completionHandler: { (firstname, lastname, uid) in
-                let user = User(firstname: firstname, lastname: lastname, uid: uid)
-                self.users.append(user)
-                self.welcomeLabel.text = "Welcome \(firstname)!"
-            }, uid: user!.uid)
-            
-            getUserEntries(completionHandler: { (category, entryName, entryAmount, uid, entryDate, entryType,entryID) in
-                let entry = UserEntry(category: category, entryName: entryName, entryAmount: entryAmount, uid: uid, entryDate: entryDate, entryType: entryType, entryID: entryID)
-                self.userEntries.append(entry)
-            }, uid: user!.uid)
-            
-        } else {
-            // No user is signed in.
-            goToLandingVC()
-        }
         
     }
     
@@ -116,6 +127,30 @@ class HomeVC: UIViewController {
         }
     }
     
+    func getAll(completion: ()){
+        if Auth.auth().currentUser != nil {
+            // User is signed in.
+            let user = Auth.auth().currentUser
+            getUserDetails(completionHandler: { (firstname, lastname, uid) in
+                let user = User(firstname: firstname, lastname: lastname, uid: uid)
+                self.users.append(user)
+                self.welcomeLabel.text = "Welcome \(firstname)!"
+            }, uid: user!.uid)
+
+                self.getUserEntries(completionHandler: { (category, entryName, entryAmount, uid, entryDate, entryType,entryID) in
+                let entry = UserEntry(category: category, entryName: entryName, entryAmount: entryAmount, uid: uid, entryDate: entryDate, entryType: entryType, entryID: entryID)
+                self.userEntries.append(entry)
+            }, uid: user!.uid)
+            
+            completion
+            tableView.reloadData()
+            
+        } else {
+            // No user is signed in.
+            goToLandingVC()
+        }
+    }
+    
 }
 
 extension HomeVC: UITableViewDataSource,UITableViewDelegate {
@@ -128,7 +163,6 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
         
         let entry = userEntries[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "entryCell", for: indexPath) as! EntryCellVC
-        
         cell.editButtonOutlet.addTarget(self, action: #selector(self.editButtonPressed(_:)), for: .touchUpInside)
         cell.editButtonOutlet.tag = indexPath.row
         cell.setEntry(entry: entry)
@@ -150,6 +184,8 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
             vc?.name = editName
             vc?.amount = editAmount
             vc?.category = editCategory
+            print("ID COMING FROM HOMEVC\(self.selectedEntryID)")
+            vc?.entryID = selectedEntryID
         }
     }
 }

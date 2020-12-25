@@ -20,40 +20,29 @@ class AddIncomeExpenseVC: UIViewController {
     @IBOutlet weak var amountTextField: UITextField!
     var catName = "Select Category"
     var selectedEntryType = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        selectedEntryType = entryTypeOutlet.titleForSegment(at: entryTypeOutlet.selectedSegmentIndex)!
-        print("Category Name\(catName)")
-
+        
     }
     
+    @IBAction func unwindFromTableVC(_ sender: UIStoryboardSegue){
+        if sender.source is TableVC {
+            if let senderVC = sender.source as? TableVC{
+                catName = senderVC.selectedC
+                print(catName)
+                categoryButtonOutlet.setTitle(catName, for: .normal)
+            }
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
-        categoryButtonOutlet.setTitle(catName, for: .normal)
-
     }
     
     @IBAction func selectCategoryPressed(_ sender: UIButton) {
-        print("Select category Pressed!")
-        self.performSegue(withIdentifier: "showCatFromAddVC", sender: self)
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
-        if segue.identifier == "showCatFromAddVC" {
-            let vc = segue.destination as? TableVC
-        }
-    }
-    @IBAction func unwindToThisView(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? TableVC {
-            print("BEFORECategory Name\(catName)")
-
-            //catName = sourceViewController.dataPassed!.categoryName
-            print("AFTERCategory Name\(catName)")
-
-        }
-    }
     @IBAction func backButtonPressed(_ sender: UIButton) {
-        goToHomeVC()
+        self.performSegue(withIdentifier: "unwindFromAddVC", sender: self)
     }
     @IBAction func addButtonPressed(_ sender: UIButton) {
         let user = Auth.auth().currentUser
@@ -62,10 +51,11 @@ class AddIncomeExpenseVC: UIViewController {
 
         do {
             try db.collection("entries").addDocument(data: dictionary)
-            self.performSegue(withIdentifier: "", sender: self)
         } catch let error {
             print("Error writing entry to Firestore: \(error)")
         }
+        self.performSegue(withIdentifier: "unwindFromAddVC", sender: self)
+
     }
     @IBAction func entrySelectorChanged(_ sender: UISegmentedControl) {
         print("Entry Selector Changed!")
@@ -75,14 +65,5 @@ class AddIncomeExpenseVC: UIViewController {
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
