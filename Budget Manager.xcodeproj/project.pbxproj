@@ -19,9 +19,9 @@
 		9B33DC9825916BD00004CA6D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33DC9725916BD00004CA6D /* User.swift */; };
 		9B927DB025956B9200556E16 /* EditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B927DAF25956B9200556E16 /* EditVC.swift */; };
 		9BBF4ABA2590EC3400F1290C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */; };
-		BA9978602594B2CC009A2222 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA99785F2594B2CC009A2222 /* HomeViewController.swift */; };
-		BAB3D9A4259360E400DA000F /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3D9A3259360E400DA000F /* TestViewController.swift */; };
-		BAB3D9A625937FAF00DA000F /* Test2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3D9A525937FAF00DA000F /* Test2.swift */; };
+		BA25582B259607EF00C74F2A /* TestAddEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA25582A259607EF00C74F2A /* TestAddEntry.swift */; };
+		BAB3D9A4259360E400DA000F /* TestSignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3D9A3259360E400DA000F /* TestSignUp.swift */; };
+		BAB3D9A625937FAF00DA000F /* TestLanding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3D9A525937FAF00DA000F /* TestLanding.swift */; };
 		BAC2998F257A6E6F00EE1511 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC2998E257A6E6F00EE1511 /* AppDelegate.swift */; };
 		BAC29991257A6E6F00EE1511 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC29990257A6E6F00EE1511 /* SceneDelegate.swift */; };
 		BAC29996257A6E6F00EE1511 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAC29994257A6E6F00EE1511 /* Main.storyboard */; };
@@ -47,9 +47,9 @@
 		9B33DC9725916BD00004CA6D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = SOURCE_ROOT; };
 		9B927DAF25956B9200556E16 /* EditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVC.swift; sourceTree = "<group>"; };
 		9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		BA99785F2594B2CC009A2222 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		BAB3D9A3259360E400DA000F /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
-		BAB3D9A525937FAF00DA000F /* Test2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test2.swift; sourceTree = "<group>"; };
+		BA25582A259607EF00C74F2A /* TestAddEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAddEntry.swift; sourceTree = "<group>"; };
+		BAB3D9A3259360E400DA000F /* TestSignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSignUp.swift; sourceTree = "<group>"; };
+		BAB3D9A525937FAF00DA000F /* TestLanding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLanding.swift; sourceTree = "<group>"; };
 		BAC2998B257A6E6F00EE1511 /* Budget Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Budget Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC2998E257A6E6F00EE1511 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAC29990257A6E6F00EE1511 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +91,16 @@
 				15EED696A835B777F270A7F9 /* Pods_Budget_Manager.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA25582C2596185800C74F2A /* OldDesign */ = {
+			isa = PBXGroup;
+			children = (
+				BAF01D41258CB5CB00E5BF62 /* SignUpVC.swift */,
+				9B173AD62592A5330049DC2D /* AddIncomeExpenseVC.swift */,
+				BAF01D3F258CB32000E5BF62 /* LandingVC.swift */,
+			);
+			path = OldDesign;
 			sourceTree = "<group>";
 		};
 		BAC29982257A6E6F00EE1511 = {
@@ -150,17 +160,15 @@
 		BAC299A6257A6E9A00EE1511 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				BAF01D3F258CB32000E5BF62 /* LandingVC.swift */,
-				BAF01D41258CB5CB00E5BF62 /* SignUpVC.swift */,
+				BA25582C2596185800C74F2A /* OldDesign */,
+				BAB3D9A525937FAF00DA000F /* TestLanding.swift */,
+				BAB3D9A3259360E400DA000F /* TestSignUp.swift */,
+				BA25582A259607EF00C74F2A /* TestAddEntry.swift */,
 				BAF01D45258CCF7000E5BF62 /* HomeVC.swift */,
 				9B173ABD259263BB0049DC2D /* TableVC.swift */,
 				9B173AC3259280CA0049DC2D /* EntryCellVC.swift */,
 				9B173ACD259290420049DC2D /* CategoryTableVC.swift */,
 				9B173AD32592918A0049DC2D /* CategoryCellVC.swift */,
-				9B173AD62592A5330049DC2D /* AddIncomeExpenseVC.swift */,
-				BAB3D9A3259360E400DA000F /* TestViewController.swift */,
-				BAB3D9A525937FAF00DA000F /* Test2.swift */,
-				BA99785F2594B2CC009A2222 /* HomeViewController.swift */,
 				9B927DAF25956B9200556E16 /* EditVC.swift */,
 			);
 			path = Controllers;
@@ -283,11 +291,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B173AC7259281A90049DC2D /* Entry.swift in Sources */,
+				BA25582B259607EF00C74F2A /* TestAddEntry.swift in Sources */,
 				9B173AC4259280CA0049DC2D /* EntryCellVC.swift in Sources */,
-				BAB3D9A4259360E400DA000F /* TestViewController.swift in Sources */,
+				BAB3D9A4259360E400DA000F /* TestSignUp.swift in Sources */,
 				9B173AD42592918A0049DC2D /* CategoryCellVC.swift in Sources */,
 				9B173AC125927C540049DC2D /* Goal.swift in Sources */,
-				BA9978602594B2CC009A2222 /* HomeViewController.swift in Sources */,
 				9B927DB025956B9200556E16 /* EditVC.swift in Sources */,
 				BAF01D42258CB5CB00E5BF62 /* SignUpVC.swift in Sources */,
 				9B173ACA25928F1D0049DC2D /* UserEntry.swift in Sources */,
@@ -296,7 +304,7 @@
 				9B173ACE259290420049DC2D /* CategoryTableVC.swift in Sources */,
 				BAF01D40258CB32000E5BF62 /* LandingVC.swift in Sources */,
 				9B173AD12592909B0049DC2D /* Category.swift in Sources */,
-				BAB3D9A625937FAF00DA000F /* Test2.swift in Sources */,
+				BAB3D9A625937FAF00DA000F /* TestLanding.swift in Sources */,
 				BAF01D46258CCF7000E5BF62 /* HomeVC.swift in Sources */,
 				9B173AD72592A5330049DC2D /* AddIncomeExpenseVC.swift in Sources */,
 				9B173ABE259263BB0049DC2D /* TableVC.swift in Sources */,

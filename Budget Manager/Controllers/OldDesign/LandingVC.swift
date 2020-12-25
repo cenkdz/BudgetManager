@@ -35,7 +35,7 @@ class LandingVC: UIViewController {
             displayAlert(message: "Password Missing", title: "Warning")
         }
         else if !(EmailValidator.validate(email: emailField.text!))  {
-            displayAlert(message: "Wrong e-mail", title: "Warning")
+            displayAlert(message: "Wrong e-mail format", title: "Warning")
         }
         else if !(password.evaluate(with: passwordField.text)){
             displayAlert(message: "Wrong password", title: "Warning")

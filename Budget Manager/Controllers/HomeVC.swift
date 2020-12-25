@@ -30,9 +30,9 @@ class HomeVC: UIViewController {
         getAll(completion: ())
 
     }
-    @IBAction func unwindFromAddVC(_ sender: UIStoryboardSegue){
-        if sender.source is AddIncomeExpenseVC {
-            if let senderVC = sender.source as? AddIncomeExpenseVC{
+    @IBAction func unwindFromTestAddVC(_ sender: UIStoryboardSegue){
+        if sender.source is TestAddEntry {
+            if let senderVC = sender.source as? TestAddEntry{
                 print("Came from AddVC")
             }
                     DispatchQueue.main.async {
@@ -68,11 +68,22 @@ class HomeVC: UIViewController {
     }
     
     func goToLandingVC() {
-        let homeViewController = storyboard?.instantiateViewController(identifier: "LandingVC") as? LandingVC
+        let homeViewController = storyboard?.instantiateViewController(identifier: "TestLanding") as? TestLanding
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
     }
     
+    @IBAction func signOutButtonPressed(_ sender: UIButton) {
+        
+            let firebaseAuth = Auth.auth()
+        do {
+          try firebaseAuth.signOut()
+            goToLandingVC()
+        } catch let signOutError as NSError {
+          print ("Error signing out: %@", signOutError)
+        }
+        
+    }
     func getUserDetails(completionHandler:@escaping(String, String, String)->(),uid: String){
         db.collection("users").getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -151,7 +162,10 @@ class HomeVC: UIViewController {
 extension HomeVC: UITableViewDataSource,UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userEntries.count
+        if section == 0{
+            return userEntries.count
+        }
+        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

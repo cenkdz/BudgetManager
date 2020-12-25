@@ -37,9 +37,7 @@ class AddIncomeExpenseVC: UIViewController {
             }
         }
     }
-    override func viewWillAppear(_ animated: Bool) {
-    }
-    
+ 
     @IBAction func selectCategoryPressed(_ sender: UIButton) {
     }
 
