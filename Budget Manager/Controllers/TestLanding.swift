@@ -44,7 +44,7 @@ class TestLanding: UIViewController {
         view.addSubview(textField2)
         
         let imageView1 = UIImageView(image: #imageLiteral(resourceName: "landingImage-1"))
-        imageView1.frame = CGRect(x: 200, y: 200, width: 200, height: 50)
+        imageView1.frame = CGRect(x: 100, y: 150, width: 200, height: 200)
         view.addSubview(imageView1)
         
         let budgetManagerLabel = UILabel(frame: CGRect(x: 0, y: 50, width: 300, height: 50))

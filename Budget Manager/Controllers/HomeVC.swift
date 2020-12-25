@@ -179,12 +179,11 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
 
         if entry.entryType == "Expense" {
             cell.backgroundColor = UIColor(hex: "#B00020ff")
-            cell.categoryIcon.image = #imageLiteral(resourceName: "cost-reduction-computer-icons-finance-money-others")
+            cell.categoryIcon.image = #imageLiteral(resourceName: "cost-reduction-computer-icons-finance-money-others-1")
         }
         else{
             cell.backgroundColor = UIColor(hex: "#3c8c3fff")
-            cell.categoryIcon.image = #imageLiteral(resourceName: "22-220911_coin-clipart-expense-save-money-flat-icon-png.png")
-            cell.categoryIcon.image.back
+            cell.categoryIcon.image = #imageLiteral(resourceName: "22-220911_coin-clipart-expense-save-money-flat-icon-png.png-1")
         }
         return cell
     }
