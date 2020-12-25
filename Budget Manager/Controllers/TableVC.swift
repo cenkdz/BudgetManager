@@ -16,14 +16,13 @@ class TableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         categories = createArray()
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         print(selectedC)
     }
@@ -35,7 +34,6 @@ class TableVC: UITableViewController {
         let category2 = Category(categoryIcon: #imageLiteral(resourceName: "coins-512"), categoryName: "Health")
         let category3 = Category(categoryIcon: #imageLiteral(resourceName: "coins-512"), categoryName: "Clothes")
         let category4 = Category(categoryIcon: #imageLiteral(resourceName: "coins-512"), categoryName: "Entertaintment")
-        
         
         tempEntries.append(category1)
         tempEntries.append(category2)

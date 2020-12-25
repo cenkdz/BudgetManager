@@ -278,6 +278,15 @@ PODS:
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/UserDefaults (~> 7.0)
     - PromisesObjC (~> 1.2)
+  - FontIcons/Core (1.5.0)
+  - FontIcons/FontAwesome (1.5.0):
+    - FontIcons/Core
+  - FontIcons/Ionicons (1.5.0):
+    - FontIcons/Core
+  - FontIcons/MaterialDesign (1.5.0):
+    - FontIcons/Core
+  - FontIcons/VaadinIcons (1.5.0):
+    - FontIcons/Core
   - GoogleAppMeasurement (7.3.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/MethodSwizzler (~> 7.0)
@@ -986,6 +995,10 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Firestore
+  - FontIcons/FontAwesome
+  - FontIcons/Ionicons
+  - FontIcons/MaterialDesign
+  - FontIcons/VaadinIcons
   - iOSUtilitiesSource (from `https://github.com/hasnine/iOSUtilitiesSource.git`)
   - MaterialComponents
   - MaterialComponents/ActionSheet
@@ -1010,6 +1023,7 @@ SPEC REPOS:
     - FirebaseDatabase
     - FirebaseFirestore
     - FirebaseInstallations
+    - FontIcons
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
@@ -1046,6 +1060,7 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 22199cb121a527ae59df646d61426fbb12f5627a
   FirebaseFirestore: 1906bf163afdb7c432d2e3b5c40ceb9dd2df5820
   FirebaseInstallations: 971df89b48ae5ee4cc2bf6935f3857a525d28550
+  FontIcons: 407f9b9a416b7519434b421fb32f2562c660599c
   GoogleAppMeasurement: 8d3c0aeede16ab7764144b5a4ca8e1d4323841b7
   GoogleDataTransport: 116c84c4bdeb76be2a7a46de51244368f9794eab
   GoogleUtilities: 3dc4ff0d5e4840e2fa8eef0889620e8c33d4218c
@@ -1062,6 +1077,6 @@ SPEC CHECKSUMS:
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
 
-PODFILE CHECKSUM: 4385c8a9ce0942929024303e90153df2b4aef37b
+PODFILE CHECKSUM: 237f2968aa0bcd966cec040e9f37c0092626db6d
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.9.0

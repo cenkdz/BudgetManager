@@ -1,0 +1,6 @@
+framework module FontIcons {
+  umbrella header "FontIcons-umbrella.h"
+
+  export *
+  module * { export * }
+}

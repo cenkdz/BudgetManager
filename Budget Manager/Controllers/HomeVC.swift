@@ -67,6 +67,7 @@ class HomeVC: UIViewController {
         
     }
     
+    
     func goToLandingVC() {
         let homeViewController = storyboard?.instantiateViewController(identifier: "TestLanding") as? TestLanding
         view.window?.rootViewController = homeViewController
@@ -175,6 +176,16 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
         cell.editButtonOutlet.addTarget(self, action: #selector(self.editButtonPressed(_:)), for: .touchUpInside)
         cell.editButtonOutlet.tag = indexPath.row
         cell.setEntry(entry: entry)
+
+        if entry.entryType == "Expense" {
+            cell.backgroundColor = UIColor(hex: "#B00020ff")
+            cell.categoryIcon.image = #imageLiteral(resourceName: "cost-reduction-computer-icons-finance-money-others")
+        }
+        else{
+            cell.backgroundColor = UIColor(hex: "#3c8c3fff")
+            cell.categoryIcon.image = #imageLiteral(resourceName: "22-220911_coin-clipart-expense-save-money-flat-icon-png.png")
+            cell.categoryIcon.image.back
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

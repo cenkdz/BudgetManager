@@ -20,6 +20,10 @@ target 'Budget Manager' do
   pod 'MaterialComponents/TextControls+OutlinedTextAreas'
   pod 'MaterialComponents/TextControls+OutlinedTextFields'
   pod 'MaterialComponents/List'
+  pod "FontIcons/FontAwesome"
+  pod "FontIcons/VaadinIcons"
+  pod "FontIcons/MaterialDesign"
+  pod "FontIcons/Ionicons"
 
   # Pods for Budget Manager
 
