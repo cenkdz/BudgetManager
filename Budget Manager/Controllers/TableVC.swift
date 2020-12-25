@@ -53,6 +53,7 @@ class TableVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(123123)
         let selectedCategory = categories[indexPath.row]
         if let viewController = storyboard?.instantiateViewController(identifier: "AddIncomeExpenseVC") as? AddIncomeExpenseVC {
             goToAddIncomeExpenseVC(catName: selectedCategory.categoryName)

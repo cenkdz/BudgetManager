@@ -18,15 +18,25 @@ class HomeVC: UIViewController {
     var users: [User] = []
     var userEntries: [UserEntry] = []
     var selectedCategories: [Category] = []
+    var editName = ""
+    var editCategory = ""
+    var editAmount = ""
     
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
-    @IBAction func editButtonPressed(_ sender: UIButton) {
-        print("Edit pressed!!")
+    @objc func editButtonPressed(_ sender: UIButton) {
+        DispatchQueue.main.async {
+            let indexPathRow = sender.tag
+            self.editName = self.userEntries[indexPathRow].entryName
+            self.editAmount = self.userEntries[indexPathRow].entryAmount as! String
+            self.editCategory = self.userEntries[indexPathRow].category
+            self.performSegue(withIdentifier: "goToEditVC", sender: self)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,15 +48,12 @@ class HomeVC: UIViewController {
                 self.users.append(user)
                 self.welcomeLabel.text = "Welcome \(firstname)!"
             }, uid: user!.uid)
-
+            
             getUserEntries(completionHandler: { (category, entryName, entryAmount, uid, entryDate, entryType,entryID) in
                 let entry = UserEntry(category: category, entryName: entryName, entryAmount: entryAmount, uid: uid, entryDate: entryDate, entryType: entryType, entryID: entryID)
                 self.userEntries.append(entry)
-                for entry in self.userEntries {
-                    print(entry.entryName)
-                }
             }, uid: user!.uid)
-
+            
         } else {
             // No user is signed in.
             goToLandingVC()
@@ -59,7 +66,7 @@ class HomeVC: UIViewController {
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
     }
-
+    
     func getUserDetails(completionHandler:@escaping(String, String, String)->(),uid: String){
         db.collection("users").getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -77,14 +84,12 @@ class HomeVC: UIViewController {
                             }
                         }
                     }
-                
-                
             }
         }
     }
     func getUserEntries(completionHandler:@escaping(String, String, Any,String,Any,String,Any)->(),uid: String){
         userEntries = []
-      db.collection("entries").whereField("uid", isEqualTo: uid)
+        db.collection("entries").whereField("uid", isEqualTo: uid)
             .getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
@@ -96,9 +101,7 @@ class HomeVC: UIViewController {
                         
                     }
                 }
-        }
-
-
+            }
     }
     
     func deleteUserEntry(selectedEntryID: Any){
@@ -118,31 +121,35 @@ class HomeVC: UIViewController {
 extension HomeVC: UITableViewDataSource,UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return userEntries.count
     }
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let entry = userEntries[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "entryCell", for: indexPath) as! EntryCellVC
         
+        cell.editButtonOutlet.addTarget(self, action: #selector(self.editButtonPressed(_:)), for: .touchUpInside)
+        cell.editButtonOutlet.tag = indexPath.row
         cell.setEntry(entry: entry)
         return cell
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            if (editingStyle == .delete) {
-                let entry = userEntries[indexPath.row]
-                deleteUserEntry(selectedEntryID: entry.entryID)
-                userEntries.remove(at: indexPath.row)
-                tableView.reloadData()
-
-            }
-            
-            
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        if (editingStyle == .delete) {
+            let entry = userEntries[indexPath.row]
+            deleteUserEntry(selectedEntryID: entry.entryID)
+            userEntries.remove(at: indexPath.row)
+            tableView.reloadData()
+        }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.identifier == "goToEditVC" {
+            let vc = segue.destination as? EditVC
+            print("DATA ON PREPARE\(editName),\(editAmount),\(editCategory)")
+            vc?.name = editName
+            vc?.amount = editAmount
+            vc?.category = editCategory
         }
     }
 }

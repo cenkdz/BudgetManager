@@ -14,13 +14,14 @@ class EntryCellVC: UITableViewCell {
     @IBOutlet weak var entryNameLabel: UILabel!
     @IBOutlet weak var entryAmount: UILabel!
     
+    @IBOutlet weak var editButtonOutlet: UIButton!
+    
     
     func setEntry(entry: UserEntry){
         categoryIcon.image = #imageLiteral(resourceName: "coins-512")
         entryNameLabel.text = entry.entryName
         entryAmount.text = entry.entryAmount as! String
     }
-    
     
     
 
