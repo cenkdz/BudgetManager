@@ -11,7 +11,6 @@ import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 
-
 class HomeVC: UIViewController {
     var entries: [Entry] = []
     let db = Firestore.firestore()
@@ -56,10 +55,6 @@ class HomeVC: UIViewController {
             tableView.reloadData()
         }
     }
-//     func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-//        let destinationVC = segue.destination as! EditVC
-//        destinationVC.entryID = selectedEntryID
-//    }
     @objc func editButtonPressed(_ sender: UIButton) {
       
             let indexPathRow = sender.tag
