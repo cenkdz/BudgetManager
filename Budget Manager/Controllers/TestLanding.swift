@@ -33,11 +33,16 @@ class TestLanding: UIViewController {
         textField.textColor = UIColor.red
         textField.placeholder = "Please enter your e-mail"
         textField.backgroundColor = .systemGray
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
         textField.sizeToFit()
         
         textField2.label.text = "PASSWORD"
         textField2.placeholder = "Please enter your password"
         textField2.backgroundColor = .systemGray
+        textField2.autocorrectionType = .no
+        textField2.autocapitalizationType = .none
+        textField2.isSecureTextEntry = true
         textField2.sizeToFit()
         
         view.addSubview(textField)

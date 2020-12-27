@@ -83,7 +83,7 @@ class TestAddEntry: UIViewController {
         categoryButton.layer.borderColor = myColor.cgColor
         categoryButton.layer.borderWidth = 1.0
         categoryButton.addTarget(self, action: #selector(didTapActionSheet), for: .touchUpInside)
-        categoryButton.setTitle("my text here", for: .normal)
+        categoryButton.setTitle(catName, for: .normal)
         categoryButton.setTitleColor(.black, for: .normal)
         view.addSubview(categoryButton)
         
@@ -101,11 +101,13 @@ class TestAddEntry: UIViewController {
         amountField.layer.borderColor = myColor.cgColor
         amountField.keyboardType = .numberPad
         amountField.layer.borderWidth = 1.0
+        amountField.autocorrectionType = .no
+
         amountField.sizeToFit()
         view.addSubview(amountField)
         
         let noteLabel = UILabel(frame: CGRect(x: 20, y: 250, width: 300, height: 50))
-        noteLabel.text = "Note"
+        noteLabel.text = "Name"
         noteLabel.textColor = .systemYellow
         noteLabel.font = UIFont.systemFont(ofSize: 20)
         view.addSubview(noteLabel)
@@ -118,6 +120,7 @@ class TestAddEntry: UIViewController {
         noteField.backgroundColor = UIColor.systemYellow
         noteField.layer.borderColor = myColor.cgColor
         noteField.layer.borderWidth = 1.0
+        noteField.autocorrectionType = .no
         noteField.sizeToFit()
         view.addSubview(noteField)
         
@@ -204,38 +207,41 @@ class TestAddEntry: UIViewController {
     }
     
     @objc private func didTapActionSheet() {
-        let actionSheet = MDCActionSheetController(title: "Category",
-                                                   message: "Pick a category")
-        actionSheet.backgroundColor = .systemBackground
-        actionSheet.titleTextColor = .label
-        actionSheet.messageTextColor = .secondaryLabel
-        actionSheet.actionTintColor = .label
-        actionSheet.actionTextColor = .label
-        
-        let action1 = MDCActionSheetAction(title: "Market",
-                                             image: UIImage(systemName: "house"),
-                                             handler: {_ in return "Home action" })
-        let action2 = MDCActionSheetAction(title: "Loan",
-                                             image: UIImage(systemName: "gear"),
-                                             handler: {_ in print("Email action") })
-        let action3 = MDCActionSheetAction(title: "Food",
-                                             image: UIImage(systemName: "gear"),
-                                             handler: {_ in print("Email action") })
-        let action4 = MDCActionSheetAction(title: "Online Shopping",
-                                             image: UIImage(systemName: "gear"),
-                                             handler: {_ in print("Email action") })
-        actionSheet.addAction(action1)
-        actionSheet.addAction(action2)
-        actionSheet.addAction(action3)
-        actionSheet.addAction(action4)
-
-
-        present(actionSheet, animated: true, completion: nil)
+//        let actionSheet = MDCActionSheetController(title: "Category",
+//                                                   message: "Pick a category")
+//        actionSheet.backgroundColor = .systemBackground
+//        actionSheet.titleTextColor = .label
+//        actionSheet.messageTextColor = .secondaryLabel
+//        actionSheet.actionTintColor = .label
+//        actionSheet.actionTextColor = .label
+//        
+//        let action1 = MDCActionSheetAction(title: "Market",
+//                                             image: UIImage(systemName: "house"),
+//                                             handler: {_ in return "Home action" })
+//        let action2 = MDCActionSheetAction(title: "Loan",
+//                                             image: UIImage(systemName: "gear"),
+//                                             handler: {_ in print("Email action") })
+//        let action3 = MDCActionSheetAction(title: "Food",
+//                                             image: UIImage(systemName: "gear"),
+//                                             handler: {_ in print("Email action") })
+//        let action4 = MDCActionSheetAction(title: "Online Shopping",
+//                                             image: UIImage(systemName: "gear"),
+//                                             handler: {_ in print("Email action") })
+//        actionSheet.addAction(action1)
+//        actionSheet.addAction(action2)
+//        actionSheet.addAction(action3)
+//        actionSheet.addAction(action4)
+//
+//
+//        present(actionSheet, animated: true, completion: nil)
+        self.performSegue(withIdentifier: "gototable", sender: self)
         
     }
     
   func selectCategoryPressed(_ sender: UIButton) {
         print("Select category Pressed!")
+    
+
     }
 
     func goToHomeVC() {

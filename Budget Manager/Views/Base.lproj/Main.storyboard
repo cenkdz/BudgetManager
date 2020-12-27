@@ -414,6 +414,7 @@
                     <connections>
                         <outlet property="entryTypeOutlet" destination="4rM-te-hBi" id="I2f-Os-NPG"/>
                         <segue destination="Spt-Gc-kOR" kind="unwind" identifier="unwindFromTestAddVC" unwindAction="unwindFromTestAddVC:" id="Jkb-SV-Afz"/>
+                        <segue destination="UyD-CH-Yb5" kind="show" identifier="gototable" id="GVF-3o-RI3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kGo-cL-nta" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -664,6 +665,6 @@
         <image name="square.and.pencil" catalog="system" width="64" height="58"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dep-hw-H0a"/>
+        <segue reference="GVF-3o-RI3"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -37,6 +37,7 @@ class TestSignUp: UIViewController {
         textField.label.textColor = .systemRed
         textField.placeholder = "Please enter your firstname"
         textField.setFilledBackgroundColor(UIColor(hex: "#FFFFFFff")!, for: .normal)
+        textField.autocorrectionType = .no
         textField.sizeToFit()
         view.addSubview(textField)
         let estimatedFrame2 = CGRect(x: 75, y: 200, width: (self.view.frame.width)/2+50, height: 50)
@@ -44,6 +45,7 @@ class TestSignUp: UIViewController {
         textField2.label.text = "Lastname"
         textField2.placeholder = "Please enter your lastname"
         textField2.setFilledBackgroundColor(UIColor(hex: "#FFFFFFff")!, for: .normal)
+        textField2.autocorrectionType = .no
         textField2.sizeToFit()
         view.addSubview(textField2)
         let estimatedFrame3 = CGRect(x: 75, y: 300, width: (self.view.frame.width)/2+50, height: 50)
@@ -51,6 +53,8 @@ class TestSignUp: UIViewController {
         textField3.label.text = "E-mail"
         textField3.placeholder = "Please enter your e-mail"
         textField3.setFilledBackgroundColor(UIColor(hex: "#FFFFFFff")!, for: .normal)
+        textField3.autocapitalizationType = .none
+        textField3.autocorrectionType = .no
         textField3.sizeToFit()
         view.addSubview(textField3)
         let estimatedFrame4 = CGRect(x: 75, y: 400, width: (self.view.frame.width)/2+50, height: 50)
@@ -58,6 +62,8 @@ class TestSignUp: UIViewController {
         textField4.label.text = "Password"
         textField4.placeholder = "Please enter your password"
         textField4.setFilledBackgroundColor(UIColor(hex: "#FFFFFFff")!, for: .normal)
+        textField4.autocapitalizationType = .none
+        textField4.autocorrectionType = .no
         textField4.sizeToFit()
         view.addSubview(textField4)
         
