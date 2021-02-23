@@ -44,19 +44,6 @@ class HomeVC: UIViewController {
         }
     }
     
-    @IBAction func unwindFromAddCategoryVCToHomeVC(_ sender: UIStoryboardSegue){
-        if sender.source is AddCategoryVC {
-            if let senderVC = sender.source as? AddCategoryVC{
-                print("Came from AddCategoryVC")
-            }
-                    DispatchQueue.main.async {
-                        self.getAll(completion: ())
-                
-            }
-            tableView.reloadData()
-            
-        }
-    }
     @IBAction func unwindFromEditVC(_ sender: UIStoryboardSegue){
         if sender.source is EditVC {
             if let senderVC = sender.source as? EditVC{

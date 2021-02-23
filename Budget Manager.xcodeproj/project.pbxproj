@@ -17,6 +17,7 @@
 		9B173AD42592918A0049DC2D /* CategoryCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B173AD32592918A0049DC2D /* CategoryCellVC.swift */; };
 		9B173AD72592A5330049DC2D /* AddIncomeExpenseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B173AD62592A5330049DC2D /* AddIncomeExpenseVC.swift */; };
 		9B33DC9825916BD00004CA6D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33DC9725916BD00004CA6D /* User.swift */; };
+		9B5FA86425E5632B001DB3F0 /* EditCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FA86325E5632B001DB3F0 /* EditCategoryVC.swift */; };
 		9B927DB025956B9200556E16 /* EditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B927DAF25956B9200556E16 /* EditVC.swift */; };
 		9BBF4ABA2590EC3400F1290C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */; };
 		BA12BBD125E4F3AB00154119 /* AddCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12BBD025E4F3AB00154119 /* AddCategoryVC.swift */; };
@@ -47,6 +48,7 @@
 		9B173AD32592918A0049DC2D /* CategoryCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellVC.swift; sourceTree = "<group>"; };
 		9B173AD62592A5330049DC2D /* AddIncomeExpenseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIncomeExpenseVC.swift; sourceTree = "<group>"; };
 		9B33DC9725916BD00004CA6D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = SOURCE_ROOT; };
+		9B5FA86325E5632B001DB3F0 /* EditCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryVC.swift; sourceTree = "<group>"; };
 		9B927DAF25956B9200556E16 /* EditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVC.swift; sourceTree = "<group>"; };
 		9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BA12BBD025E4F3AB00154119 /* AddCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryVC.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				9B927DAF25956B9200556E16 /* EditVC.swift */,
 				BA12BBD025E4F3AB00154119 /* AddCategoryVC.swift */,
 				BA12BBD225E4F4E800154119 /* IconListVC.swift */,
+				9B5FA86325E5632B001DB3F0 /* EditCategoryVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				BA12BBD125E4F3AB00154119 /* AddCategoryVC.swift in Sources */,
 				9B927DB025956B9200556E16 /* EditVC.swift in Sources */,
 				BAF01D42258CB5CB00E5BF62 /* SignUpVC.swift in Sources */,
+				9B5FA86425E5632B001DB3F0 /* EditCategoryVC.swift in Sources */,
 				9B173ACA25928F1D0049DC2D /* UserEntry.swift in Sources */,
 				BAC2998F257A6E6F00EE1511 /* AppDelegate.swift in Sources */,
 				9B33DC9825916BD00004CA6D /* User.swift in Sources */,

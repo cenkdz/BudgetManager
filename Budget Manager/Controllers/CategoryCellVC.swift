@@ -13,6 +13,7 @@ import SwiftIcons
 class CategoryCellVC: UITableViewCell {
     
 
+    @IBOutlet weak var editCategoryButton: UIButton!
     @IBOutlet weak var categoryIcon: UIImageView!
     @IBOutlet weak var categoryName: UILabel!
     func setEntry(entry: Category){

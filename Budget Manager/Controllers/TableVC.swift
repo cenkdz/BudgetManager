@@ -17,31 +17,66 @@ class TableVC: UITableViewController {
     var categories: [Category] = []
     var selectedCategoryName = ""
     var selectedC: String!
+    var editName = ""
+    var editIcon = ""
+    var selectedCategoryID: Any!
+
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getUserCategories(completionHandler: { (category_id, category_name, category_icon,uid) in
+            self.getUserCategories(completionHandler: { (category_id, category_name, category_icon,uid) in
             let category = Category(categoryID: category_id, categoryName: category_name, categoryIcon: category_icon, uid: uid)
             self.categories.append(category)
-        }, uid: user!.uid)
+        }, uid: self.user!.uid)
+
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    @objc func editButtonPressed(_ sender: UIButton) {
+      
+            let indexPathRow = sender.tag
+        self.editName = self.categories[indexPathRow].categoryName
+        self.editIcon = self.categories[indexPathRow].categoryIcon
+
+            self.selectedCategoryID = self.categories[indexPathRow].categoryID
+
+            self.performSegue(withIdentifier: "goToEditCategoryVC", sender: self)
+        
+    }
+    
+    @IBAction func unwindFromAddCategoryVCToTableVC(_ sender: UIStoryboardSegue){
+        DispatchQueue.main.async {
+            self.getUserCategories(completionHandler: { (category_id, category_name, category_icon,uid) in
+            let category = Category(categoryID: category_id, categoryName: category_name, categoryIcon: category_icon, uid: uid)
+            self.categories.append(category)
+        }, uid: self.user!.uid)
+            
+        }
+        self.tableView.reloadData()
+        
+    }
+    @IBAction func goToTableVCAfterEdit(_ sender: UIStoryboardSegue){
+        DispatchQueue.main.async {
+            self.getUserCategories(completionHandler: { (category_id, category_name, category_icon,uid) in
+            let category = Category(categoryID: category_id, categoryName: category_name, categoryIcon: category_icon, uid: uid)
+            self.categories.append(category)
+        }, uid: self.user!.uid)
+            
+        }
+        self.tableView.reloadData()
         
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return categories.count
     }
-    @IBAction func editButtonPressed(_ sender: UIButton) {
-    }
-    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let entry = categories[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as! CategoryCellVC
+        cell.editCategoryButton.addTarget(self, action: #selector(self.editButtonPressed(_:)), for: .touchUpInside)
+        cell.editCategoryButton.tag = indexPath.row
         cell.setEntry(entry: entry)
         return cell
     }
@@ -62,6 +97,15 @@ class TableVC: UITableViewController {
         self.performSegue(withIdentifier: "unwindFromTVCToEdit", sender: self)
 
 
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.identifier == "goToEditCategoryVC" {
+            let vc = segue.destination as? EditCategoryVC
+            vc?.name = editName
+            vc?.icon = editIcon
+            vc?.categoryID = selectedCategoryID
+        }
     }
     
     func goToAddIncomeExpenseVC(catName: String) {

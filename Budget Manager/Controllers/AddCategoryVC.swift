@@ -35,11 +35,13 @@ class AddCategoryVC: UIViewController {
         //        }
                 else{
                 do {
+                    
                     try db.collection("categories").addDocument(data: dictionary)
+                    
                 } catch let error {
                     print("Error writing entry to Firestore: \(error)")
                 }
-                self.performSegue(withIdentifier: "unwindFromAddCategoryVCToHomeVC", sender: self)
+                self.performSegue(withIdentifier: "unwindFromAddCategoryVCToTableVC", sender: self)
                 }
 
     }

@@ -15,6 +15,7 @@ struct Icon {
 class IconListVC: UIViewController {
     
     var seledtedIcon = ""
+    var selectedI = ""
     
     
     let icons = [
@@ -80,7 +81,9 @@ extension IconListVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
     didSelectItemAt indexPath: IndexPath) {
 
         seledtedIcon = icons[indexPath.row].iconName
+        selectedI = icons[indexPath.row].iconName
         self.performSegue(withIdentifier: "unwindFromIconListVCToAddCategoryVC", sender: self)
+        self.performSegue(withIdentifier: "unwindFromIconListVCToEditCategoryVC", sender: self)
 
     }
     
