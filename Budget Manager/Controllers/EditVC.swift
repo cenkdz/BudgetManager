@@ -59,7 +59,7 @@ class EditVC: UIViewController {
     }
     
     func editEntry(completion: ()){
-        let entries = self.db.collection("entries") //self.db points to *my* firestore
+        let entries = self.db.collection("entries") 
         entries.whereField("entryID", isEqualTo: entryID).getDocuments(completion: { querySnapshot, error in
             if let err = error {
                 print(err.localizedDescription)

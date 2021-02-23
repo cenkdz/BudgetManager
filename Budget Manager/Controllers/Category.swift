@@ -9,10 +9,19 @@
 import Foundation
 import UIKit
 class Category {
-    var categoryIcon: UIImage
+    var categoryID: String
+    var categoryIcon: String
     var categoryName: String
-    init(categoryIcon: UIImage,categoryName:String) {
-        self.categoryIcon = categoryIcon
+    var uid: String
+    init(categoryID:String,categoryName:String,categoryIcon: String,uid: String) {
+        self.categoryID = categoryID
         self.categoryName = categoryName
+        self.categoryIcon = categoryIcon
+        self.uid = uid
+        
     }
+    
+    func getDictionary() -> [String: Any]{
+         return ["category_id": categoryID,"category_name":categoryName,"category_icon":categoryIcon,"uid":uid]
+     }
 }

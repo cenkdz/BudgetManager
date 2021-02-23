@@ -145,7 +145,7 @@ class TestAddEntry: UIViewController {
             if let senderVC = sender.source as? TableVC{
                 catName = senderVC.selectedC
                 print(catName)
-               // categoryButtonOutlet.setTitle(catName, for: .normal)
+               //categoryButtonOutlet.setTitle(catName, for: .normal)
             }
         }
     }

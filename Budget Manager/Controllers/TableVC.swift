@@ -7,45 +7,35 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
+
 
 class TableVC: UITableViewController {
     
     var categories: [Category] = []
     var selectedCategoryName = ""
     var selectedC: String!
+    let db = Firestore.firestore()
+    let user = Auth.auth().currentUser
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        categories = createArray()
+        getUserCategories(completionHandler: { (category_id, category_name, category_icon,uid) in
+            let category = Category(categoryID: category_id, categoryName: category_name, categoryIcon: category_icon, uid: uid)
+            self.categories.append(category)
+        }, uid: user!.uid)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        print(selectedC)
-    }
-    
-    func createArray() -> [Category] {
-        
-        var tempEntries: [Category] = []
-        let category1 = Category(categoryIcon: #imageLiteral(resourceName: "coins-512"), categoryName: "Car")
-        let category2 = Category(categoryIcon: #imageLiteral(resourceName: "coins-512"), categoryName: "Health")
-        let category3 = Category(categoryIcon: #imageLiteral(resourceName: "coins-512"), categoryName: "Clothes")
-        let category4 = Category(categoryIcon: #imageLiteral(resourceName: "coins-512"), categoryName: "Entertaintment")
-        
-        tempEntries.append(category1)
-        tempEntries.append(category2)
-        tempEntries.append(category3)
-        tempEntries.append(category4)
-        
-        return tempEntries
-        
-    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return categories.count
+    }
+    @IBAction func editButtonPressed(_ sender: UIButton) {
     }
     
     
@@ -55,6 +45,14 @@ class TableVC: UITableViewController {
         cell.setEntry(entry: entry)
         return cell
     }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+         if (editingStyle == .delete) {
+             let entry = categories[indexPath.row]
+             deleteUserCategory(selectedEntryID: entry.categoryID)
+             categories.remove(at: indexPath.row)
+             tableView.reloadData()
+         }
+     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCategory = categories[indexPath.row]
@@ -71,6 +69,33 @@ class TableVC: UITableViewController {
         homeViewController?.catName = catName
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
+    }
+    
+    func getUserCategories(completionHandler:@escaping(String, String, String,String)->(),uid: String){
+        categories = []
+        db.collection("categories").whereField("uid", isEqualTo: uid)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let data = document.data()
+                        completionHandler (data["category_id"] as! String, data["category_name"] as! String, data["category_icon"] as! String,data["uid"] as! String)
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+    }
+    func deleteUserCategory(selectedEntryID: Any){
+        db.collection("categories").whereField("category_id", isEqualTo: selectedEntryID).getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    document.reference.delete()
+                }
+            }
+        }
     }
     
 }

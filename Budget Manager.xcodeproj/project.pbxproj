@@ -19,6 +19,8 @@
 		9B33DC9825916BD00004CA6D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33DC9725916BD00004CA6D /* User.swift */; };
 		9B927DB025956B9200556E16 /* EditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B927DAF25956B9200556E16 /* EditVC.swift */; };
 		9BBF4ABA2590EC3400F1290C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */; };
+		BA12BBD125E4F3AB00154119 /* AddCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12BBD025E4F3AB00154119 /* AddCategoryVC.swift */; };
+		BA12BBD325E4F4E800154119 /* IconListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12BBD225E4F4E800154119 /* IconListVC.swift */; };
 		BA25582B259607EF00C74F2A /* TestAddEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA25582A259607EF00C74F2A /* TestAddEntry.swift */; };
 		BAB3D9A4259360E400DA000F /* TestSignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3D9A3259360E400DA000F /* TestSignUp.swift */; };
 		BAB3D9A625937FAF00DA000F /* TestLanding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3D9A525937FAF00DA000F /* TestLanding.swift */; };
@@ -47,6 +49,8 @@
 		9B33DC9725916BD00004CA6D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = SOURCE_ROOT; };
 		9B927DAF25956B9200556E16 /* EditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVC.swift; sourceTree = "<group>"; };
 		9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BA12BBD025E4F3AB00154119 /* AddCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryVC.swift; sourceTree = "<group>"; };
+		BA12BBD225E4F4E800154119 /* IconListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconListVC.swift; sourceTree = "<group>"; };
 		BA25582A259607EF00C74F2A /* TestAddEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAddEntry.swift; sourceTree = "<group>"; };
 		BAB3D9A3259360E400DA000F /* TestSignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSignUp.swift; sourceTree = "<group>"; };
 		BAB3D9A525937FAF00DA000F /* TestLanding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLanding.swift; sourceTree = "<group>"; };
@@ -170,6 +174,8 @@
 				9B173ACD259290420049DC2D /* CategoryTableVC.swift */,
 				9B173AD32592918A0049DC2D /* CategoryCellVC.swift */,
 				9B927DAF25956B9200556E16 /* EditVC.swift */,
+				BA12BBD025E4F3AB00154119 /* AddCategoryVC.swift */,
+				BA12BBD225E4F4E800154119 /* IconListVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -294,8 +300,10 @@
 				BA25582B259607EF00C74F2A /* TestAddEntry.swift in Sources */,
 				9B173AC4259280CA0049DC2D /* EntryCellVC.swift in Sources */,
 				BAB3D9A4259360E400DA000F /* TestSignUp.swift in Sources */,
+				BA12BBD325E4F4E800154119 /* IconListVC.swift in Sources */,
 				9B173AD42592918A0049DC2D /* CategoryCellVC.swift in Sources */,
 				9B173AC125927C540049DC2D /* Goal.swift in Sources */,
+				BA12BBD125E4F3AB00154119 /* AddCategoryVC.swift in Sources */,
 				9B927DB025956B9200556E16 /* EditVC.swift in Sources */,
 				BAF01D42258CB5CB00E5BF62 /* SignUpVC.swift in Sources */,
 				9B173ACA25928F1D0049DC2D /* UserEntry.swift in Sources */,

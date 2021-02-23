@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SwiftIcons
+
 
 class CategoryCellVC: UITableViewCell {
     
@@ -14,7 +16,8 @@ class CategoryCellVC: UITableViewCell {
     @IBOutlet weak var categoryIcon: UIImageView!
     @IBOutlet weak var categoryName: UILabel!
     func setEntry(entry: Category){
-        categoryIcon.image = entry.categoryIcon
+        categoryIcon.image = UIImage(systemName: entry.categoryIcon)
         categoryName.text = entry.categoryName
     }
+
 }
