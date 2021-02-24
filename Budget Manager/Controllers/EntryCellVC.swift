@@ -21,6 +21,18 @@ class EntryCellVC: UITableViewCell {
         categoryIcon.image = #imageLiteral(resourceName: "coins-512")
         entryNameLabel.text = entry.entryName
         entryAmount.text = entry.entryAmount as! String
+        editButtonOutlet.setImage(UIImage(systemName: "pencil"), for: .normal)
+        
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        if selected {
+            contentView.backgroundColor = .black
+        } else {
+            
+        }
     }
     
     

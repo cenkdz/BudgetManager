@@ -987,6 +987,7 @@ PODS:
   - nanopb/decode (2.30906.0)
   - nanopb/encode (2.30906.0)
   - PromisesObjC (1.2.11)
+  - SFSafeSymbols (2.1.2)
   - SwiftIcons (2.3.2)
 
 DEPENDENCIES:
@@ -1010,6 +1011,7 @@ DEPENDENCIES:
   - "MaterialComponents/TextControls+FilledTextFields"
   - "MaterialComponents/TextControls+OutlinedTextAreas"
   - "MaterialComponents/TextControls+OutlinedTextFields"
+  - SFSafeSymbols (~> 2.1.2)
   - SwiftIcons (~> 2.3.2)
 
 SPEC REPOS:
@@ -1040,6 +1042,7 @@ SPEC REPOS:
     - MotionInterchange
     - nanopb
     - PromisesObjC
+    - SFSafeSymbols
     - SwiftIcons
 
 EXTERNAL SOURCES:
@@ -1079,8 +1082,9 @@ SPEC CHECKSUMS:
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
+  SFSafeSymbols: 2ff539ad202ae24f76fe53e645b17f2a97a2ee53
   SwiftIcons: e652cfd2676441c462ad57b6e92977faf577e590
 
-PODFILE CHECKSUM: 9aaa7665c181535c9525a1855c50e01348ddacef
+PODFILE CHECKSUM: 092a5da881c9a7721780a054d5a056ea32a973bb
 
 COCOAPODS: 1.10.1

@@ -22,13 +22,14 @@ class HomeVC: UIViewController {
     var editAmount = ""
     var selectedEntryID: Any!
     
+    @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.allowsSelection = false
         getAll(completion: ())
-
     }
     @IBAction func unwindFromTestAddVC(_ sender: UIStoryboardSegue){
         if sender.source is TestAddEntry {
@@ -179,13 +180,12 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
         cell.setEntry(entry: entry)
 
         if entry.entryType == "Expense" {
-            cell.backgroundColor = UIColor(hex: "#B00020ff")
-            cell.categoryIcon.image = #imageLiteral(resourceName: "cost-reduction-computer-icons-finance-money-others-1")
+//            cell.backgroundColor = UIColor(hex: "#ffe40017")
+            cell.categoryIcon.image = UIImage(systemName: "minus.square")
         }
         else{
-            cell.backgroundColor = UIColor(hex: "#3c8c3fff")
-            cell.categoryIcon.image = #imageLiteral(resourceName: "22-220911_coin-clipart-expense-save-money-flat-icon-png.png-1")
-        }
+//            cell.backgroundColor = UIColor(hex: "#ff5b6d5b")
+            cell.categoryIcon.image = UIImage(systemName: "plus.square")        }
         return cell
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

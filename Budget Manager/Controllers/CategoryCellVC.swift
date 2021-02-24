@@ -18,7 +18,6 @@ class CategoryCellVC: UITableViewCell {
     @IBOutlet weak var categoryName: UILabel!
     func setEntry(entry: Category){
         categoryIcon.image = UIImage(systemName: entry.categoryIcon)
-        categoryName.text = entry.categoryName
-    }
+        categoryName.text = entry.categoryName    }
 
 }

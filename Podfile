@@ -25,6 +25,8 @@ target 'Budget Manager' do
   pod "FontIcons/MaterialDesign"
   pod "FontIcons/Ionicons"
   pod 'SwiftIcons', '~> 2.3.2'
+  pod 'SFSafeSymbols', '~> 2.1.2'
+
 
   # Pods for Budget Manager
 
