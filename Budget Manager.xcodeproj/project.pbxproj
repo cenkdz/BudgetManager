@@ -17,6 +17,7 @@
 		9B173AD42592918A0049DC2D /* CategoryCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B173AD32592918A0049DC2D /* CategoryCellVC.swift */; };
 		9B173AD72592A5330049DC2D /* AddIncomeExpenseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B173AD62592A5330049DC2D /* AddIncomeExpenseVC.swift */; };
 		9B33DC9825916BD00004CA6D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33DC9725916BD00004CA6D /* User.swift */; };
+		9B5A05B425F26A7700A02BEF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5A05B325F26A7700A02BEF /* HomeViewController.swift */; };
 		9B5FA86425E5632B001DB3F0 /* EditCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FA86325E5632B001DB3F0 /* EditCategoryVC.swift */; };
 		9B927DB025956B9200556E16 /* EditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B927DAF25956B9200556E16 /* EditVC.swift */; };
 		9BBF4ABA2590EC3400F1290C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */; };
@@ -48,6 +49,7 @@
 		9B173AD32592918A0049DC2D /* CategoryCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellVC.swift; sourceTree = "<group>"; };
 		9B173AD62592A5330049DC2D /* AddIncomeExpenseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIncomeExpenseVC.swift; sourceTree = "<group>"; };
 		9B33DC9725916BD00004CA6D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = SOURCE_ROOT; };
+		9B5A05B325F26A7700A02BEF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9B5FA86325E5632B001DB3F0 /* EditCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryVC.swift; sourceTree = "<group>"; };
 		9B927DAF25956B9200556E16 /* EditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVC.swift; sourceTree = "<group>"; };
 		9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -89,6 +91,14 @@
 				D47F8BB2EED2FA1014552490 /* Pods-Budget Manager.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		9B5A05B225F26A5200A02BEF /* NewestDesign */ = {
+			isa = PBXGroup;
+			children = (
+				9B5A05B325F26A7700A02BEF /* HomeViewController.swift */,
+			);
+			path = NewestDesign;
 			sourceTree = "<group>";
 		};
 		B5505E10DA27040232BF5D31 /* Frameworks */ = {
@@ -166,6 +176,7 @@
 		BAC299A6257A6E9A00EE1511 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9B5A05B225F26A5200A02BEF /* NewestDesign */,
 				BA25582C2596185800C74F2A /* OldDesign */,
 				BAB3D9A525937FAF00DA000F /* TestLanding.swift */,
 				BAB3D9A3259360E400DA000F /* TestSignUp.swift */,
@@ -305,6 +316,7 @@
 				BAB3D9A4259360E400DA000F /* TestSignUp.swift in Sources */,
 				BA12BBD325E4F4E800154119 /* IconListVC.swift in Sources */,
 				9B173AD42592918A0049DC2D /* CategoryCellVC.swift in Sources */,
+				9B5A05B425F26A7700A02BEF /* HomeViewController.swift in Sources */,
 				9B173AC125927C540049DC2D /* Goal.swift in Sources */,
 				BA12BBD125E4F3AB00154119 /* AddCategoryVC.swift in Sources */,
 				9B927DB025956B9200556E16 /* EditVC.swift in Sources */,
