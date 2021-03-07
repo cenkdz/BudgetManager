@@ -18,6 +18,10 @@ class HomeTableViewCell: UITableViewCell {
             amountOutlet.textColor = UIColor(red: 0.98, green: 0.39, blue: 0.00, alpha: 1.00)
             
         }
+        else if entry.type == "Income" {
+            amountOutlet.textColor = UIColor(red: 0.24, green: 0.48, blue: 0.94, alpha: 1.00)
+
+        }
         amountOutlet.text = entry.amount
         categorySourceOutlet.text = entry.category+" / "+entry.source
     }

@@ -16,125 +16,122 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     @IBOutlet weak var monthlyButton: UIButton!
     @IBOutlet weak var totalButton: UIButton!
     @IBOutlet weak var addButtonOutlet: UIButton!
-    
     @IBOutlet var addView: UIView!
     @IBOutlet weak var visualEffectView: UIVisualEffectView!
-    
     @IBOutlet weak var incomeOutlet: UILabel!
     @IBOutlet weak var expenseOutlet: UILabel!
     @IBOutlet weak var totalOutlet: UILabel!
-    @IBOutlet weak var balanceOutlet: UILabel!
-    @IBOutlet weak var yearMonthOutlet: UILabel!
-    @IBOutlet weak var dayNameOutlet: UILabel!
-    @IBOutlet weak var dayOutlet: UILabel!
     
     var effect: UIVisualEffect!
-    var tableData: [String] = ["Row 1","Row 2","Row 3"]
-    var entries: [Entry] = []
+    var entries: [[Entry]] = []
+    var sections: [Int] = []
+    var count = 0
+
+  
+
     func setData(){
-        
-        
-let data = Entry(type: "Expense", category: "Car", source: "Card", amount: "200", day: String(4), dayInWeek: "Wednesday", year: "2021", month: "3")
-        let data2 = Entry(type: "Income", category: "Salary", source: "Cash", amount: "1000", day: "7", dayInWeek: "Sunday", year: "2021", month: "3")
-        
+        let data = [Entry(type: "Expense", category: "Car", source: "Card", amount: "-1100", day: 4, dayInWeek: "Wednesday", year: "2021", month: "3"),Entry(type: "Income", category: "Car", source: "Card", amount: "1200", day: 4, dayInWeek: "Wednesday", year: "2021", month: "3")]
+        let data2 = [Entry(type: "Income", category: "Salary", source: "Cash", amount: "1000", day: 7, dayInWeek: "Sunday", year: "2021", month: "3")
+                     ,Entry(type: "Income", category: "Tip", source: "Cash", amount: "900", day: 7, dayInWeek: "Sunday", year: "2021", month: "3")]
+        let data3 = [Entry(type: "Income", category: "Mother", source: "Cash", amount: "800", day: 28, dayInWeek: "Sunday", year: "2021", month: "3"),
+         Entry(type: "Income", category: "Mother", source: "Cash", amount: "700", day: 28, dayInWeek: "Sunday", year: "2021", month: "3"),
+         Entry(type: "Income", category: "Mother", source: "Cash", amount: "600", day: 28, dayInWeek: "Sunday", year: "2021", month: "3"),
+         Entry(type: "Income", category: "Mother", source: "Cash", amount: "500", day: 28, dayInWeek: "Sunday", year: "2021", month: "3")]
+        let data4 = [Entry(type: "Income", category: "Mother", source: "Cash", amount: "400", day: 29, dayInWeek: "Sunday", year: "2021", month: "3"),
+        Entry(type: "Income", category: "Mother", source: "Cash", amount: "300", day: 29, dayInWeek: "Sunday", year: "2021", month: "3")]
+        let data5 = [Entry(type: "Income", category: "Mother", source: "Cash", amount: "200", day: 30, dayInWeek: "Sunday", year: "2021", month: "3"),
+        Entry(type: "Income", category: "Mother", source: "Cash", amount: "100", day: 30, dayInWeek: "Sunday", year: "2021", month: "3")]
+
         entries.append(data)
         entries.append(data2)
+        entries.append(data3)
+        entries.append(data4)
+        entries.append(data5)
+        
+        let sortedArray = entries.sorted(by: {$0[0].day > $1[0].day })
+        entries.removeAll()
+        entries.append(contentsOf: sortedArray)
     }
     
-    func calculateTotal(entry: [Entry]) -> String{
+    func calculateTotal() -> String{
         var total = 0
-        
-        for entry in entries {
-            if entry.type == "Expense" {
-                total = total - Int(entry.amount)!
-            }
-            else{
-                total = total + Int(entry.amount)!
-            }
-        }
 
+        for array in entries {
+            for value in array {
+                total = total + Int(value.amount)!
+            }
+            print(" ")
+        }
         return String(total)
     }
-    
-    func calculateExpenses(entry: [Entry]) -> String{
+
+    func calculateExpenses() -> String{
         var expenses = 0
-        
-        for entry in entries {
-            if entry.type == "Expense" {
-                expenses = expenses + Int(entry.amount)!
+
+        for array in entries {
+            for value in array {
+                if value.type == "Expense" {
+                    expenses = expenses + Int(value.amount)!
+                }
             }
         }
         return String(expenses)
     }
-    
-    func calculateIncome(entry: [Entry]) -> String{
+
+    func calculateIncome() -> String{
         var income = 0
-        
-        for entry in entries {
-            if entry.type == "Income" {
-                income = income + Int(entry.amount)!
+
+        for array in entries {
+            for value in array {
+                if value.type == "Income" {
+                    income = income + Int(value.amount)!
+                }
             }
         }
         return String(income)
     }
-    
-    func getDays(entry: [Entry]) -> [String] {
-        var days: [String] = []
-        
-        for entry in entries {
-            var dayData = entry.day
-            
-            if !days.contains(dayData){
-                days.append(dayData)
-            }
-            
-        }
-        
-        return days
-    }
-    
-    func getTodayEntries() -> [Entry] {
-        
-        let date = Date()
-
-        let dateFormatter = DateFormatter()
-
-        func getCurrentYear() -> String{
-            
-            return String(Calendar.current.component(.year, from: date))
-        }
-
-        func getCurrentMonth()-> String{
-            return String(Calendar.current.component(.month, from: date))
-        }
-
-        func getCurrentDay()-> String{
-            return String(Calendar.current.component(.day, from: date))
-        }
-
-        func getCurrentDayInWeek()-> String{
-            dateFormatter.dateFormat = "EEEE"
-
-            return String(dateFormatter.string(from: date))
-
-        }
-        
-        let todayDay = getCurrentDay()
-        let todayMonth = getCurrentMonth()
-        let todayYear = getCurrentYear()
-        let todayDayInWeek = getCurrentDayInWeek()
-        
-        let todayEntries = entries.filter({
-            $0.day == todayDay && $0.month == todayMonth && $0.year == todayYear
-        })
-        return todayEntries
-    }
+//
+//    func getTodayEntries() -> [Entry] {
+//
+//        let date = Date()
+//
+//        let dateFormatter = DateFormatter()
+//
+//        func getCurrentYear() -> String{
+//
+//            return String(Calendar.current.component(.year, from: date))
+//        }
+//
+//        func getCurrentMonth()-> String{
+//            return String(Calendar.current.component(.month, from: date))
+//        }
+//
+//        func getCurrentDay()-> String{
+//            return String(Calendar.current.component(.day, from: date))
+//        }
+//
+//        func getCurrentDayInWeek()-> String{
+//            dateFormatter.dateFormat = "EEEE"
+//
+//            return String(dateFormatter.string(from: date))
+//
+//        }
+//
+//        let todayDay = getCurrentDay()
+//        let todayMonth = getCurrentMonth()
+//        let todayYear = getCurrentYear()
+//        let todayDayInWeek = getCurrentDayInWeek()
+//
+//        let todayEntries = entries.filter({
+//            $0.day == Int(todayDay)! && $0.month == todayMonth && $0.year == todayYear
+//        })
+//        return todayEntries
+//    }
     
     func setFinancialOutlets() {
-        let income = calculateIncome(entry: entries)
-        let expenses = calculateExpenses(entry: entries)
-        let total = calculateTotal(entry: entries)
-                
+        let total = calculateTotal()
+        let income = calculateIncome()
+        let expenses = calculateExpenses()
         if Int(total)!<0 {
             totalOutlet.textColor = UIColor(red: 0.98, green: 0.39, blue: 0.00, alpha: 1.00)
         }
@@ -142,25 +139,25 @@ let data = Entry(type: "Expense", category: "Car", source: "Card", amount: "200"
             totalOutlet.textColor = UIColor(red: 0.24, green: 0.48, blue: 0.94, alpha: 1.00)
 
         }
-        
+
         totalOutlet.text = total
         incomeOutlet.text = income
         expenseOutlet.text = expenses
     }
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setData()
         setFinancialOutlets()
+        calculateTotal()
         effect = visualEffectView.effect
         visualEffectView.effect = nil
         addView.layer.cornerRadius = 5
         addView.removeFromSuperview()
-
         tableView.delegate = self
         tableView.dataSource = self
-        //tableView.tableHeaderView = customHeaderView
     }
     
     func animateIn(){
@@ -224,39 +221,40 @@ let data = Entry(type: "Expense", category: "Car", source: "Card", amount: "200"
         monthlyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         weeklyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
     }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return entries.count
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return entries.count
+
+        return entries[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! HomeTableViewCell
-        let data = getTodayEntries()
-        let entry = entries[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeTableViewCell
+        cell.categorySourceOutlet.text = "Section \(indexPath.section) Row \(indexPath.row)"
+        let entry = entries[indexPath.section][indexPath.row]
         cell.setEntry(entry: entry)
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell")
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! HeaderTableViewCell
+        let entry = entries[section]
+        cell.setEntry(entries: entry)
+        cell.setTotal()
         return cell
-        
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
             return 96
         }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 20
-    }
 
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
-    
+
     
     /*
      // MARK: - Navigation
@@ -268,4 +266,19 @@ let data = Entry(type: "Expense", category: "Car", source: "Card", amount: "200"
      }
      */
     
+    struct MonthSection {
+        var month: Date
+        var headlines: [Entry]
+    }
+    
+}
+
+extension NSCountedSet {
+    var occurences: [(object: Any, count: Int)] { map { ($0, count(for: $0))} }
+    var dictionary: [AnyHashable: Int] {
+        reduce(into: [:]) {
+            guard let key = $1 as? AnyHashable else { return }
+            $0[key] = count(for: key)
+        }
+    }
 }

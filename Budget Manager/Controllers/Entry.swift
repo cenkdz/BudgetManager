@@ -9,16 +9,31 @@
 import Foundation
 import UIKit
 
-class Entry {
+class Entry: Hashable,Equatable,Comparable {
+    static func < (lhs: Entry, rhs: Entry) -> Bool {
+        return lhs.day == rhs.day
+    }
+    
+    static func == (lhs: Entry, rhs: Entry) -> Bool {
+        return lhs.day == rhs.day
+    }
+
     var type: String
     var category: String
     var source: String
     var amount: String
-    var day: String
+    var day: Int
     var dayInWeek: String
     var year: String
     var month: String
-    init(type: String,category:String,source: String,amount:String,day:String,dayInWeek:String,year:String,month:String) {
+    
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(day)
+    }
+    
+    
+    init(type: String,category:String,source: String,amount:String,day:Int,dayInWeek:String,year:String,month:String) {
         self.type = type
         self.category = category
         self.source = source
