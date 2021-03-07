@@ -19,6 +19,8 @@
 		9B33DC9825916BD00004CA6D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33DC9725916BD00004CA6D /* User.swift */; };
 		9B5A05B425F26A7700A02BEF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5A05B325F26A7700A02BEF /* HomeViewController.swift */; };
 		9B5FA86425E5632B001DB3F0 /* EditCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FA86325E5632B001DB3F0 /* EditCategoryVC.swift */; };
+		9B6D4F6425F419D1001458E7 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6D4F6325F419D1001458E7 /* HomeTableViewCell.swift */; };
+		9B6D4F6725F4D32C001458E7 /* EntryDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6D4F6625F4D32C001458E7 /* EntryDate.swift */; };
 		9B927DB025956B9200556E16 /* EditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B927DAF25956B9200556E16 /* EditVC.swift */; };
 		9BBF4ABA2590EC3400F1290C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */; };
 		BA12BBD125E4F3AB00154119 /* AddCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12BBD025E4F3AB00154119 /* AddCategoryVC.swift */; };
@@ -51,6 +53,8 @@
 		9B33DC9725916BD00004CA6D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = SOURCE_ROOT; };
 		9B5A05B325F26A7700A02BEF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9B5FA86325E5632B001DB3F0 /* EditCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryVC.swift; sourceTree = "<group>"; };
+		9B6D4F6325F419D1001458E7 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		9B6D4F6625F4D32C001458E7 /* EntryDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EntryDate.swift; path = "Budget Manager/Controllers/NewestDesign/EntryDate.swift"; sourceTree = SOURCE_ROOT; };
 		9B927DAF25956B9200556E16 /* EditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVC.swift; sourceTree = "<group>"; };
 		9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BA12BBD025E4F3AB00154119 /* AddCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryVC.swift; sourceTree = "<group>"; };
@@ -97,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				9B5A05B325F26A7700A02BEF /* HomeViewController.swift */,
+				9B6D4F6325F419D1001458E7 /* HomeTableViewCell.swift */,
 			);
 			path = NewestDesign;
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 				9B173AC6259281A90049DC2D /* Entry.swift */,
 				9B173AC925928F1D0049DC2D /* UserEntry.swift */,
 				9B173AD02592909B0049DC2D /* Category.swift */,
+				9B6D4F6625F4D32C001458E7 /* EntryDate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -316,6 +322,8 @@
 				BAB3D9A4259360E400DA000F /* TestSignUp.swift in Sources */,
 				BA12BBD325E4F4E800154119 /* IconListVC.swift in Sources */,
 				9B173AD42592918A0049DC2D /* CategoryCellVC.swift in Sources */,
+				9B6D4F6725F4D32C001458E7 /* EntryDate.swift in Sources */,
+				9B6D4F6425F419D1001458E7 /* HomeTableViewCell.swift in Sources */,
 				9B5A05B425F26A7700A02BEF /* HomeViewController.swift in Sources */,
 				9B173AC125927C540049DC2D /* Goal.swift in Sources */,
 				BA12BBD125E4F3AB00154119 /* AddCategoryVC.swift in Sources */,
@@ -478,6 +486,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JQ5NFYG676;
 				INFOPLIST_FILE = "Budget Manager/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -496,6 +505,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JQ5NFYG676;
 				INFOPLIST_FILE = "Budget Manager/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

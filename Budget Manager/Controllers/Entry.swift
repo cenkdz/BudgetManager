@@ -10,12 +10,24 @@ import Foundation
 import UIKit
 
 class Entry {
-    var categoryIcon: UIImage
-    var entryName: String
-    var entryAmount: Double
-    init(categoryIcon: UIImage,entryName:String,entryAmount: Double) {
-        self.categoryIcon = categoryIcon
-        self.entryName = entryName
-        self.entryAmount = entryAmount
+    var type: String
+    var category: String
+    var source: String
+    var amount: String
+    var day: String
+    var dayInWeek: String
+    var year: String
+    var month: String
+    init(type: String,category:String,source: String,amount:String,day:String,dayInWeek:String,year:String,month:String) {
+        self.type = type
+        self.category = category
+        self.source = source
+        self.amount = amount
+        self.day = day
+        self.dayInWeek = dayInWeek
+        self.year = year
+        self.month = month
+
+
     }
 }
