@@ -13,11 +13,24 @@ import SwiftIcons
 class CategoryCellVC: UITableViewCell {
     
 
-    @IBOutlet weak var editCategoryButton: UIButton!
-    @IBOutlet weak var categoryIcon: UIImageView!
-    @IBOutlet weak var categoryName: UILabel!
-    func setEntry(entry: Category){
-        categoryIcon.image = UIImage(systemName: entry.categoryIcon)
-        categoryName.text = entry.categoryName    }
+    @IBOutlet weak var imageOutlet: UIImageView!
+    @IBOutlet weak var nameOutlet: UILabel!
+    
+
+    
+    
+    func setEntry(category: Category,source: Source,selectedButton: String){
+        switch selectedButton {
+        case "SourceButton":
+            imageOutlet.image = UIImage(systemName: source.sourceIcon)
+            nameOutlet.text = source.sourceName
+        case "CategoryButton":
+            imageOutlet.image = UIImage(systemName: category.categoryIcon)
+            nameOutlet.text = category.categoryName
+        default:
+            print("Error")
+        }
+        
+    }
 
 }

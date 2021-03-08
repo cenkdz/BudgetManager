@@ -26,6 +26,7 @@ class Entry: Hashable,Equatable,Comparable {
     var dayInWeek: String
     var year: String
     var month: String
+    var id: String
     
     
     func hash(into hasher: inout Hasher) {
@@ -33,7 +34,7 @@ class Entry: Hashable,Equatable,Comparable {
     }
     
     
-    init(type: String,category:String,source: String,amount:String,day:Int,dayInWeek:String,year:String,month:String) {
+    init(type: String,category:String,source: String,amount:String,day:Int,dayInWeek:String,year:String,month:String,id:String) {
         self.type = type
         self.category = category
         self.source = source
@@ -42,6 +43,7 @@ class Entry: Hashable,Equatable,Comparable {
         self.dayInWeek = dayInWeek
         self.year = year
         self.month = month
+        self.id = id
 
 
     }

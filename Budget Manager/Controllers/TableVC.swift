@@ -75,9 +75,9 @@ class TableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let entry = categories[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as! CategoryCellVC
-        cell.editCategoryButton.addTarget(self, action: #selector(self.editButtonPressed(_:)), for: .touchUpInside)
-        cell.editCategoryButton.tag = indexPath.row
-        cell.setEntry(entry: entry)
+//        cell.editCategoryButton.addTarget(self, action: #selector(self.editButtonPressed(_:)), for: .touchUpInside)
+//        cell.editCategoryButton.tag = indexPath.row
+        //cell.setEntry(entry: entry)
         return cell
     }
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

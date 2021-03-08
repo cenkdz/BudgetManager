@@ -23,34 +23,37 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     @IBOutlet weak var totalOutlet: UILabel!
     
     var effect: UIVisualEffect!
-    var entries: [[Entry]] = []
+    var entries: [[Entry]] = [[Entry(type: "Expense", category: "Car", source: "Card", amount: "-1100", day: 4, dayInWeek: "Wednesday", year: "2021", month: "3", id: "1"),Entry(type: "Income", category: "Car", source: "Card", amount: "1200", day: 4, dayInWeek: "Wednesday", year: "2021", month: "3", id: "12")],[Entry(type: "Income", category: "Salary", source: "Cash", amount: "1000", day: 7, dayInWeek: "Sunday", year: "2021", month: "3", id: "2")
+                                                                                                                                                                                                                                                                                                    ,Entry(type: "Income", category: "Tip", source: "Cash", amount: "900", day: 7, dayInWeek: "Sunday", year: "2021", month: "3", id: "3")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "800", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "4"),
+                                                                                                                                                                                                                                                                                                                                                                                                                                             Entry(type: "Income", category: "Mother", source: "Cash", amount: "700", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "5"),
+                                                                                                                                                                                                                                                                                                                                                                                                                                             Entry(type: "Income", category: "Mother", source: "Cash", amount: "600", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "6"),
+                                                                                                                                                                                                                                                                                                                                                                                                                                             Entry(type: "Income", category: "Mother", source: "Cash", amount: "500", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "7")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "400", day: 29, dayInWeek: "Sunday", year: "2021", month: "3", id: "8"),
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Entry(type: "Income", category: "Mother", source: "Cash", amount: "300", day: 29, dayInWeek: "Sunday", year: "2021", month: "3", id: "9")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "200", day: 30, dayInWeek: "Sunday", year: "2021", month: "3", id: "10"),
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     Entry(type: "Income", category: "Mother", source: "Cash", amount: "100", day: 30, dayInWeek: "Sunday", year: "2021", month: "3", id: "11")]]
     var sections: [Int] = []
     var count = 0
 
   
 
     func setData(){
-        let data = [Entry(type: "Expense", category: "Car", source: "Card", amount: "-1100", day: 4, dayInWeek: "Wednesday", year: "2021", month: "3"),Entry(type: "Income", category: "Car", source: "Card", amount: "1200", day: 4, dayInWeek: "Wednesday", year: "2021", month: "3")]
-        let data2 = [Entry(type: "Income", category: "Salary", source: "Cash", amount: "1000", day: 7, dayInWeek: "Sunday", year: "2021", month: "3")
-                     ,Entry(type: "Income", category: "Tip", source: "Cash", amount: "900", day: 7, dayInWeek: "Sunday", year: "2021", month: "3")]
-        let data3 = [Entry(type: "Income", category: "Mother", source: "Cash", amount: "800", day: 28, dayInWeek: "Sunday", year: "2021", month: "3"),
-         Entry(type: "Income", category: "Mother", source: "Cash", amount: "700", day: 28, dayInWeek: "Sunday", year: "2021", month: "3"),
-         Entry(type: "Income", category: "Mother", source: "Cash", amount: "600", day: 28, dayInWeek: "Sunday", year: "2021", month: "3"),
-         Entry(type: "Income", category: "Mother", source: "Cash", amount: "500", day: 28, dayInWeek: "Sunday", year: "2021", month: "3")]
-        let data4 = [Entry(type: "Income", category: "Mother", source: "Cash", amount: "400", day: 29, dayInWeek: "Sunday", year: "2021", month: "3"),
-        Entry(type: "Income", category: "Mother", source: "Cash", amount: "300", day: 29, dayInWeek: "Sunday", year: "2021", month: "3")]
-        let data5 = [Entry(type: "Income", category: "Mother", source: "Cash", amount: "200", day: 30, dayInWeek: "Sunday", year: "2021", month: "3"),
-        Entry(type: "Income", category: "Mother", source: "Cash", amount: "100", day: 30, dayInWeek: "Sunday", year: "2021", month: "3")]
-
-        entries.append(data)
-        entries.append(data2)
-        entries.append(data3)
-        entries.append(data4)
-        entries.append(data5)
-        
         let sortedArray = entries.sorted(by: {$0[0].day > $1[0].day })
         entries.removeAll()
         entries.append(contentsOf: sortedArray)
+    }
+    
+    @IBAction func unwindFromAddToHome(_ sender: UIStoryboardSegue){
+        
+        self.tableView.reloadData()
+        animateOut()
+        print("Came from ADDVC")
+        
+    }
+    @IBAction func unwindFromExpenseToHome(_ sender: UIStoryboardSegue){
+        
+        self.tableView.reloadData()
+        animateOut()
+        print("Came from ExpenseVC")
+        
     }
     
     func calculateTotal() -> String{
@@ -242,14 +245,48 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! HeaderTableViewCell
         let entry = entries[section]
-        cell.setEntry(entries: entry)
-        cell.setTotal()
-        return cell
+        
+        if entry.count != 0 {
+            cell.setEntry(entries: entry)
+            cell.setTotal()
+            return cell
+        }
+        
+        return nil
+        
+        
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
             return 96
         }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+         if (editingStyle == .delete) {
+            let entry = entries[indexPath.section][indexPath.row]
+             //deleteUserCategory(selectedEntryID: entry.categoryID)
+            print("HEHE\(indexPath.section),\(indexPath.row)")
+          
+            var changedEntries = entries
+//            for var x in 0..<changedEntries.count {
+//                for var y in 0..<changedEntries[x].count {
+//                    if entry.id == changedEntries[x][y].id {
+//
+//                        changedEntries.remove(at: [x][y])
+//                    }
+//                }
+//            }
+            changedEntries[indexPath.section].remove(at: indexPath.row)
+            
+            if changedEntries[indexPath.section].count == 0 {
+                
+                changedEntries.remove(at: indexPath.section)
+            }
+
+            entries = changedEntries
+             tableView.reloadData()
+         }
+     }
 
     override var prefersStatusBarHidden: Bool {
         return true
@@ -265,20 +302,6 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
      // Pass the selected object to the new view controller.
      }
      */
-    
-    struct MonthSection {
-        var month: Date
-        var headlines: [Entry]
-    }
-    
-}
 
-extension NSCountedSet {
-    var occurences: [(object: Any, count: Int)] { map { ($0, count(for: $0))} }
-    var dictionary: [AnyHashable: Int] {
-        reduce(into: [:]) {
-            guard let key = $1 as? AnyHashable else { return }
-            $0[key] = count(for: key)
-        }
-    }
+    
 }

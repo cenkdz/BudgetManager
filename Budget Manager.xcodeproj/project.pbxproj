@@ -24,6 +24,9 @@
 		9B927DB025956B9200556E16 /* EditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B927DAF25956B9200556E16 /* EditVC.swift */; };
 		9BBF4ABA2590EC3400F1290C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */; };
 		9BCAD21B25F4F73300047059 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */; };
+		9BF44C2B25F6331900A9FA96 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF44C2A25F6331900A9FA96 /* Source.swift */; };
+		9BF44C2E25F6354D00A9FA96 /* SourceCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF44C2D25F6354D00A9FA96 /* SourceCellVC.swift */; };
+		9BF8DD4825F63E4D00D3A8AC /* AddExpenseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8DD4725F63E4D00D3A8AC /* AddExpenseVC.swift */; };
 		BA12BBD125E4F3AB00154119 /* AddCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12BBD025E4F3AB00154119 /* AddCategoryVC.swift */; };
 		BA12BBD325E4F4E800154119 /* IconListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12BBD225E4F4E800154119 /* IconListVC.swift */; };
 		BA25582B259607EF00C74F2A /* TestAddEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA25582A259607EF00C74F2A /* TestAddEntry.swift */; };
@@ -59,6 +62,9 @@
 		9B927DAF25956B9200556E16 /* EditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVC.swift; sourceTree = "<group>"; };
 		9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
+		9BF44C2A25F6331900A9FA96 /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
+		9BF44C2D25F6354D00A9FA96 /* SourceCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceCellVC.swift; sourceTree = "<group>"; };
+		9BF8DD4725F63E4D00D3A8AC /* AddExpenseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseVC.swift; sourceTree = "<group>"; };
 		BA12BBD025E4F3AB00154119 /* AddCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryVC.swift; sourceTree = "<group>"; };
 		BA12BBD225E4F4E800154119 /* IconListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconListVC.swift; sourceTree = "<group>"; };
 		BA25582A259607EF00C74F2A /* TestAddEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAddEntry.swift; sourceTree = "<group>"; };
@@ -105,6 +111,8 @@
 				9B5A05B325F26A7700A02BEF /* HomeViewController.swift */,
 				9B6D4F6325F419D1001458E7 /* HomeTableViewCell.swift */,
 				9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */,
+				BA25582A259607EF00C74F2A /* TestAddEntry.swift */,
+				9BF8DD4725F63E4D00D3A8AC /* AddExpenseVC.swift */,
 			);
 			path = NewestDesign;
 			sourceTree = "<group>";
@@ -157,6 +165,7 @@
 				BAC29999257A6E7100EE1511 /* LaunchScreen.storyboard */,
 				9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */,
 				BAC2999C257A6E7100EE1511 /* Info.plist */,
+				9BF44C2A25F6331900A9FA96 /* Source.swift */,
 			);
 			path = "Budget Manager";
 			sourceTree = "<group>";
@@ -189,7 +198,6 @@
 				BA25582C2596185800C74F2A /* OldDesign */,
 				BAB3D9A525937FAF00DA000F /* TestLanding.swift */,
 				BAB3D9A3259360E400DA000F /* TestSignUp.swift */,
-				BA25582A259607EF00C74F2A /* TestAddEntry.swift */,
 				BAF01D45258CCF7000E5BF62 /* HomeVC.swift */,
 				9B173ABD259263BB0049DC2D /* TableVC.swift */,
 				9B173AC3259280CA0049DC2D /* EntryCellVC.swift */,
@@ -199,6 +207,7 @@
 				BA12BBD025E4F3AB00154119 /* AddCategoryVC.swift */,
 				BA12BBD225E4F4E800154119 /* IconListVC.swift */,
 				9B5FA86325E5632B001DB3F0 /* EditCategoryVC.swift */,
+				9BF44C2D25F6354D00A9FA96 /* SourceCellVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -326,6 +335,7 @@
 				BA12BBD325E4F4E800154119 /* IconListVC.swift in Sources */,
 				9B173AD42592918A0049DC2D /* CategoryCellVC.swift in Sources */,
 				9B6D4F6725F4D32C001458E7 /* EntryDate.swift in Sources */,
+				9BF8DD4825F63E4D00D3A8AC /* AddExpenseVC.swift in Sources */,
 				9B6D4F6425F419D1001458E7 /* HomeTableViewCell.swift in Sources */,
 				9B5A05B425F26A7700A02BEF /* HomeViewController.swift in Sources */,
 				9B173AC125927C540049DC2D /* Goal.swift in Sources */,
@@ -333,6 +343,7 @@
 				9B927DB025956B9200556E16 /* EditVC.swift in Sources */,
 				BAF01D42258CB5CB00E5BF62 /* SignUpVC.swift in Sources */,
 				9B5FA86425E5632B001DB3F0 /* EditCategoryVC.swift in Sources */,
+				9BF44C2B25F6331900A9FA96 /* Source.swift in Sources */,
 				9B173ACA25928F1D0049DC2D /* UserEntry.swift in Sources */,
 				BAC2998F257A6E6F00EE1511 /* AppDelegate.swift in Sources */,
 				9B33DC9825916BD00004CA6D /* User.swift in Sources */,
@@ -341,6 +352,7 @@
 				9B173AD12592909B0049DC2D /* Category.swift in Sources */,
 				9BCAD21B25F4F73300047059 /* HeaderTableViewCell.swift in Sources */,
 				BAB3D9A625937FAF00DA000F /* TestLanding.swift in Sources */,
+				9BF44C2E25F6354D00A9FA96 /* SourceCellVC.swift in Sources */,
 				BAF01D46258CCF7000E5BF62 /* HomeVC.swift in Sources */,
 				9B173AD72592A5330049DC2D /* AddIncomeExpenseVC.swift in Sources */,
 				9B173ABE259263BB0049DC2D /* TableVC.swift in Sources */,
