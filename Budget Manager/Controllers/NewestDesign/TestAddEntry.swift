@@ -27,6 +27,7 @@ class TestAddEntry: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var selectedButton = ""
     var catName = "Select Category"
     var selectedEntryType = ""
+    var addedCategory = ""
     var categories: [Category] = [Category(categoryID: "1", categoryName: "Home", categoryIcon: "", uid: "6"),Category(categoryID: "2", categoryName: "Car", categoryIcon: "", uid: "6"),Category(categoryID: "3", categoryName: "Health", categoryIcon: "", uid: "6"),Category(categoryID: "3", categoryName: "Self-Care", categoryIcon: "", uid: "6")]
     var sources: [Source] = [Source(sourceID: "1", sourceName: "Salary", sourceIcon: "", uid: "6"),Source(sourceID: "2", sourceName: "Stock Market", sourceIcon: "", uid: "6"),Source(sourceID: "3", sourceName: "Borrowed Money", sourceIcon: "", uid: "6"),Source(sourceID: "3", sourceName: "Cryptocurrency", sourceIcon: "", uid: "6")]
 
@@ -53,15 +54,16 @@ class TestAddEntry: UIViewController,UITableViewDataSource,UITableViewDelegate {
         self.performSegue(withIdentifier: "unwindFromAddToHome", sender: self)
     }
     
-//    @IBAction func unwindFromTableVC(_ sender: UIStoryboardSegue){
-//        if sender.source is TableVC {
-//            if let senderVC = sender.source as? TableVC{
-//                catName = senderVC.selectedC
-//                print(catName)
-//               //categoryButtonOutlet.setTitle(catName, for: .normal)
-//            }
-//        }
-//    }
+    @IBAction func unwindToADDENTRY(_ sender: UIStoryboardSegue){
+        if sender.source is AddCategoryViewController {
+            if let senderVC = sender.source as? AddCategoryViewController{
+                addedCategory = senderVC.selectedI
+                print(catName)
+                categories.append(Category(categoryID: "6", categoryName: addedCategory, categoryIcon: "", uid: "1"))
+                tableView.reloadData()
+            }
+        }
+    }
     
  @objc func backButtonPressed(_ sender: UIButton) {
          self.performSegue(withIdentifier: "unwindFromTestAddVC", sender: self)
@@ -157,6 +159,20 @@ class TestAddEntry: UIViewController,UITableViewDataSource,UITableViewDelegate {
 //        view.window?.rootViewController = homeViewController
 //        view.window?.makeKeyAndVisible()
 //    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! HeaderCellVC
+        switch selectedButton {
+        case "CategoryButton":
+            cell.setEntry(selected: "Categories")
+        case "SourceButton":
+            cell.setEntry(selected: "Sources")
+        default:
+            cell.setEntry(selected: "")
+ 
+        }
+        
+        return cell
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -189,7 +205,15 @@ class TestAddEntry: UIViewController,UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CategoryCellVC
-        cell.setEntry(category: categories[indexPath.row], source: sources[indexPath.row], selectedButton: selectedButton)
+        
+        
+        if selectedButton == "CategoryButton" {
+            cell.setCategories(category: categories[indexPath.row])
+        }
+        else if selectedButton == "SourceButton" {
+            cell.setSources(source: sources[indexPath.row])
+
+        }
         return cell
     }
 

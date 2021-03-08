@@ -32,5 +32,21 @@ class CategoryCellVC: UITableViewCell {
         }
         
     }
+    
+    func setCategories(category: Category){
+        
+            imageOutlet.image = UIImage(systemName: category.categoryIcon)
+            nameOutlet.text = category.categoryName
+
+        }
+    
+    func setSources(source: Source){
+        
+            imageOutlet.image = UIImage(systemName: source.sourceIcon)
+            nameOutlet.text = source.sourceName
+
+        }
+        
+    
 
 }

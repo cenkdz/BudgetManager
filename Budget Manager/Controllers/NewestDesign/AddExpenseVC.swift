@@ -25,9 +25,10 @@ class AddExpenceVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     let db = Firestore.firestore()
     var selectedButton = ""
+    var addedCategory = ""
     var catName = "Select Category"
     var selectedEntryType = ""
-    var categories: [Category] = [Category(categoryID: "1", categoryName: "Home", categoryIcon: "", uid: "6"),Category(categoryID: "2", categoryName: "Car", categoryIcon: "", uid: "6"),Category(categoryID: "3", categoryName: "Health", categoryIcon: "", uid: "6"),Category(categoryID: "3", categoryName: "Self-Care", categoryIcon: "", uid: "6")]
+    var categories: [Category] = [Category(categoryID: "1", categoryName: "Home", categoryIcon: "", uid: "6"),Category(categoryID: "2", categoryName: "Car", categoryIcon: "", uid: "6"),Category(categoryID: "3", categoryName: "Health", categoryIcon: "", uid: "6"),Category(categoryID: "4", categoryName: "Self-Care", categoryIcon: "", uid: "6")]
     var sources: [Source] = [Source(sourceID: "1", sourceName: "Salary", sourceIcon: "", uid: "6"),Source(sourceID: "2", sourceName: "Stock Market", sourceIcon: "", uid: "6"),Source(sourceID: "3", sourceName: "Borrowed Money", sourceIcon: "", uid: "6"),Source(sourceID: "3", sourceName: "Cryptocurrency", sourceIcon: "", uid: "6")]
 
     override func viewDidLoad() {
@@ -55,12 +56,12 @@ class AddExpenceVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         
     }
     
-    @IBAction func unwindFromTableVC(_ sender: UIStoryboardSegue){
-        if sender.source is TableVC {
-            if let senderVC = sender.source as? TableVC{
-                catName = senderVC.selectedC
-                print(catName)
-               //categoryButtonOutlet.setTitle(catName, for: .normal)
+    @IBAction func unwind1(_ sender: UIStoryboardSegue){
+        if sender.source is AddCategoryViewController {
+            if let senderVC = sender.source as? AddCategoryViewController{
+                addedCategory = senderVC.selectedI
+                categories.append(Category(categoryID: "", categoryName: addedCategory, categoryIcon: "", uid: "5"))
+                tableView.reloadData()
             }
         }
     }
@@ -164,6 +165,20 @@ class AddExpenceVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         return 1
     }
 
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! HeaderCellVC
+        switch selectedButton {
+        case "CategoryButton":
+            cell.setEntry(selected: "Categories")
+        case "SourceButton":
+            cell.setEntry(selected: "Sources")
+        default:
+            cell.setEntry(selected: "")
+ 
+        }
+        
+        return cell
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         switch selectedButton {

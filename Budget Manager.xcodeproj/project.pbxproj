@@ -25,8 +25,10 @@
 		9BBF4ABA2590EC3400F1290C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */; };
 		9BCAD21B25F4F73300047059 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */; };
 		9BF44C2B25F6331900A9FA96 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF44C2A25F6331900A9FA96 /* Source.swift */; };
-		9BF44C2E25F6354D00A9FA96 /* SourceCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF44C2D25F6354D00A9FA96 /* SourceCellVC.swift */; };
+		9BF44C2E25F6354D00A9FA96 /* HeaderCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF44C2D25F6354D00A9FA96 /* HeaderCellVC.swift */; };
 		9BF8DD4825F63E4D00D3A8AC /* AddExpenseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8DD4725F63E4D00D3A8AC /* AddExpenseVC.swift */; };
+		9BF8DD4B25F65EF400D3A8AC /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8DD4A25F65EF400D3A8AC /* EditViewController.swift */; };
+		9BF8DD4F25F6733200D3A8AC /* AddCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8DD4E25F6733200D3A8AC /* AddCategoryViewController.swift */; };
 		BA12BBD125E4F3AB00154119 /* AddCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12BBD025E4F3AB00154119 /* AddCategoryVC.swift */; };
 		BA12BBD325E4F4E800154119 /* IconListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12BBD225E4F4E800154119 /* IconListVC.swift */; };
 		BA25582B259607EF00C74F2A /* TestAddEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA25582A259607EF00C74F2A /* TestAddEntry.swift */; };
@@ -64,7 +66,10 @@
 		9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		9BF44C2A25F6331900A9FA96 /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		9BF44C2D25F6354D00A9FA96 /* SourceCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceCellVC.swift; sourceTree = "<group>"; };
+		9BF44C2D25F6354D00A9FA96 /* HeaderCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCellVC.swift; sourceTree = "<group>"; };
 		9BF8DD4725F63E4D00D3A8AC /* AddExpenseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseVC.swift; sourceTree = "<group>"; };
+		9BF8DD4A25F65EF400D3A8AC /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		9BF8DD4E25F6733200D3A8AC /* AddCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryViewController.swift; sourceTree = "<group>"; };
 		BA12BBD025E4F3AB00154119 /* AddCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryVC.swift; sourceTree = "<group>"; };
 		BA12BBD225E4F4E800154119 /* IconListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconListVC.swift; sourceTree = "<group>"; };
 		BA25582A259607EF00C74F2A /* TestAddEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAddEntry.swift; sourceTree = "<group>"; };
@@ -113,6 +118,8 @@
 				9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */,
 				BA25582A259607EF00C74F2A /* TestAddEntry.swift */,
 				9BF8DD4725F63E4D00D3A8AC /* AddExpenseVC.swift */,
+				9BF8DD4A25F65EF400D3A8AC /* EditViewController.swift */,
+				9BF8DD4E25F6733200D3A8AC /* AddCategoryViewController.swift */,
 			);
 			path = NewestDesign;
 			sourceTree = "<group>";
@@ -207,7 +214,7 @@
 				BA12BBD025E4F3AB00154119 /* AddCategoryVC.swift */,
 				BA12BBD225E4F4E800154119 /* IconListVC.swift */,
 				9B5FA86325E5632B001DB3F0 /* EditCategoryVC.swift */,
-				9BF44C2D25F6354D00A9FA96 /* SourceCellVC.swift */,
+				9BF44C2D25F6354D00A9FA96 /* HeaderCellVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -348,11 +355,13 @@
 				BAC2998F257A6E6F00EE1511 /* AppDelegate.swift in Sources */,
 				9B33DC9825916BD00004CA6D /* User.swift in Sources */,
 				9B173ACE259290420049DC2D /* CategoryTableVC.swift in Sources */,
+				9BF8DD4F25F6733200D3A8AC /* AddCategoryViewController.swift in Sources */,
+				9BF8DD4B25F65EF400D3A8AC /* EditViewController.swift in Sources */,
 				BAF01D40258CB32000E5BF62 /* LandingVC.swift in Sources */,
 				9B173AD12592909B0049DC2D /* Category.swift in Sources */,
 				9BCAD21B25F4F73300047059 /* HeaderTableViewCell.swift in Sources */,
 				BAB3D9A625937FAF00DA000F /* TestLanding.swift in Sources */,
-				9BF44C2E25F6354D00A9FA96 /* SourceCellVC.swift in Sources */,
+				9BF44C2E25F6354D00A9FA96 /* HeaderCellVC.swift in Sources */,
 				BAF01D46258CCF7000E5BF62 /* HomeVC.swift in Sources */,
 				9B173AD72592A5330049DC2D /* AddIncomeExpenseVC.swift in Sources */,
 				9B173ABE259263BB0049DC2D /* TableVC.swift in Sources */,

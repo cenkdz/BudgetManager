@@ -10,16 +10,18 @@ import UIKit
 import SwiftIcons
 
 
-class SourceCellVC: UITableViewCell {
+class HeaderCellVC: UITableViewCell {
 
+    @IBAction func plusPressed(_ sender: UIButton) {
+        print("Plus button pressed!")
+    }
     @IBOutlet weak var sourceNameOutlet: UILabel!
-    @IBOutlet weak var sourceImageOutlet: UIImageView!
     
     
-    func setEntry(entry: Source){
-        sourceImageOutlet.image = UIImage(systemName: entry.sourceIcon)
-        sourceNameOutlet.text = entry.sourceName
+    func setEntry(selected: String){
+        sourceNameOutlet.text = selected
         
     }
+
 
 }
