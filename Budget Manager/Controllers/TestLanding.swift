@@ -150,7 +150,7 @@ class TestLanding: UIViewController {
         
     }
     func goToHomeVC() {
-         let homeViewController = storyboard?.instantiateViewController(identifier: "HomeVC") as? HomeVC
+         let homeViewController = storyboard?.instantiateViewController(identifier: "HomeViewController") as? HomeViewController
          view.window?.rootViewController = homeViewController
          view.window?.makeKeyAndVisible()
      }

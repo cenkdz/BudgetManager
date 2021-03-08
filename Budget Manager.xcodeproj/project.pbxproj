@@ -65,7 +65,6 @@
 		9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		9BF44C2A25F6331900A9FA96 /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
-		9BF44C2D25F6354D00A9FA96 /* SourceCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceCellVC.swift; sourceTree = "<group>"; };
 		9BF44C2D25F6354D00A9FA96 /* HeaderCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCellVC.swift; sourceTree = "<group>"; };
 		9BF8DD4725F63E4D00D3A8AC /* AddExpenseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseVC.swift; sourceTree = "<group>"; };
 		9BF8DD4A25F65EF400D3A8AC /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };

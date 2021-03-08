@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
 
 class EditViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -17,30 +20,54 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var amountFieldOutlet: UITextField!
     @IBOutlet weak var sourceButtonOutlet: UIButton!
     @IBOutlet weak var categoryButtonOutlet: UIButton!
+    let db = Firestore.firestore()
+    let user = Auth.auth().currentUser
+
+
     var name:String = ""
     var amount:String = ""
     var category:String = ""
     var entryID: Any!
     var selectedButton = ""
+    var selectedType = ""
+
     var source = ""
-    var categories: [Category] = [Category(categoryID: "1", categoryName: "Home", categoryIcon: "", uid: "6"),Category(categoryID: "2", categoryName: "Car", categoryIcon: "", uid: "6"),Category(categoryID: "3", categoryName: "Health", categoryIcon: "", uid: "6"),Category(categoryID: "3", categoryName: "Self-Care", categoryIcon: "", uid: "6")]
-    var sources: [Source] = [Source(sourceID: "1", sourceName: "Salary", sourceIcon: "", uid: "6"),Source(sourceID: "2", sourceName: "Stock Market", sourceIcon: "", uid: "6"),Source(sourceID: "3", sourceName: "Borrowed Money", sourceIcon: "", uid: "6"),Source(sourceID: "3", sourceName: "Cryptocurrency", sourceIcon: "", uid: "6")]
+    var selectedEntryType = ""
+    var editName = ""
+    var typeType = ""
+    var catName = "Select Category"
+    var addedText = ""
+
+
+    var categories: [Category] = []
+    var sources: [Source] = []
 
     @IBAction func selectCategoryPressed(_ sender: UIButton) {
         selectedButton = "CategoryButton"
+        self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryName,uid) in
+            let category = Category(categoryID: categoryID, categoryName: categoryName, categoryIcon: categoryIcon, uid: uid)
+        self.categories.append(category)
+    }, uid: self.user!.uid)
         self.tableView.isHidden = false
         self.tableView.reloadData()
     }
     @IBAction func selectSourcePressed(_ sender: UIButton) {
         selectedButton = "SourceButton"
-        self.tableView.isHidden = false
-        self.tableView.reloadData()
+        self.getUserSources(completionHandler: { (sourceID, sourceName, sourceIcon, uid) in
+            let sourceData = Source(sourceID: sourceID, sourceName: sourceName, sourceIcon: sourceIcon, uid: uid)
+            self.sources.append(sourceData)
+            self.tableView.isHidden = false
+            self.tableView.reloadData()
+
+        }, uid: self.user!.uid)
+        
 
 
     }
     @IBAction func savePressed(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-        self.performSegue(withIdentifier: "unwindFromEditToHome", sender: self)
+        DispatchQueue.main.async {
+            self.editEntry(completion: ())
+        }
     }
     
     override func viewDidLoad() {
@@ -49,7 +76,6 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate = self
         tableView.dataSource = self
 
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,21 +96,94 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Pass the selected object to the new view controller.
     }
     */
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! HeaderCellVC
-        switch selectedButton {
-        case "CategoryButton":
-            cell.setEntry(selected: "Categories")
-        case "SourceButton":
-            cell.setEntry(selected: "Sources")
-        default:
-            cell.setEntry(selected: "")
- 
+    @IBAction func unwindToEDIT(_ sender: UIStoryboardSegue){
+        if sender.source is AddCategoryViewController {
+            if let senderVC = sender.source as? AddCategoryViewController{
+                
+                addedText = senderVC.selectedI
+                selectedType = senderVC.type
+                switch selectedType {
+                case "Category":
+                    categories.append(Category(categoryID: "113", categoryName: addedText, categoryIcon: "", uid: "5"))
+                case "Source":
+                    sources.append(Source(sourceID: "113", sourceName: addedText, sourceIcon: "", uid: "123321"))
+                default:
+                    print("Error")
+                }
+                
+                tableView.reloadData()
+            }
         }
-        
-        return cell
     }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let delete = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
+            switch self.selectedButton {
+            case "CategoryButton":
+                let entry = self.categories[indexPath.row]
+                self.deleteUserCategory(selectedEntryID: entry.categoryID)
+
+                var changedEntries = self.categories
+                changedEntries.remove(at: indexPath.row)
+                self.categories = changedEntries
+                tableView.reloadData()
+            case "SourceButton":
+                let entry = self.sources[indexPath.row]
+                var changedEntries = self.sources
+                changedEntries.remove(at: indexPath.row)
+                self.sources = changedEntries
+            default:
+                print("error")
+            }
+            //deleteUserCategory(selectedEntryID: entry.categoryID)
+            
+            tableView.reloadData()
+            
+        }
+        delete.backgroundColor = UIColor.red
+        
+        let edit = UITableViewRowAction(style: .default, title: "Edit") { (action, indexPath) in
+            switch self.selectedButton{
+            case "CategoryButton":
+                let entry = self.categories[indexPath.row]
+                self.editName = entry.categoryName
+                
+                self.typeType = "Category"
+                
+                
+                
+            case "SourceButton":
+                let entry = self.sources[indexPath.row]
+                self.editName = entry.sourceName
+                
+                self.typeType = "Source"
+                
+                
+            default:
+                print("ERRROR")
+            }
+            DispatchQueue.main.async(){
+                self.performSegue(withIdentifier: "goAndEdEdit", sender: self)
+            }
+        }
+        edit.backgroundColor = UIColor(red: 0.13, green: 0.17, blue: 0.40, alpha: 1.00)
+        
+        //edit put back
+        return [delete,edit]
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.identifier == "goAndEdEdit" {
+            let vc = segue.destination as? AddCategoryViewController
+            vc?.name = editName
+            vc?.senderController = "Edit"
+            
+            vc?.type = typeType
+            
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
@@ -119,7 +218,13 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CategoryCellVC
-        cell.setEntry(category: categories[indexPath.row], source: sources[indexPath.row], selectedButton: selectedButton)
+        if selectedButton == "CategoryButton" {
+            cell.setCategories(category: categories[indexPath.row])
+        }
+        else if selectedButton == "SourceButton" {
+            cell.setSources(source: sources[indexPath.row])
+            
+        }
         return cell
     }
     
@@ -137,5 +242,74 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    func editEntry(completion: ()){
+        let entries = self.db.collection("entries")
+        entries.whereField("id", isEqualTo: entryID).getDocuments(completion: { querySnapshot, error in
+            if let err = error {
+                print(err.localizedDescription)
+                return
+            }
+            guard let docs = querySnapshot?.documents else { return }
+
+
+            for doc in docs {
+                let docData = doc.data()
+                print("Doc Data\(docData)")
+                print(docData)
+                let ref = doc.reference
+                ref.updateData(["amount": self.amountFieldOutlet.text])
+                ref.updateData(["category": String(self.categoryButtonOutlet.currentAttributedTitle!.string)])
+                ref.updateData(["source": String(self.sourceButtonOutlet.currentAttributedTitle!.string)])
+
+                completion
+            }
+            self.performSegue(withIdentifier: "unwindFromEditToHome", sender: self)
+                    
+            
+        })
+    }
+    
+    func getUserCategories(completionHandler:@escaping(String, String, String,String)->(),uid: String){
+        categories = []
+        db.collection("categories").whereField("uid", isEqualTo: uid)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let data = document.data()
+                        completionHandler (data["categoryID"] as! String, data["categoryIcon"] as! String, data["categoryName"] as! String,data["uid"] as! String)
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+    }
+    func getUserSources(completionHandler:@escaping(String, String, String,String)->(),uid: String){
+        sources = []
+        db.collection("sources").whereField("uid", isEqualTo: uid)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let data = document.data()
+                        completionHandler (data["sourceID"] as! String, data["sourceIcon"] as! String, data["sourceName"] as! String,data["uid"] as! String)
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+    }
+    func deleteUserCategory(selectedEntryID: Any){
+        db.collection("categories").whereField("categoryID", isEqualTo: selectedEntryID).getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    document.reference.delete()
+                }
+            }
+        }
     }
 }

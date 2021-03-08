@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9gV-tl-r7V">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uKC-Ok-LWy">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -367,7 +367,7 @@
         <!--Home View Controller-->
         <scene sceneID="UvZ-kJ-T9o">
             <objects>
-                <viewController id="9gV-tl-r7V" customClass="HomeViewController" customModule="Budget_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" id="9gV-tl-r7V" customClass="HomeViewController" customModule="Budget_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="X0X-WV-QXV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1188,7 +1188,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Add Custom Category/Source"/>
                                         <connections>
-                                            <segue destination="XxN-fg-ep1" kind="show" id="8Yl-Z8-1vl"/>
+                                            <segue destination="XxN-fg-ep1" kind="show" identifier="goAndEdit" id="8Yl-Z8-1vl"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1315,6 +1315,7 @@
                         <outlet property="sourceButtonOutlet" destination="M6b-Js-gk0" id="8oT-Ol-9bo"/>
                         <outlet property="tableView" destination="qRL-NW-z3o" id="rE5-Cv-52B"/>
                         <segue destination="Spt-Gc-kOR" kind="unwind" identifier="unwindFromAddToHome" unwindAction="unwindFromAddToHome:" id="liU-bj-5hp"/>
+                        <segue destination="XxN-fg-ep1" kind="show" id="xu0-aD-XsK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kGo-cL-nta" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1351,6 +1352,17 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Jkz-Ih-h2y">
+                                <rect key="frame" x="16" y="24" width="343" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Category"/>
+                                    <segment title="Source"/>
+                                </segments>
+                                <connections>
+                                    <action selector="onChange:" destination="XxN-fg-ep1" eventType="valueChanged" id="V9z-s6-Wv6"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xqb-1z-Ame"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1359,13 +1371,16 @@
                     <connections>
                         <outlet property="nameOutlet" destination="SPO-o7-VaG" id="rKP-JS-C9K"/>
                         <outlet property="nameTextOutlet" destination="hz8-F9-msc" id="CgX-N2-jie"/>
+                        <outlet property="segmentedControl" destination="Jkz-Ih-h2y" id="YRF-en-J2a"/>
                         <segue destination="PEb-81-SYd" kind="unwind" identifier="unwindToADDENTRY" unwindAction="unwindToADDENTRY:" id="ufl-Sk-yue"/>
+                        <segue destination="PEb-81-SYd" kind="unwind" identifier="unwindToADDEXPENSE" unwindAction="unwindToADDEXPENSE:" id="GdV-VF-yRB"/>
+                        <segue destination="PEb-81-SYd" kind="unwind" identifier="unwindToEDIT" unwindAction="unwindToEDIT:" id="kdH-fg-KWL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6KZ-Iu-f9g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="PEb-81-SYd" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="945" y="-889"/>
+            <point key="canvasLocation" x="944.79999999999995" y="-889.20539730134942"/>
         </scene>
         <!--Test Landing-->
         <scene sceneID="HzE-jZ-gdq">
@@ -1778,6 +1793,14 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQd-1Z-NZw">
+                                <rect key="frame" x="85" y="217" width="204" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add Custom Category/Source"/>
+                                <connections>
+                                    <segue destination="XxN-fg-ep1" kind="show" identifier="goAndExEdit" id="zsB-ej-wai"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xcA-xz-eO7"/>
                         <color key="backgroundColor" red="0.12549019610000001" green="0.17254901959999999" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
@@ -1968,6 +1991,14 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E5w-0v-CzN">
+                                <rect key="frame" x="85" y="215" width="204" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add Custom Category/Source"/>
+                                <connections>
+                                    <segue destination="XxN-fg-ep1" kind="show" identifier="goAndEdEdit" id="CXa-bm-F3g"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rdB-LB-vFc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1989,6 +2020,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="CXa-bm-F3g"/>
         <segue reference="71h-Tg-ekW"/>
         <segue reference="vJw-x4-rl1"/>
         <segue reference="dep-hw-H0a"/>

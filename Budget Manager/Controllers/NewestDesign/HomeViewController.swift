@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
 
 class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     @IBOutlet weak var customHeaderView: UIView!
@@ -24,16 +27,23 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
     var editCategory = ""
     var editAmount = ""
+    let db = Firestore.firestore()
     var selectedEntryID: Any!
     var editSource = ""
     var effect: UIVisualEffect!
-    var entries: [[Entry]] = [[Entry(type: "Expense", category: "Car", source: "Card", amount: "-1100", day: 4, dayInWeek: "Wednesday", year: "2021", month: "3", id: "1"),Entry(type: "Income", category: "Car", source: "Card", amount: "1200", day: 4, dayInWeek: "Wednesday", year: "2021", month: "3", id: "12")],[Entry(type: "Income", category: "Salary", source: "Cash", amount: "1000", day: 7, dayInWeek: "Sunday", year: "2021", month: "3", id: "2")
-                                                                                                                                                                                                                                                                                                                        ,Entry(type: "Income", category: "Tip", source: "Cash", amount: "900", day: 7, dayInWeek: "Sunday", year: "2021", month: "3", id: "3")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "800", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "4"),
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                 Entry(type: "Income", category: "Mother", source: "Cash", amount: "700", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "5"),
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                 Entry(type: "Income", category: "Mother", source: "Cash", amount: "600", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "6"),
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                 Entry(type: "Income", category: "Mother", source: "Cash", amount: "500", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "7")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "400", day: 29, dayInWeek: "Sunday", year: "2021", month: "3", id: "8"),
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Entry(type: "Income", category: "Mother", source: "Cash", amount: "300", day: 29, dayInWeek: "Sunday", year: "2021", month: "3", id: "9")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "200", day: 30, dayInWeek: "Sunday", year: "2021", month: "3", id: "10"),
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Entry(type: "Income", category: "Mother", source: "Cash", amount: "100", day: 30, dayInWeek: "Sunday", year: "2021", month: "3", id: "11")]]
+    var users: [User] = []
+    var entries: [[Entry]] = [[]]
+    var selectedCategories: [Category] = []
+    var editName = ""
+
+
+//    var entries: [[Entry]] = [[Entry(type: "Expense", category: "Car", source: "Card", amount: "-1100", day: 4, dayInWeek: "Wednesday", year: "2021", month: "3", id: "1", uid: "4444"),Entry(type: "Income", category: "Car", source: "Card", amount: "1200", day: 4, dayInWeek: "Wednesday", year: "2021", month: "3", id: "12", uid: "33")],[Entry(type: "Income", category: "Salary", source: "Cash", amount: "1000", day: 7, dayInWeek: "Sunday", year: "2021", month: "3", id: "2", uid: "1312")
+//                                                                                                                                                                                                                                                                                                                                                      ,Entry(type: "Income", category: "Tip", source: "Cash", amount: "900", day: 7, dayInWeek: "Sunday", year: "2021", month: "3", id: "3", uid: "33333")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "800", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "4", uid: "12312312"),
+//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Entry(type: "Income", category: "Mother", source: "Cash", amount: "700", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "5", uid: "22"),
+//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Entry(type: "Income", category: "Mother", source: "Cash", amount: "600", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "6", uid: "111"),
+//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Entry(type: "Income", category: "Mother", source: "Cash", amount: "500", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "7", uid: "11")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "400", day: 29, dayInWeek: "Sunday", year: "2021", month: "3", id: "8", uid: "123123123123"),
+//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Entry(type: "Income", category: "Mother", source: "Cash", amount: "300", day: 29, dayInWeek: "Sunday", year: "2021", month: "3", id: "9", uid: "2")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "200", day: 30, dayInWeek: "Sunday", year: "2021", month: "3", id: "10", uid: "123123218128"),
+//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Entry(type: "Income", category: "Mother", source: "Cash", amount: "100", day: 30, dayInWeek: "Sunday", year: "2021", month: "3", id: "11", uid: "1")]]
     var sections: [Int] = []
     var count = 0
     
@@ -53,10 +63,13 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         
     }
     @IBAction func unwindFromEditToHome(_ sender: UIStoryboardSegue){
-        
+        DispatchQueue.main.async {
+            self.getAll(completion: ())
+    
+}
         self.tableView.reloadData()
         animateOut()
-        print("Came from EditVC")
+
         
     }
     @IBAction func unwindFromExpenseToHome(_ sender: UIStoryboardSegue){
@@ -165,6 +178,9 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         super.viewDidLoad()
         setData()
         setFinancialOutlets()
+        getAll(completion: ())
+        // Should print: a, b, c, d, e, f
+   
         calculateTotal()
         effect = visualEffectView.effect
         visualEffectView.effect = nil
@@ -280,6 +296,9 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             if changedEntries[indexPath.section].count == 0 {
                 
                 changedEntries.remove(at: indexPath.section)
+                
+                self.deleteUserEntry(selectedEntryID: entry.id)
+
             }
             
             self.entries = changedEntries
@@ -328,4 +347,119 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         }
     }
     
+    func getUserDetails(completionHandler:@escaping(String, String, String)->(),uid: String){
+        db.collection("users").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                //get name of the user
+                self.db.collection("users").whereField("uid", isEqualTo: uid)
+                    .getDocuments() { (querySnapshot, err) in
+                        if let err = err {
+                            print("Error getting documents: \(err)")
+                        } else {
+                            for document in querySnapshot!.documents {
+                                let data = document.data()
+                                completionHandler ((data["firstname"] as? String)!, (data["lastname"]as? String)!, (data["uid"]as? String)!)
+                            }
+                        }
+                    }
+            }
+        }
+    }
+    func getUserEntries(completionHandler:@escaping(String, String, String,String,Int,String,String,String,String,String)->(),uid: String){
+        entries = []
+        db.collection("entries").whereField("uid", isEqualTo: uid)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    print(uid)
+                    for document in querySnapshot!.documents {
+                        let data = document.data()
+                        completionHandler (data["type"] as! String, data["category"] as! String, data["source"]as! String, data["amount"] as! String, Int(data["day"] as! String)! as! Int, data["dayInWeek"] as! String, data["year"]as! String,data["month"]as! String,data["id"]as! String,data["uid"]as! String)
+                        self.tableView.reloadData()
+                        
+                    }
+                }
+            }
+    }
+    
+    func deleteUserEntry(selectedEntryID: Any){
+        db.collection("entries").whereField("id", isEqualTo: selectedEntryID).getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    document.reference.delete()
+                }
+            }
+        }
+    }
+    func goToLandingVC() {
+        let homeViewController = storyboard?.instantiateViewController(identifier: "TestLanding") as? TestLanding
+        view.window?.rootViewController = homeViewController
+        view.window?.makeKeyAndVisible()
+    }
+    
+    func getAll(completion: ()){
+        if Auth.auth().currentUser != nil {
+            // User is signed in.
+            let user = Auth.auth().currentUser
+            getUserDetails(completionHandler: { (firstname, lastname, uid) in
+                let user = User(firstname: firstname, lastname: lastname, uid: uid)
+                self.users.append(user)
+            }, uid: user!.uid)
+
+                self.getUserEntries(completionHandler: { (type, category,source, amount, day,dayInWeek, year,month,id,uid) in
+                let entry = Entry(type: type, category: category, source: source, amount: amount, day: day, dayInWeek: dayInWeek, year: year, month: month, id: id, uid: uid)
+                self.entries.append([entry])
+            }, uid: user!.uid)
+            
+            completion
+            tableView.reloadData()
+            
+        } else {
+            // No user is signed in.
+            goToLandingVC()
+        }
+
+    }
+    
 }
+
+fileprivate extension Array where Element : Collection, Element.Index == Int {
+
+    typealias InnerCollection = Element
+    typealias InnerElement = InnerCollection.Iterator.Element
+
+    func matrixIterator() -> AnyIterator<InnerElement> {
+        var outerIndex = self.startIndex
+        var innerIndex: Int?
+
+        return AnyIterator({
+            guard !self.isEmpty else { return nil }
+
+            var innerArray = self[outerIndex]
+            if !innerArray.isEmpty && innerIndex == nil {
+                innerIndex = innerArray.startIndex
+            }
+
+            // This loop makes sure to skip empty internal arrays
+            while innerArray.isEmpty || (innerIndex != nil && innerIndex! == innerArray.endIndex) {
+                outerIndex = self.index(after: outerIndex)
+                if outerIndex == self.endIndex { return nil }
+                innerArray = self[outerIndex]
+                innerIndex = innerArray.startIndex
+            }
+
+            let result = self[outerIndex][innerIndex!]
+            innerIndex = innerArray.index(after: innerIndex!)
+
+            return result
+        })
+    }
+
+}
+    
+
