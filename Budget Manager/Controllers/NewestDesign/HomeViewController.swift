@@ -54,29 +54,11 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         entries.removeAll()
         entries.append(contentsOf: sortedArray)
     }
-    
-    @IBAction func unwindFromAddToHome(_ sender: UIStoryboardSegue){
+    @IBAction func unwindFromAllEditingVC(_ sender: UIStoryboardSegue){
         
         self.tableView.reloadData()
         animateOut()
-        print("Came from ADDVC")
-        
-    }
-    @IBAction func unwindFromEditToHome(_ sender: UIStoryboardSegue){
-        DispatchQueue.main.async {
-            self.getAll(completion: ())
-    
-}
-        self.tableView.reloadData()
-        animateOut()
-
-        
-    }
-    @IBAction func unwindFromExpenseToHome(_ sender: UIStoryboardSegue){
-        
-        self.tableView.reloadData()
-        animateOut()
-        print("Came from ExpenseVC")
+        print("Came from AllEditingVC")
         
     }
     
@@ -206,18 +188,20 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             self.addView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
             self.addView.alpha = 0
             self.visualEffectView.effect = nil
-        } completion: { (success:Bool) in
-            self.addView.removeFromSuperview()
-            self.addButtonOutlet.setAttributedTitle(NSAttributedString(string: "+"), for: .normal)
-            self.view.sendSubviewToBack(self.visualEffectView)
         }
+        
+             self.addView.removeFromSuperview()
+             self.addButtonOutlet.setAttributedTitle(NSAttributedString(string: "+"), for: .normal)
+             self.view.sendSubviewToBack(self.visualEffectView)
         
     }
     
     @IBAction func addButtonPressed(_ sender: UIButton) {
         
         if(addButtonOutlet.attributedTitle(for: .normal) == NSAttributedString(string: "x")){
-            animateOut()
+            DispatchQueue.main.async{
+                self.animateOut()
+            }
         }
         self.view.bringSubviewToFront(visualEffectView)
         addButtonOutlet.setAttributedTitle(NSAttributedString(string: "x"), for: .normal)
@@ -313,7 +297,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             self.editCategory = entry.category
             self.selectedEntryID = entry.id
             self.editSource = entry.source
-            self.performSegue(withIdentifier: "goToEdit", sender: self)
+            self.performSegue(withIdentifier: "goToAllEditingVC", sender: self)
         }
         edit.backgroundColor = UIColor(red: 0.13, green: 0.17, blue: 0.40, alpha: 1.00)
         
@@ -337,8 +321,8 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
      */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        if segue.identifier == "goToEdit" {
-            let vc = segue.destination as? EditViewController
+        if segue.identifier == "goToAllEditingVC" {
+            let vc = segue.destination as? AllEditingViewController
             print("DATA ON PREPARE\(editAmount),\(editCategory)")
             vc?.amount = editAmount
             vc?.category = editCategory

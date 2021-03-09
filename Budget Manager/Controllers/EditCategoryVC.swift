@@ -28,14 +28,7 @@ class EditCategoryVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func unwindFromIconListVCToEditCategoryVC(_ sender: UIStoryboardSegue){
-        if sender.source is IconListVC {
-            if let senderVC = sender.source as? IconListVC{
-                icon = senderVC.selectedI
-                newIconButton.setTitle(icon, for: .normal)
-            }
-        }
-    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         print("Name is : \(name)")

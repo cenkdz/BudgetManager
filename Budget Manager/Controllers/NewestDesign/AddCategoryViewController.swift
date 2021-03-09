@@ -7,21 +7,26 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
 
 class AddCategoryViewController: UIViewController {
     
     @IBOutlet weak var nameOutlet: UILabel!
     @IBOutlet weak var nameTextOutlet: UITextField!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    let db = Firestore.firestore()
+    
     var selectedI = ""
     var type = "Category"
     var name = ""
+    var ID = ""
     var senderController = ""
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        type = "Category"
         // Do any additional setup after loading the view.
     }
     
@@ -52,27 +57,17 @@ class AddCategoryViewController: UIViewController {
         selectedI = nameTextOutlet.text!
         
         
-        
-        switch senderController {
-        case "Income":
-            
-            self.performSegue(withIdentifier: "unwindToADDENTRY", sender: self)
-            
-            
-        case "Expense":
-            DispatchQueue.main.async(){
-                
-                self.performSegue(withIdentifier: "unwindToADDEXPENSE", sender: self)
+        switch type {
+        case "Category":
+            DispatchQueue.main.async {
+                self.editCategory(completion: ())
             }
-        case "Edit":
-            DispatchQueue.main.async(){
-                
-                self.performSegue(withIdentifier: "unwindToEDIT", sender: self)
+        case "Source":
+            DispatchQueue.main.async {
+                self.editSource(completion: ())
             }
-            
-            
         default:
-            print("Error")
+            print("Error editing!")
         }
         
         
@@ -87,5 +82,52 @@ class AddCategoryViewController: UIViewController {
      // Pass the selected object to the new view controller.
      }
      */
+    func editCategory(completion: ()){
+        let entries = self.db.collection("categories")
+        entries.whereField("categoryID", isEqualTo: ID).getDocuments(completion: { querySnapshot, error in
+            if let err = error {
+                print(err.localizedDescription)
+                return
+            }
+            guard let docs = querySnapshot?.documents else { return }
+            
+            for doc in docs {
+                let docData = doc.data()
+                print("Doc Data\(docData)")
+                print(docData)
+                let ref = doc.reference
+                ref.updateData(["categoryName": self.nameTextOutlet.text!])
+                completion
+            }
+
+            self.performSegue(withIdentifier: "unwindToAllEditingVC", sender: self)
+
+            
+            
+        })
+    }
+    func editSource(completion: ()){
+        let entries = self.db.collection("sources")
+        entries.whereField("sourceID", isEqualTo: ID).getDocuments(completion: { querySnapshot, error in
+            if let err = error {
+                print(err.localizedDescription)
+                return
+            }
+            guard let docs = querySnapshot?.documents else { return }
+            
+            
+            for doc in docs {
+                let docData = doc.data()
+                print("Doc Data\(docData)")
+                print(docData)
+                let ref = doc.reference
+                ref.updateData(["sourceName": self.nameTextOutlet.text!])
+                completion
+            }
+               self.performSegue(withIdentifier: "unwindToAllEditingVC", sender: self)
+            
+            
+        })
+    }
     
 }

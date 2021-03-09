@@ -39,6 +39,7 @@
 		BAC29996257A6E6F00EE1511 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAC29994257A6E6F00EE1511 /* Main.storyboard */; };
 		BAC29998257A6E7100EE1511 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAC29997257A6E7100EE1511 /* Assets.xcassets */; };
 		BAC2999B257A6E7100EE1511 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAC29999257A6E7100EE1511 /* LaunchScreen.storyboard */; };
+		BAEC3AAB25F77BC3009B1DCE /* AllEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEC3AAA25F77BC3009B1DCE /* AllEditingViewController.swift */; };
 		BAF01D40258CB32000E5BF62 /* LandingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF01D3F258CB32000E5BF62 /* LandingVC.swift */; };
 		BAF01D42258CB5CB00E5BF62 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF01D41258CB5CB00E5BF62 /* SignUpVC.swift */; };
 		BAF01D46258CCF7000E5BF62 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF01D45258CCF7000E5BF62 /* HomeVC.swift */; };
@@ -81,6 +82,7 @@
 		BAC29997257A6E7100EE1511 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BAC2999A257A6E7100EE1511 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BAC2999C257A6E7100EE1511 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BAEC3AAA25F77BC3009B1DCE /* AllEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEditingViewController.swift; sourceTree = "<group>"; };
 		BAF01D3F258CB32000E5BF62 /* LandingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingVC.swift; sourceTree = "<group>"; };
 		BAF01D41258CB5CB00E5BF62 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		BAF01D45258CCF7000E5BF62 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				9BF8DD4725F63E4D00D3A8AC /* AddExpenseVC.swift */,
 				9BF8DD4A25F65EF400D3A8AC /* EditViewController.swift */,
 				9BF8DD4E25F6733200D3A8AC /* AddCategoryViewController.swift */,
+				BAEC3AAA25F77BC3009B1DCE /* AllEditingViewController.swift */,
 			);
 			path = NewestDesign;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				9B33DC9825916BD00004CA6D /* User.swift in Sources */,
 				9B173ACE259290420049DC2D /* CategoryTableVC.swift in Sources */,
 				9BF8DD4F25F6733200D3A8AC /* AddCategoryViewController.swift in Sources */,
+				BAEC3AAB25F77BC3009B1DCE /* AllEditingViewController.swift in Sources */,
 				9BF8DD4B25F65EF400D3A8AC /* EditViewController.swift in Sources */,
 				BAF01D40258CB32000E5BF62 /* LandingVC.swift in Sources */,
 				9B173AD12592909B0049DC2D /* Category.swift in Sources */,

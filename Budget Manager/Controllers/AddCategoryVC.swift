@@ -46,14 +46,7 @@ class AddCategoryVC: UIViewController {
 
     }
     
-    @IBAction func unwindFromIconListVCToAddCategoryVC(_ sender: UIStoryboardSegue){
-        if sender.source is IconListVC {
-            if let senderVC = sender.source as? IconListVC{
-                selectedIcon = senderVC.seledtedIcon
-                iconName.setTitle(selectedIcon, for: .normal)
-            }
-        }
-    }
+
 
     /*
     // MARK: - Navigation
