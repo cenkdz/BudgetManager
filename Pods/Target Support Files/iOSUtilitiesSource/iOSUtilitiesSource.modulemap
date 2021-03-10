@@ -1,6 +1,0 @@
-framework module iOSUtilitiesSource {
-  umbrella header "iOSUtilitiesSource-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -10,17 +10,15 @@ import Foundation
 
 class User {
     var firstname: String
-    var lastname: String
     var uid: String
 
-    init(firstname:String,lastname:String,uid:String) {
+    init(firstname:String,uid:String) {
         self.firstname = firstname
-        self.lastname = lastname
         self.uid = uid
     }
     
     
     func printAll(){
-        print(firstname,lastname,uid)
+        print(firstname,uid)
     }
 }

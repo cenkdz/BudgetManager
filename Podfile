@@ -10,22 +10,6 @@ target 'Budget Manager' do
   pod 'Firebase/Database'
   pod ‘Firebase/Core’
   pod 'Firebase/Firestore'
-  pod 'iOSUtilitiesSource', :git => 'https://github.com/hasnine/iOSUtilitiesSource.git'
-  pod 'MaterialComponents'
-  pod 'MaterialComponents/Buttons+Theming'
-  pod 'MaterialComponents/Dialogs'
-  pod 'MaterialComponents/ActionSheet'
-  pod 'MaterialComponents/TextControls+FilledTextAreas'
-  pod 'MaterialComponents/TextControls+FilledTextFields'
-  pod 'MaterialComponents/TextControls+OutlinedTextAreas'
-  pod 'MaterialComponents/TextControls+OutlinedTextFields'
-  pod 'MaterialComponents/List'
-  pod "FontIcons/FontAwesome"
-  pod "FontIcons/VaadinIcons"
-  pod "FontIcons/MaterialDesign"
-  pod "FontIcons/Ionicons"
-  pod 'SwiftIcons', '~> 2.3.2'
-
   # Pods for Budget Manager
 
 end

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftIcons
 
 
 class HeaderCellVC: UITableViewCell {

@@ -22,6 +22,6 @@ class Category {
     }
     
     func getDictionary() -> [String: Any]{
-         return ["category_id": categoryID,"category_name":categoryName,"category_icon":categoryIcon,"uid":uid]
+         return ["categoryID": categoryID,"categoryName":categoryName,"categoryIcon":categoryIcon,"uid":uid]
      }
 }
