@@ -35,7 +35,9 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     var entries: [[Entry]] = [[]]
     var selectedCategories: [Category] = []
     var editName = ""
-
+    var sections: [Int] = []
+    var count = 0
+    var userAction = ""
 
 //    var entries: [[Entry]] = [[Entry(type: "Expense", category: "Car", source: "Card", amount: "-1100", day: 4, dayInWeek: "Wednesday", year: "2021", month: "3", id: "1", uid: "4444"),Entry(type: "Income", category: "Car", source: "Card", amount: "1200", day: 4, dayInWeek: "Wednesday", year: "2021", month: "3", id: "12", uid: "33")],[Entry(type: "Income", category: "Salary", source: "Cash", amount: "1000", day: 7, dayInWeek: "Sunday", year: "2021", month: "3", id: "2", uid: "1312")
 //                                                                                                                                                                                                                                                                                                                                                      ,Entry(type: "Income", category: "Tip", source: "Cash", amount: "900", day: 7, dayInWeek: "Sunday", year: "2021", month: "3", id: "3", uid: "33333")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "800", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "4", uid: "12312312"),
@@ -44,9 +46,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
 //                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Entry(type: "Income", category: "Mother", source: "Cash", amount: "500", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "7", uid: "11")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "400", day: 29, dayInWeek: "Sunday", year: "2021", month: "3", id: "8", uid: "123123123123"),
 //                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Entry(type: "Income", category: "Mother", source: "Cash", amount: "300", day: 29, dayInWeek: "Sunday", year: "2021", month: "3", id: "9", uid: "2")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "200", day: 30, dayInWeek: "Sunday", year: "2021", month: "3", id: "10", uid: "123123218128"),
 //                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Entry(type: "Income", category: "Mother", source: "Cash", amount: "100", day: 30, dayInWeek: "Sunday", year: "2021", month: "3", id: "11", uid: "1")]]
-    var sections: [Int] = []
-    var count = 0
-    
+  
     
     
     func setData(){
@@ -55,11 +55,13 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         entries.append(contentsOf: sortedArray)
     }
     @IBAction func unwindFromAllEditingVC(_ sender: UIStoryboardSegue){
-        
+        DispatchQueue.main.async {
+            self.getAll(completion: ())
+        }
+
         self.tableView.reloadData()
         animateOut()
         print("Came from AllEditingVC")
-        
     }
     
     func calculateTotal() -> String{
@@ -146,32 +148,39 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         }
         else if Int(total)! >= 0 {
             totalOutlet.textColor = UIColor(red: 0.24, green: 0.48, blue: 0.94, alpha: 1.00)
-            
         }
-        
         totalOutlet.text = total
         incomeOutlet.text = income
         expenseOutlet.text = expenses
     }
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setData()
         setFinancialOutlets()
         getAll(completion: ())
-        // Should print: a, b, c, d, e, f
-   
-        calculateTotal()
+        
+        //calculateTotal()
         effect = visualEffectView.effect
         visualEffectView.effect = nil
         addView.layer.cornerRadius = 5
         addView.removeFromSuperview()
         tableView.delegate = self
         tableView.dataSource = self
+        self.hideKeyboardWhenTappedAround()
+
     }
     
+    @IBAction func incomePressed(_ sender: UIButton) {
+        userAction = "IncomeButton"
+        self.performSegue(withIdentifier: "goToAllEditingVC", sender: self)
+    }
+    
+    @IBAction func expensePressed(_ sender: UIButton) {
+        userAction = "ExpenseButton"
+        self.performSegue(withIdentifier: "goToAllEditingVC", sender: self)
+
+    }
     func animateIn(){
         self.view.addSubview(addView)
         addView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
@@ -189,11 +198,9 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             self.addView.alpha = 0
             self.visualEffectView.effect = nil
         }
-        
-             self.addView.removeFromSuperview()
-             self.addButtonOutlet.setAttributedTitle(NSAttributedString(string: "+"), for: .normal)
-             self.view.sendSubviewToBack(self.visualEffectView)
-        
+            self.addView.removeFromSuperview()
+            self.addButtonOutlet.setAttributedTitle(NSAttributedString(string: "+"), for: .normal)
+            self.view.sendSubviewToBack(self.visualEffectView)
     }
     
     @IBAction func addButtonPressed(_ sender: UIButton) {
@@ -210,6 +217,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         animateIn()
         
     }
+    
     @IBAction func dailyPressed(_ sender: UIButton) {
         dailyButton.backgroundColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 1.00)
         weeklyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
@@ -217,18 +225,21 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         totalButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         
     }
+    
     @IBAction func weeklyPressed(_ sender: UIButton) {
         weeklyButton.backgroundColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 1.00)
         dailyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         monthlyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         totalButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
     }
+    
     @IBAction func monthlyPressed(_ sender: UIButton) {
         monthlyButton.backgroundColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 1.00)
         dailyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         weeklyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         totalButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
     }
+    
     @IBAction func totalPressed(_ sender: UIButton) {
         totalButton.backgroundColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 1.00)
         dailyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
@@ -241,7 +252,6 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return entries[section].count
     }
     
@@ -256,14 +266,12 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! HeaderTableViewCell
         let entry = entries[section]
-        
         if entry.count != 0 {
             cell.setEntry(entries: entry)
             cell.setTotal()
             return cell
         }
         return nil
- 
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -282,9 +290,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                 changedEntries.remove(at: indexPath.section)
                 
                 self.deleteUserEntry(selectedEntryID: entry.id)
-
             }
-            
             self.entries = changedEntries
             tableView.reloadData()
             
@@ -297,6 +303,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             self.editCategory = entry.category
             self.selectedEntryID = entry.id
             self.editSource = entry.source
+            self.userAction = "EditEntry"
             self.performSegue(withIdentifier: "goToAllEditingVC", sender: self)
         }
         edit.backgroundColor = UIColor(red: 0.13, green: 0.17, blue: 0.40, alpha: 1.00)
@@ -304,21 +311,10 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         return [delete, edit]
     }
     
-    
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         if segue.identifier == "goToAllEditingVC" {
@@ -328,6 +324,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             vc?.category = editCategory
             vc?.entryID = selectedEntryID
             vc?.source = editSource
+            vc?.userAction = userAction
         }
     }
     
@@ -351,7 +348,8 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             }
         }
     }
-    func getUserEntries(completionHandler:@escaping(String, String, String,String,Int,String,String,String,String,String)->(),uid: String){
+    
+    func getUserEntries(completionHandler:@escaping(String, String, String,String,String,String,String,String,String,String)->(),uid: String){
         entries = []
         db.collection("entries").whereField("uid", isEqualTo: uid)
             .getDocuments() { (querySnapshot, err) in
@@ -361,7 +359,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                     print(uid)
                     for document in querySnapshot!.documents {
                         let data = document.data()
-                        completionHandler (data["type"] as! String, data["category"] as! String, data["source"]as! String, data["amount"] as! String, Int(data["day"] as! String)! as! Int, data["dayInWeek"] as! String, data["year"]as! String,data["month"]as! String,data["id"]as! String,data["uid"]as! String)
+                        completionHandler (data["type"] as! String, data["category"] as! String, data["source"]as! String, data["amount"] as! String, data["day"] as! String, data["dayInWeek"] as! String, data["year"]as! String,data["month"]as! String,data["id"]as! String,data["uid"]as! String)
                         self.tableView.reloadData()
                         
                     }
@@ -396,18 +394,15 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             }, uid: user!.uid)
 
                 self.getUserEntries(completionHandler: { (type, category,source, amount, day,dayInWeek, year,month,id,uid) in
-                let entry = Entry(type: type, category: category, source: source, amount: amount, day: day, dayInWeek: dayInWeek, year: year, month: month, id: id, uid: uid)
+                let entry = Entry(type: type, category: category, source: source, amount: amount, day: String(day), dayInWeek: dayInWeek, year: year, month: month, id: id, uid: uid)
                 self.entries.append([entry])
             }, uid: user!.uid)
-            
             completion
             tableView.reloadData()
-            
         } else {
             // No user is signed in.
             goToLandingVC()
         }
-
     }
     
 }

@@ -23,6 +23,8 @@ class TestLanding: UIViewController {
     let password = NSPredicate(format: "SELF MATCHES %@ ", "^(?=.*[a-z])(?=.*[$@$#!%*?&]).{6,}$")
     
     override func viewWillAppear(_ animated: Bool) {
+        self.hideKeyboardWhenTappedAround()
+
         view.backgroundColor = UIColor(hex: "#000000ff")
         let estimatedFrame = CGRect(x: 75, y: 400, width: (self.view.frame.width)/2+50, height: 50)
         let estimatedFrame2 = CGRect(x: 75, y: 500, width: (self.view.frame.width)/2+50, height: 50)

@@ -24,25 +24,7 @@ class AddCategoryVC: UIViewController {
     }
     @IBAction func donePressed(_ sender: UIButton) {
         
-                let user = Auth.auth().currentUser
-            let category = Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)) , categoryName: categoryName.text!, categoryIcon: selectedIcon, uid: user!.uid)
-                let dictionary = category.getDictionary()
-                if categoryName.text!.isEmpty {
-                    displayAlert(message: "Name field can't be empty.", title: "Warning")
-                }
-        //        else if categoryButtonOutlet.title(for: .normal) == "SELECT CATEGORY"{
-        //            displayAlert(message: "Please select a category from the predefined list", title: "Warning")
-        //        }
-                else{
-                do {
-                    
-                    try db.collection("categories").addDocument(data: dictionary)
-                    
-                } catch let error {
-                    print("Error writing entry to Firestore: \(error)")
-                }
-                self.performSegue(withIdentifier: "unwindFromAddCategoryVCToTableVC", sender: self)
-                }
+
 
     }
     

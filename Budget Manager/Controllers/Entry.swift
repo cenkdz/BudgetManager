@@ -22,7 +22,7 @@ class Entry: Hashable,Equatable,Comparable {
     var category: String
     var source: String
     var amount: String
-    var day: Int
+    var day: String
     var dayInWeek: String
     var year: String
     var month: String
@@ -35,7 +35,7 @@ class Entry: Hashable,Equatable,Comparable {
     }
     
     
-    init(type: String,category:String,source: String,amount:String,day:Int,dayInWeek:String,year:String,month:String,id:String,uid:String) {
+    init(type: String,category:String,source: String,amount:String,day:String,dayInWeek:String,year:String,month:String,id:String,uid:String) {
         self.type = type
         self.category = category
         self.source = source
@@ -48,5 +48,8 @@ class Entry: Hashable,Equatable,Comparable {
         self.uid = uid
 
 
+    }
+    func getDictionary() -> [String: Any]{
+        return ["type": type,"category":category,"source":source,"amount":amount,"day":day,"dayInWeek":dayInWeek,"year":year,"month":month,"id":id,"uid":uid]
     }
 }

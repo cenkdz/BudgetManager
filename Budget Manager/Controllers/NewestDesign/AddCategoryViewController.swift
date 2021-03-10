@@ -19,14 +19,17 @@ class AddCategoryViewController: UIViewController {
     let db = Firestore.firestore()
     
     var selectedI = ""
-    var type = "Category"
+    var type = ""
     var name = ""
+    var wantToAddCategory = false
     var ID = ""
     var senderController = ""
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
+        
         // Do any additional setup after loading the view.
     }
     
@@ -40,7 +43,7 @@ class AddCategoryViewController: UIViewController {
             segmentedControl.selectedSegmentIndex = 1
             
         default:
-            print("Error")
+            segmentedControl.selectedSegmentIndex = 0
         }
         nameTextOutlet.text! = name
         
@@ -54,34 +57,43 @@ class AddCategoryViewController: UIViewController {
     
     
     @IBAction func addPressed(_ sender: UIButton) {
-        selectedI = nameTextOutlet.text!
-        
-        
-        switch type {
-        case "Category":
+        if type == "Category" && wantToAddCategory == false{
             DispatchQueue.main.async {
                 self.editCategory(completion: ())
             }
-        case "Source":
+        } else if type == "Source" && wantToAddCategory == false{
             DispatchQueue.main.async {
-                self.editSource(completion: ())
+                self.editCategory(completion: ())
             }
-        default:
-            print("Error editing!")
         }
+        else if wantToAddCategory == true {
+            switch type {
+            case "Category":
+                DispatchQueue.main.async {
+                self.addCategory()
+                }
+            case "Source":
+                DispatchQueue.main.async {
+                self.addSource()
+                }
+            default:
+                print("Error adding categories/sources")
+            }
+            
+        }
+    }
+    
+    func displayAlert(message: String,title: String) {
+        let dialogMessage = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        
+        let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+        })
+        dialogMessage.addAction(ok)
+        self.present(dialogMessage, animated: true, completion: nil)
         
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    
+    
     func editCategory(completion: ()){
         let entries = self.db.collection("categories")
         entries.whereField("categoryID", isEqualTo: ID).getDocuments(completion: { querySnapshot, error in
@@ -99,9 +111,9 @@ class AddCategoryViewController: UIViewController {
                 ref.updateData(["categoryName": self.nameTextOutlet.text!])
                 completion
             }
-
+            
             self.performSegue(withIdentifier: "unwindToAllEditingVC", sender: self)
-
+            
             
             
         })
@@ -124,10 +136,48 @@ class AddCategoryViewController: UIViewController {
                 ref.updateData(["sourceName": self.nameTextOutlet.text!])
                 completion
             }
-               self.performSegue(withIdentifier: "unwindToAllEditingVC", sender: self)
+            self.performSegue(withIdentifier: "unwindToAllEditingVC", sender: self)
             
             
         })
+    }
+    
+    func addCategory(){
+        let user = Auth.auth().currentUser
+        let category = Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)), categoryName: nameTextOutlet.text!, categoryIcon: "", uid: user!.uid)
+        let dictionary = category.getDictionary()
+        if nameTextOutlet.text!.isEmpty {
+            displayAlert(message: "Name field can't be empty.", title: "Warning")
+        }
+        else{
+            do {
+                try db.collection("categories").addDocument(data: dictionary)
+                
+            } catch let error {
+                print("Error writing entry to Firestore: \(error)")
+            }
+            self.performSegue(withIdentifier: "unwindToAllEditingVC", sender: self)
+        }
+    }
+    
+    func addSource(){
+        let user = Auth.auth().currentUser
+        let source = Source(sourceID: String(Int.random(in: 10000000000 ..< 100000000000000000)), sourceName: nameTextOutlet.text!, sourceIcon: "", uid: user!.uid)
+        let dictionary = source.getDictionary()
+        if nameTextOutlet.text!.isEmpty {
+            displayAlert(message: "Name field can't be empty.", title: "Warning")
+        }
+        else{
+            do {
+                try db.collection("sources").addDocument(data: dictionary)
+                
+            } catch let error {
+                print("Error writing entry to Firestore: \(error)")
+            }
+            self.performSegue(withIdentifier: "unwindToAllEditingVC", sender: self)
+        }
+        
+        
     }
     
 }

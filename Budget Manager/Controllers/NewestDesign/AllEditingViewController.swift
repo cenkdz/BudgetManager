@@ -31,12 +31,17 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     var typeType = ""
     var editName = ""
     var addedText = ""
+    var userAction = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Selected User Action Is \(userAction)")
+        self.hideKeyboardWhenTappedAround()
+
         tableViewOutlet.isHidden = true
         tableViewOutlet.delegate = self
         tableViewOutlet.dataSource = self
+        print("Id is\(entryID)")
 
         // Do any additional setup after loading the view.
     }
@@ -70,7 +75,14 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
 
 
                 default:
-                    print("Error unwinding")
+                    source = senderVC.type
+                    DispatchQueue.main.async {
+                        self.getUserSources(completionHandler: { (sourceID, sourceIcon, sourceName, uid) in
+                            let source = Source(sourceID: sourceID, sourceName: sourceName, sourceIcon: sourceIcon, uid: uid)
+                            self.sources.append(source)
+                        }, uid: self.user!.uid)
+                        
+                    }
                     tableViewOutlet.reloadData()
 
                 }
@@ -81,6 +93,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         selectCategoryButtonOutlet.setAttributedTitle(NSAttributedString(string: category), for: .normal)
         selectSourceButtonOutlet.setAttributedTitle(NSAttributedString(string: source), for: .normal)
         amountTextFieldOutlet.text = amount
+        print("Selected User Action Is \(userAction)")
 
     }
     @IBAction func selectCategoryPressed(_ sender: UIButton) {
@@ -106,10 +119,25 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBAction func addCustomCategorySourcePressed(_ sender: UIButton) {
         print("AddCustomCategorySource Pressed!")
 
-        self.performSegue(withIdentifier: "goToCategoryVC", sender: self)
+        self.performSegue(withIdentifier: "goToCategory", sender: self)
     }
     @IBAction func savePressed(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "unwindFromAllEditingVC", sender: self)
+        
+        switch userAction {
+        case "IncomeButton":
+            DispatchQueue.main.async {
+                self.addUserEntry()
+            }
+        case "ExpenseButton":
+            DispatchQueue.main.async {
+                self.addUserEntry()            }
+        default:
+            DispatchQueue.main.async {
+                self.editEntry(completion: ())
+            }
+        }
+
+        
     }
     
     func getUserCategories(completionHandler:@escaping(String, String, String,String)->(),uid: String){
@@ -294,50 +322,70 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         return [delete,edit]
     }
     
-//            func editEntry(completion: ()){
-//                let entries = self.db.collection("entries")
-//                entries.whereField("entryID", isEqualTo: ID).getDocuments(completion: { querySnapshot, error in
-//                    if let err = error {
-//                        print(err.localizedDescription)
-//                        return
-//                    }
-//                    guard let docs = querySnapshot?.documents else { return }
-//
-//
-//                    for doc in docs {
-//                        let docData = doc.data()
-//                        print("Doc Data\(docData)")
-//                        print(docData)
-//                        let ref = doc.reference
-//                        ref.updateData(["entryAmount": self.amountTextField.text])
-//                        completion
-//                    }
-//                            switch senderController {
-//                    case "Income":
-//
-//                        self.performSegue(withIdentifier: "unwindToADDENTRY", sender: self)
-//
-//
-//                    case "Expense":
-//                        DispatchQueue.main.async(){
-//
-//                            self.performSegue(withIdentifier: "unwindToADDEXPENSE", sender: self)
-//                        }
-//                    case "Edit":
-//                        DispatchQueue.main.async(){
-//
-//                            self.performSegue(withIdentifier: "unwindToEDIT", sender: self)
-//                        }
-//
-//
-//                    default:
-//                        print("Error")
-//                    }
-//
-//
-//
-//                })
-//            }
+            func editEntry(completion: ()){
+                let entries = self.db.collection("entries")
+                entries.whereField("id", isEqualTo: entryID!).getDocuments(completion: { querySnapshot, error in
+                    if let err = error {
+                        print(err.localizedDescription)
+                        return
+                    }
+                    guard let docs = querySnapshot?.documents else { return }
+
+
+                    for doc in docs {
+                        let docData = doc.data()
+                        print("Doc Data\(docData)")
+                        print(docData)
+                        let ref = doc.reference
+                        ref.updateData(["amount": self.amountTextFieldOutlet.text])
+                        ref.updateData(["category": String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string)])
+                        ref.updateData(["source": String(self.selectSourceButtonOutlet.currentAttributedTitle!.string)])
+                        completion
+                    }
+                    DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "unwindFromAllEditingVC", sender: self)
+                    }
+                    
+                })
+            }
+    
+    func addUserEntry(){
+        let user = Auth.auth().currentUser
+        var type = ""
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        switch userAction {
+        case "IncomeButton":
+            type = "Income"
+        case "ExpenseButton":
+            type = "Expense"
+        default:
+            print("Error")
+        }
+        let userEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)) , uid: user!.uid)
+        let dictionary = userEntry.getDictionary()
+//        if noteField.text!.isEmpty {
+//            displayAlert(message: "Name field can't be empty.", title: "Warning")
+//        }
+        if amountTextFieldOutlet.text!.isEmpty {
+            displayAlert(message: "Amount field can't be empty.", title: "Warning")
+        }
+//        else if categoryButtonOutlet.title(for: .normal) == "SELECT CATEGORY"{
+//            displayAlert(message: "Please select a category from the predefined list", title: "Warning")
+//        }
+        else{
+        do {
+            try db.collection("entries").addDocument(data: dictionary)
+        } catch let error {
+            print("Error writing entry to Firestore: \(error)")
+        }
+            DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "unwindFromAllEditingVC", sender: self)
+            }
+            
+        }
+    }
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -346,11 +394,37 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         if segue.identifier == "goToCategory" {
             let vc = segue.destination as? AddCategoryViewController
-            vc?.name = editName
-            vc?.ID = self.entryID as! String
-            vc?.senderController = "Edit"
+
+            switch typeType {
+            case "Category":
+                vc?.type = typeType
+                vc?.name = editName
+                vc?.ID = self.entryID as! String
+                vc?.senderController = "Edit"
+
+            case "Source":
+                vc?.type = typeType
+                vc?.name = editName
+                vc?.ID = self.entryID as! String
+                vc?.senderController = "Edit"
+
+            default:
+                print("User wants to add a category")
+                vc?.type = typeType
+                vc?.wantToAddCategory = true
+                vc?.senderController = "Edit"
+
+            }
             
-            vc?.type = typeType
         }
+    }
+    func displayAlert(message: String,title: String) {
+        let dialogMessage = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+        })
+        dialogMessage.addAction(ok)
+        self.present(dialogMessage, animated: true, completion: nil)
+        
     }
 }

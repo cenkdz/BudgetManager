@@ -22,6 +22,6 @@ class Source {
     }
     
     func getDictionary() -> [String: Any]{
-         return ["source_id": sourceID,"source_name":sourceName,"source_icon":sourceIcon,"uid":uid]
+         return ["sourceID": sourceID,"sourceName":sourceName,"sourceIcon":sourceIcon,"uid":uid]
      }
 }
