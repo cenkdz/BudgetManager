@@ -95,7 +95,7 @@ class TestLanding: UIViewController {
         button2.setTitle("Sign Up", for: .normal)
         button2.backgroundColor = .systemYellow
         button2.setTitleColor(.black, for: .normal)
-        button2.addTarget(self, action: #selector(signUpButton), for: .touchUpInside)
+//        button2.addTarget(self, action: #selector(signUpButton), for: .touchUpInside)
         
         
         view.addSubview(button2)
@@ -187,11 +187,11 @@ class TestLanding: UIViewController {
         }
     }
     
-    @objc func signUpButton() {
-          let homeViewController = storyboard?.instantiateViewController(identifier: "TestSignUp") as? TestSignUp
-          view.window?.rootViewController = homeViewController
-          view.window?.makeKeyAndVisible()
-      }
+//    @objc func signUpButton() {
+//          let homeViewController = storyboard?.instantiateViewController(identifier: "TestSignUp") as? TestSignUp
+//          view.window?.rootViewController = homeViewController
+//          view.window?.makeKeyAndVisible()
+//      }
     
     
     
@@ -225,3 +225,5 @@ extension UIColor {
         return nil
     }
 }
+
+
