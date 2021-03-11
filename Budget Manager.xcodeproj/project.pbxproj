@@ -11,6 +11,7 @@
 		9B173AC7259281A90049DC2D /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B173AC6259281A90049DC2D /* Entry.swift */; };
 		9B173AD12592909B0049DC2D /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B173AD02592909B0049DC2D /* Category.swift */; };
 		9B173AD42592918A0049DC2D /* CategoryCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B173AD32592918A0049DC2D /* CategoryCellVC.swift */; };
+		9B2DE29325FA1253009A3360 /* RecurringEntryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2DE29225FA1253009A3360 /* RecurringEntryVC.swift */; };
 		9B33DC9825916BD00004CA6D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33DC9725916BD00004CA6D /* User.swift */; };
 		9B5A05B425F26A7700A02BEF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5A05B325F26A7700A02BEF /* HomeViewController.swift */; };
 		9B8209D525F8D77700B62016 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8209D425F8D77700B62016 /* HomeTableViewCell.swift */; };
@@ -41,6 +42,7 @@
 		9B173AC6259281A90049DC2D /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Entry.swift; path = "Budget Manager/Controllers/Entry.swift"; sourceTree = SOURCE_ROOT; };
 		9B173AD02592909B0049DC2D /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Category.swift; path = "Budget Manager/Controllers/Category.swift"; sourceTree = SOURCE_ROOT; };
 		9B173AD32592918A0049DC2D /* CategoryCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellVC.swift; sourceTree = "<group>"; };
+		9B2DE29225FA1253009A3360 /* RecurringEntryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringEntryVC.swift; sourceTree = "<group>"; };
 		9B33DC9725916BD00004CA6D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = SOURCE_ROOT; };
 		9B5A05B325F26A7700A02BEF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9B8209D425F8D77700B62016 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				9B820A8B25F91FCE00B62016 /* UserPreferencesVC.swift */,
 				9B820A8E25F9222C00B62016 /* CheckableTableViewCell.swift */,
 				9B820A9125F94D6F00B62016 /* SettingsVC.swift */,
+				9B2DE29225FA1253009A3360 /* RecurringEntryVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				9BF8DD4F25F6733200D3A8AC /* AddCategoryViewController.swift in Sources */,
 				BAEC3AAB25F77BC3009B1DCE /* AllEditingViewController.swift in Sources */,
 				9B820A8C25F91FCE00B62016 /* UserPreferencesVC.swift in Sources */,
+				9B2DE29325FA1253009A3360 /* RecurringEntryVC.swift in Sources */,
 				9BF8DD4B25F65EF400D3A8AC /* EditViewController.swift in Sources */,
 				9B173AD12592909B0049DC2D /* Category.swift in Sources */,
 				9BCAD21B25F4F73300047059 /* HeaderTableViewCell.swift in Sources */,

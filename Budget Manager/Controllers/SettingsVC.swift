@@ -7,18 +7,19 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
 
 class SettingsVC: UIViewController,UITabBarDelegate {
     @IBOutlet weak var tabBarOutlet: UITabBar!
     
+    let user = Auth.auth().currentUser
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarOutlet.delegate = self
-
         tabBarOutlet.selectedItem = tabBarOutlet.items?[2]
-
-
-        // Do any additional setup after loading the view.
     }
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -30,12 +31,26 @@ class SettingsVC: UIViewController,UITabBarDelegate {
             print("Settings Selected")
         }
     }
+    func goToLandingVC() {
+        let homeViewController = storyboard?.instantiateViewController(identifier: "LandingVC") as? LandingVC
+        view.window?.rootViewController = homeViewController
+        view.window?.makeKeyAndVisible()
+    }
     func goToHomeVC() {
         let homeViewController = storyboard?.instantiateViewController(identifier: "HomeViewController") as? HomeViewController
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
     }
-
+    @IBAction func logOutButtonPressed(_ sender: UIButton) {
+        let firebaseAuth = Auth.auth()
+             do {
+               try firebaseAuth.signOut()
+                 goToLandingVC()
+             } catch let signOutError as NSError {
+               print ("Error signing out: %@", signOutError)
+             }
+    }
+    
     /*
     // MARK: - Navigation
 

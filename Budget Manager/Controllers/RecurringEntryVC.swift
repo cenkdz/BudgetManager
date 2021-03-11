@@ -11,14 +11,14 @@ import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 
-class AllEditingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var selectCategoryButtonOutlet: UIButton!
     @IBOutlet weak var selectSourceButtonOutlet: UIButton!
-    @IBOutlet weak var addCustomCategorySourceOutlet: UIButton!
     @IBOutlet weak var amountTextFieldOutlet: UITextField!
     @IBOutlet weak var tableViewOutlet: UITableView!
-    @IBOutlet weak var saveButtonOutlet: UIButton!
+    @IBOutlet weak var doneButtonOutlet: UIButton!
+    @IBOutlet weak var datePicker: UIDatePicker!
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
     var amount = "0"
@@ -32,6 +32,23 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     var editName = ""
     var addedText = ""
     var userAction = ""
+
+    var selectedDate = Date()
+    var selectedEndDate = Date()
+
+    var selectedYear = ""
+    var selectedMonth = ""
+    var selectedDay = ""
+    var selectedHour = ""
+    var selectedMinute = ""
+    var selectedDayInWeek = ""
+
+    var selectedEndYear = ""
+    var selectedEndMonth = ""
+    var selectedEndDay = ""
+    var selectedEndHour = ""
+    var selectedEndMinute = ""
+    var selectedEndDayInWeek = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,6 +113,30 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         print("Selected User Action Is \(userAction)")
 
     }
+    @IBAction func datePickerSelected(_ sender: UIDatePicker) {
+        selectedDate = sender.date
+        let comp = datePicker.calendar.dateComponents([.day, .month, .year, .hour, .minute], from: datePicker.date)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        selectedDay = String(comp.day!)
+        selectedYear = String(comp.year!)
+        selectedMonth = String(comp.month!)
+        selectedHour = String(comp.hour!)
+        selectedMinute = String(comp.minute!)
+        selectedDayInWeek = String(dateFormatter.string(from: selectedDate))
+    }
+    @IBAction func endDateSelected(_ sender: UIDatePicker) {
+        selectedEndDate = sender.date
+        let comp = datePicker.calendar.dateComponents([.day, .month, .year, .hour, .minute], from: sender.date)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        selectedEndDay = String(comp.day!)
+        selectedEndYear = String(comp.year!)
+        selectedEndMonth = String(comp.month!)
+        selectedEndHour = String(comp.hour!)
+        selectedEndMinute = String(comp.minute!)
+        selectedEndDayInWeek = String(dateFormatter.string(from: selectedDate))
+    }
     @IBAction func selectCategoryPressed(_ sender: UIButton) {
         print("Select Category Pressed!")
         selectedButton = "CategoryButton"
@@ -116,30 +157,23 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         self.tableViewOutlet.isHidden = false
         self.tableViewOutlet.reloadData()
     }
-    @IBAction func addCustomCategorySourcePressed(_ sender: UIButton) {
-        print("AddCustomCategorySource Pressed!")
-
-        self.performSegue(withIdentifier: "goToCategory", sender: self)
+    func goToHomeVC() {
+        let homeViewController = storyboard?.instantiateViewController(identifier: "HomeViewController") as? HomeViewController
+        view.window?.rootViewController = homeViewController
+        view.window?.makeKeyAndVisible()
     }
-    @IBAction func savePressed(_ sender: UIButton) {
-
-        switch userAction {
-        case "IncomeButton":
-            DispatchQueue.main.async {
-                self.addUserEntry()
-            }
-        case "ExpenseButton":
-            DispatchQueue.main.async {
-                self.addUserEntry() }
-        default:
-            DispatchQueue.main.async {
-                self.editEntry(completion: ())
-            }
+    @IBAction func donePressed(_ sender: UIButton) {
+        let change = selectedEndDate - selectedDate
+        let monthDiff = change.month!
+        DispatchQueue.main.async {
+            self.addRecurringEntry(monthDiff: monthDiff)
+        }
+        DispatchQueue.main.async {
+            self.goToHomeVC()
         }
 
 
     }
-
     func getUserCategories(completionHandler: @escaping(String, String, String, String) -> (), uid: String) {
         categories = []
         db.collection("categories").whereField("uid", isEqualTo: uid)
@@ -349,7 +383,8 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         })
     }
 
-    func addUserEntry() {
+    @objc func addRecurringEntry(monthDiff: Int) {
+        var monthDifference = 1
         let user = Auth.auth().currentUser
         var type = ""
         let date = Date()
@@ -358,33 +393,52 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         switch userAction {
         case "IncomeButton":
             type = "Income"
-        case "ExpenseButton":
+        case "ExpenseButton":g
             type = "Expense"
         default:
             print("Error")
         }
-        let userEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid)
-        let dictionary = userEntry.getDictionary()
-//        if noteField.text!.isEmpty {
-//            displayAlert(message: "Name field can't be empty.", title: "Warning")
-//        }
-        if amountTextFieldOutlet.text!.isEmpty {
-            displayAlert(message: "Amount field can't be empty.", title: "Warning")
+        let firstRecurringEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: selectedDay, dayInWeek: String(dateFormatter.string(from: selectedDate)), year: selectedYear, month: selectedMonth, id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid)
+        let firstDictionary = firstRecurringEntry.getDictionary()
+        do {
+            try db.collection("entries").addDocument(data: firstDictionary)
+
+        } catch let error {
+            print("Error writing entry to Firestore: \(error)")
         }
-//        else if categoryButtonOutlet.title(for: .normal) == "SELECT CATEGORY"{
-//            displayAlert(message: "Please select a category from the predefined list", title: "Warning")
-//        }
-        else {
+
+        if ((selectedDay != selectedEndDay && selectedMonth == selectedEndMonth && selectedYear == selectedEndYear) || (selectedYear != selectedEndYear || (selectedMonth != selectedMonth)) || (selectedYear == selectedEndYear)){
+            let lastRecurringEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: selectedEndDay, dayInWeek: String(dateFormatter.string(from: selectedEndDate)), year: selectedEndYear, month: selectedEndMonth, id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid)
+            let lastDictionary = lastRecurringEntry.getDictionary()
             do {
-                try db.collection("entries").addDocument(data: dictionary)
+                try db.collection("entries").addDocument(data: lastDictionary)
+
             } catch let error {
                 print("Error writing entry to Firestore: \(error)")
             }
-            DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "unwindFromAllEditingVC", sender: self)
-            }
-
         }
+
+        while monthDifference != monthDiff + 1 {
+            var dateComponent = DateComponents()
+            dateComponent.month = monthDifference
+            let futureDate = Calendar.current.date(byAdding: dateComponent, to: selectedDate)
+            let incrementedDate = Calendar.current.dateComponents([.day, .year, .month], from: futureDate!)
+            print("\(monthDifference)IncDay is \(incrementedDate.day)")
+            print("\(monthDifference)IncMonth is \(incrementedDate.month)")
+            print("\(monthDifference)IncYear is \(incrementedDate.year)")
+            print("\(monthDifference)IncDayInWeek is \(String(dateFormatter.string(from: futureDate!)))")
+            if (Int(selectedEndMonth) != incrementedDate.month || Int(selectedEndYear) != incrementedDate.year) {
+                let incRecurringEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: String(incrementedDate.day!), dayInWeek: String(dateFormatter.string(from: futureDate!)), year: String(incrementedDate.year!), month: String(incrementedDate.month!), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid)
+                let incDictionary = incRecurringEntry.getDictionary()
+                do {
+                    try db.collection("entries").addDocument(data: incDictionary)
+                } catch let error {
+                    print("Error writing entry to Firestore: \(error)")
+                }
+            }
+            monthDifference = monthDifference + 1
+        }
+        monthDifference = monthDifference + 1
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -422,5 +476,29 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         dialogMessage.addAction(ok)
         self.present(dialogMessage, animated: true, completion: nil)
 
+    }
+}
+
+extension Date {
+
+    static func - (recent: Date, previous: Date) -> (month: Int?, day: Int?, hour: Int?, minute: Int?, second: Int?) {
+        let day = Calendar.current.dateComponents([.day], from: previous, to: recent).day
+        let month = Calendar.current.dateComponents([.month], from: previous, to: recent).month
+        let hour = Calendar.current.dateComponents([.hour], from: previous, to: recent).hour
+        let minute = Calendar.current.dateComponents([.minute], from: previous, to: recent).minute
+        let second = Calendar.current.dateComponents([.second], from: previous, to: recent).second
+
+        return (month: month, day: day, hour: hour, minute: minute, second: second)
+    }
+
+}
+
+extension Date {
+    func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
+        return calendar.dateComponents(Set(components), from: self)
+    }
+
+    func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
+        return calendar.component(component, from: self)
     }
 }

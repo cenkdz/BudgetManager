@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 
-class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITabBarDelegate {
+class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate {
     @IBOutlet weak var customHeaderView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dailyButton: UIButton!
@@ -25,7 +25,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     @IBOutlet weak var expenseOutlet: UILabel!
     @IBOutlet weak var totalOutlet: UILabel!
     @IBOutlet weak var tabBarOutlet: UITabBar!
-    
+
     var editCategory = ""
     var editAmount = ""
     let db = Firestore.firestore()
@@ -40,22 +40,49 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     var count = 0
     var userAction = ""
 
-//    var entries: [[Entry]] = [[Entry(type: "Expense", category: "Car", source: "Card", amount: "-1100", day: 4, dayInWeek: "Wednesday", year: "2021", month: "3", id: "1", uid: "4444"),Entry(type: "Income", category: "Car", source: "Card", amount: "1200", day: 4, dayInWeek: "Wednesday", year: "2021", month: "3", id: "12", uid: "33")],[Entry(type: "Income", category: "Salary", source: "Cash", amount: "1000", day: 7, dayInWeek: "Sunday", year: "2021", month: "3", id: "2", uid: "1312")
-//                                                                                                                                                                                                                                                                                                                                                      ,Entry(type: "Income", category: "Tip", source: "Cash", amount: "900", day: 7, dayInWeek: "Sunday", year: "2021", month: "3", id: "3", uid: "33333")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "800", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "4", uid: "12312312"),
-//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Entry(type: "Income", category: "Mother", source: "Cash", amount: "700", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "5", uid: "22"),
-//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Entry(type: "Income", category: "Mother", source: "Cash", amount: "600", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "6", uid: "111"),
-//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Entry(type: "Income", category: "Mother", source: "Cash", amount: "500", day: 28, dayInWeek: "Sunday", year: "2021", month: "3", id: "7", uid: "11")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "400", day: 29, dayInWeek: "Sunday", year: "2021", month: "3", id: "8", uid: "123123123123"),
-//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Entry(type: "Income", category: "Mother", source: "Cash", amount: "300", day: 29, dayInWeek: "Sunday", year: "2021", month: "3", id: "9", uid: "2")],[Entry(type: "Income", category: "Mother", source: "Cash", amount: "200", day: 30, dayInWeek: "Sunday", year: "2021", month: "3", id: "10", uid: "123123218128"),
-//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Entry(type: "Income", category: "Mother", source: "Cash", amount: "100", day: 30, dayInWeek: "Sunday", year: "2021", month: "3", id: "11", uid: "1")]]
-  
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tabBarOutlet.selectedItem = tabBarOutlet.items?[0]
+        setData()
+        getAll(completion: ())
+        setFinancialOutlets()
+        effect = visualEffectView.effect
+        visualEffectView.effect = nil
+        addView.layer.cornerRadius = 5
+        addView.removeFromSuperview()
+        tableView.delegate = self
+        tabBarOutlet.delegate = self
+        tableView.dataSource = self
+        self.hideKeyboardWhenTappedAround()
+    }
     
+    func goToSettingsVC() {
+        let homeViewController = storyboard?.instantiateViewController(identifier: "SettingsVC") as? SettingsVC
+        view.window?.rootViewController = homeViewController
+        view.window?.makeKeyAndVisible()
+    }
+    func goToRecurringEntryVC() {
+        let homeViewController = storyboard?.instantiateViewController(identifier: "RecurringEntryVC") as? RecurringEntryVC
+        view.window?.rootViewController = homeViewController
+        view.window?.makeKeyAndVisible()
+    }
+    //    func goToStatisticsVC() {
+    //        let homeViewController = storyboard?.instantiateViewController(identifier: "HomeViewController") as? HomeViewController
+    //        view.window?.rootViewController = homeViewController
+    //        view.window?.makeKeyAndVisible()
+    //    }
+    func goToLandingVC() {
+        let homeViewController = storyboard?.instantiateViewController(identifier: "LandingVC") as? LandingVC
+        view.window?.rootViewController = homeViewController
+        view.window?.makeKeyAndVisible()
+    }
     
-    func setData(){
-        let sortedArray = entries.sorted(by: {$0[0].day > $1[0].day })
+    func setData() {
+        let sortedArray = entries.sorted(by: { $0[0].day > $1[0].day })
         entries.removeAll()
         entries.append(contentsOf: sortedArray)
     }
-    @IBAction func unwindFromAllEditingVC(_ sender: UIStoryboardSegue){
+    @IBAction func unwindFromAllEditingVC(_ sender: UIStoryboardSegue) {
         DispatchQueue.main.async {
             self.getAll(completion: ())
         }
@@ -64,10 +91,10 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         animateOut()
         print("Came from AllEditingVC")
     }
-    
-    func calculateTotal() -> String{
+
+    func calculateTotal() -> String {
         var total = 0
-        
+
         for array in entries {
             for value in array {
                 total = total + Int(value.amount)!
@@ -76,10 +103,10 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         }
         return String(total)
     }
-    
-    func calculateExpenses() -> String{
+
+    func calculateExpenses() -> String {
         var expenses = 0
-        
+
         for array in entries {
             for value in array {
                 if value.type == "Expense" {
@@ -89,10 +116,10 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         }
         return String(expenses)
     }
-    
-    func calculateIncome() -> String{
+
+    func calculateIncome() -> String {
         var income = 0
-        
+
         for array in entries {
             for value in array {
                 if value.type == "Income" {
@@ -139,12 +166,12 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
     //        })
     //        return todayEntries
     //    }
-    
+
     func setFinancialOutlets() {
         let total = calculateTotal()
         let income = calculateIncome()
         let expenses = calculateExpenses()
-        if Int(total)!<0 {
+        if Int(total)! < 0 {
             totalOutlet.textColor = UIColor(red: 0.98, green: 0.39, blue: 0.00, alpha: 1.00)
         }
         else if Int(total)! >= 0 {
@@ -154,38 +181,11 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         incomeOutlet.text = income
         expenseOutlet.text = expenses
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tabBarOutlet.selectedItem = tabBarOutlet.items?[0]
-        setData()
-        setFinancialOutlets()
-        getAll(completion: ())
-        
-        //calculateTotal()
-        effect = visualEffectView.effect
-        visualEffectView.effect = nil
-        addView.layer.cornerRadius = 5
-        addView.removeFromSuperview()
-        tableView.delegate = self
-        tabBarOutlet.delegate = self
-        tableView.dataSource = self
-        self.hideKeyboardWhenTappedAround()
 
+    @IBAction func recurringEntryPressed(_ sender: UIButton) {
+        goToRecurringEntryVC()
     }
-    
-//    func goToStatisticsVC() {
-//        let homeViewController = storyboard?.instantiateViewController(identifier: "HomeViewController") as? HomeViewController
-//        view.window?.rootViewController = homeViewController
-//        view.window?.makeKeyAndVisible()
-//    }
-    
-        func goToSettingsVC() {
-            let homeViewController = storyboard?.instantiateViewController(identifier: "SettingsVC") as? SettingsVC
-            view.window?.rootViewController = homeViewController
-            view.window?.makeKeyAndVisible()
-        }
-    
+
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if(item.tag == 0) {
             print("Home Selected")
@@ -196,18 +196,18 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             goToSettingsVC()
         }
     }
-    
+
     @IBAction func incomePressed(_ sender: UIButton) {
         userAction = "IncomeButton"
         self.performSegue(withIdentifier: "goToAllEditingVC", sender: self)
     }
-    
+
     @IBAction func expensePressed(_ sender: UIButton) {
         userAction = "ExpenseButton"
         self.performSegue(withIdentifier: "goToAllEditingVC", sender: self)
 
     }
-    func animateIn(){
+    func animateIn() {
         self.view.addSubview(addView)
         addView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
         addView.alpha = 0
@@ -217,22 +217,22 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             self.addView.transform = CGAffineTransform.identity
         }
     }
-    
+
     func animateOut() {
         UIView.animate(withDuration: 0.1) {
             self.addView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
             self.addView.alpha = 0
             self.visualEffectView.effect = nil
         }
-            self.addView.removeFromSuperview()
-            self.addButtonOutlet.setAttributedTitle(NSAttributedString(string: "+"), for: .normal)
-            self.view.sendSubviewToBack(self.visualEffectView)
+        self.addView.removeFromSuperview()
+        self.addButtonOutlet.setAttributedTitle(NSAttributedString(string: "+"), for: .normal)
+        self.view.sendSubviewToBack(self.visualEffectView)
     }
-    
+
     @IBAction func addButtonPressed(_ sender: UIButton) {
-        
-        if(addButtonOutlet.attributedTitle(for: .normal) == NSAttributedString(string: "x")){
-            DispatchQueue.main.async{
+
+        if(addButtonOutlet.attributedTitle(for: .normal) == NSAttributedString(string: "x")) {
+            DispatchQueue.main.async {
                 self.animateOut()
             }
         }
@@ -241,46 +241,46 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         addButtonOutlet.setTitleColor(.white, for: .normal)
         self.view.bringSubviewToFront(addButtonOutlet)
         animateIn()
-        
+
     }
-    
+
     @IBAction func dailyPressed(_ sender: UIButton) {
         dailyButton.backgroundColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 1.00)
         weeklyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         monthlyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         totalButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
-        
+
     }
-    
+
     @IBAction func weeklyPressed(_ sender: UIButton) {
         weeklyButton.backgroundColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 1.00)
         dailyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         monthlyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         totalButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
     }
-    
+
     @IBAction func monthlyPressed(_ sender: UIButton) {
         monthlyButton.backgroundColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 1.00)
         dailyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         weeklyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         totalButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
     }
-    
+
     @IBAction func totalPressed(_ sender: UIButton) {
         totalButton.backgroundColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 1.00)
         dailyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         monthlyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         weeklyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return entries.count
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return entries[section].count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeTableViewCell
         cell.categorySourceOutlet.text = "Section \(indexPath.section) Row \(indexPath.row)"
@@ -288,7 +288,7 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         cell.setEntry(entry: entry)
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! HeaderTableViewCell
         let entry = entries[section]
@@ -299,33 +299,29 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
         }
         return nil
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 96
     }
-    
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
-        let delete = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
             let entry = self.entries[indexPath.section][indexPath.row]
             //deleteUserCategory(selectedEntryID: entry.categoryID)
             var changedEntries = self.entries
             changedEntries[indexPath.section].remove(at: indexPath.row)
             if changedEntries[indexPath.section].count == 0 {
-                
+
                 changedEntries.remove(at: indexPath.section)
-                
+
                 self.deleteUserEntry(selectedEntryID: entry.id)
             }
             self.entries = changedEntries
             tableView.reloadData()
-            
         }
         delete.backgroundColor = UIColor.red
-        
-        let edit = UITableViewRowAction(style: .default, title: "Edit") { (action, indexPath) in
+        let edit = UIContextualAction(style: .destructive, title: "Edit") { (contextualAction, view, boolValue) in
             let entry = self.entries[indexPath.section][indexPath.row]
-            self.editAmount = entry.amount as! String
+            self.editAmount = entry.amount
             self.editCategory = entry.category
             self.selectedEntryID = entry.id
             self.editSource = entry.source
@@ -333,12 +329,11 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             self.performSegue(withIdentifier: "goToAllEditingVC", sender: self)
         }
         edit.backgroundColor = UIColor(red: 0.13, green: 0.17, blue: 0.40, alpha: 1.00)
-        
-        return [delete, edit]
-    }
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
+
+
+        let swipeActions = UISwipeActionsConfiguration(actions: [delete, edit])
+
+        return swipeActions
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -353,8 +348,8 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             vc?.userAction = userAction
         }
     }
-    
-    func getUserDetails(completionHandler:@escaping(String, String)->(),uid: String){
+
+    func getUserDetails(completionHandler: @escaping(String, String) -> (), uid: String) {
         db.collection("users").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -362,38 +357,38 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
                 //get name of the user
                 self.db.collection("users").whereField("uid", isEqualTo: uid)
                     .getDocuments() { (querySnapshot, err) in
-                        if let err = err {
-                            print("Error getting documents: \(err)")
-                        } else {
-                            for document in querySnapshot!.documents {
-                                let data = document.data()
-                                completionHandler ((data["firstname"] as? String)!, (data["uid"]as? String)!)
-                            }
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            let data = document.data()
+                            completionHandler ((data["firstname"] as? String)!, (data["uid"]as? String)!)
                         }
-                    }
-            }
-        }
-    }
-    
-    func getUserEntries(completionHandler:@escaping(String, String, String,String,String,String,String,String,String,String)->(),uid: String){
-        entries = []
-        db.collection("entries").whereField("uid", isEqualTo: uid)
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    print(uid)
-                    for document in querySnapshot!.documents {
-                        let data = document.data()
-                        completionHandler (data["type"] as! String, data["category"] as! String, data["source"]as! String, data["amount"] as! String, data["day"] as! String, data["dayInWeek"] as! String, data["year"]as! String,data["month"]as! String,data["id"]as! String,data["uid"]as! String)
-                        self.tableView.reloadData()
-                        
                     }
                 }
             }
+        }
     }
-    
-    func deleteUserEntry(selectedEntryID: Any){
+
+    func getUserEntries(completionHandler: @escaping(String, String, String, String, String, String, String, String, String, String) -> (), uid: String) {
+        entries = []
+        db.collection("entries").whereField("uid", isEqualTo: uid)
+            .getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                print(uid)
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    completionHandler (data["type"] as! String, data["category"] as! String, data["source"]as! String, data["amount"] as! String, data["day"] as! String, data["dayInWeek"] as! String, data["year"]as! String, data["month"]as! String, data["id"]as! String, data["uid"]as! String)
+                    self.tableView.reloadData()
+
+                }
+            }
+        }
+    }
+
+    func deleteUserEntry(selectedEntryID: Any) {
         db.collection("entries").whereField("id", isEqualTo: selectedEntryID).getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -404,67 +399,26 @@ class HomeViewController: UIViewController,UITableViewDataSource,UITableViewDele
             }
         }
     }
-    func goToLandingVC() {
-        let homeViewController = storyboard?.instantiateViewController(identifier: "LandingVC") as? LandingVC
-        view.window?.rootViewController = homeViewController
-        view.window?.makeKeyAndVisible()
-    }
-    
-    func getAll(completion: ()){
+
+    func getAll(completion: ()) {
         if Auth.auth().currentUser != nil {
-            // User is signed in.
             let user = Auth.auth().currentUser
             getUserDetails(completionHandler: { (firstname, uid) in
                 let user = User(firstname: firstname, uid: uid)
                 self.users.append(user)
             }, uid: user!.uid)
-
-                self.getUserEntries(completionHandler: { (type, category,source, amount, day,dayInWeek, year,month,id,uid) in
+            self.getUserEntries(completionHandler: { (type, category, source, amount, day, dayInWeek, year, month, id, uid) in
                 let entry = Entry(type: type, category: category, source: source, amount: amount, day: String(day), dayInWeek: dayInWeek, year: year, month: month, id: id, uid: uid)
                 self.entries.append([entry])
             }, uid: user!.uid)
             completion
             tableView.reloadData()
         } else {
-            // No user is signed in.
             goToLandingVC()
         }
     }
-    
 }
 
-fileprivate extension Array where Element : Collection, Element.Index == Int {
 
-    typealias InnerCollection = Element
-    typealias InnerElement = InnerCollection.Iterator.Element
 
-    func matrixIterator() -> AnyIterator<InnerElement> {
-        var outerIndex = self.startIndex
-        var innerIndex: Int?
-
-        return AnyIterator({
-            guard !self.isEmpty else { return nil }
-
-            var innerArray = self[outerIndex]
-            if !innerArray.isEmpty && innerIndex == nil {
-                innerIndex = innerArray.startIndex
-            }
-
-            // This loop makes sure to skip empty internal arrays
-            while innerArray.isEmpty || (innerIndex != nil && innerIndex! == innerArray.endIndex) {
-                outerIndex = self.index(after: outerIndex)
-                if outerIndex == self.endIndex { return nil }
-                innerArray = self[outerIndex]
-                innerIndex = innerArray.startIndex
-            }
-
-            let result = self[outerIndex][innerIndex!]
-            innerIndex = innerArray.index(after: innerIndex!)
-
-            return result
-        })
-    }
-
-}
-    
 
