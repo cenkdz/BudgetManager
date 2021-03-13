@@ -69,8 +69,8 @@ class SignUpVC: UIViewController {
         }
     }
     @IBAction func signUpPressed(_ sender: UIButton) {
-        let enteredFirstname = firstNameFieldOutlet.text!
-        let enteredEmail = emailFieldOutlet.text!
+        let enteredFirstname = firstNameFieldOutlet.text!.trimmingCharacters(in: .whitespaces)
+        let enteredEmail = emailFieldOutlet.text!.trimmingCharacters(in: .whitespaces)
         let enteredPassword = passwordFieldOutlet.text!
         let enteredConfirmPassword = passwordConfirmationFieldOutlet.text!
         if (enteredFirstname.isEmpty){
@@ -92,10 +92,10 @@ class SignUpVC: UIViewController {
                    displayAlert(message: "Your passwords must match.", title: "Warning")
                }
                else {
-                   Auth.auth().createUser(withEmail: emailFieldOutlet.text!, password: passwordFieldOutlet.text!) { authResult, errorUser in
+                   Auth.auth().createUser(withEmail: enteredEmail, password: passwordFieldOutlet.text!) { authResult, errorUser in
                        if(errorUser == nil) {
                            let db = Firestore.firestore()
-                        db.collection("users").addDocument(data: ["firstname":self.firstNameFieldOutlet.text!,"uid":authResult!.user.uid,"salary": "","budgetGoal":""]) { (errorDatabase) in
+                        db.collection("users").addDocument(data: ["firstname": enteredFirstname,"uid":authResult!.user.uid,"salary": "","budgetGoal":""]) { (errorDatabase) in
                                if errorDatabase == nil{
                                    self.displayDisappearingAlert(message: "Success", title: "Signup Successful")
                                    self.goToUserPreferences()

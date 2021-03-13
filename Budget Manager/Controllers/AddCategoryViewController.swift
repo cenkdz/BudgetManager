@@ -23,17 +23,24 @@ class AddCategoryViewController: UIViewController {
     var name = ""
     var wantToAddCategory = false
     var ID = ""
-    var senderController = ""
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        if wantToAddCategory != true {
+            segmentedControl.isUserInteractionEnabled = false
+        }
         
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if wantToAddCategory != true {
+            segmentedControl.isUserInteractionEnabled = false
+        }
+        
+        if type == "Add"{
+            type = "Category"
+        }
         
         switch type {
         case "Category":
@@ -57,16 +64,19 @@ class AddCategoryViewController: UIViewController {
     
     
     @IBAction func addPressed(_ sender: UIButton) {
+        print("TYPE OIS")
+        print(type)
         if type == "Category" && wantToAddCategory == false{
             DispatchQueue.main.async {
                 self.editCategory(completion: ())
             }
         } else if type == "Source" && wantToAddCategory == false{
             DispatchQueue.main.async {
-                self.editCategory(completion: ())
+                self.editSource(completion: ())
             }
         }
         else if wantToAddCategory == true {
+            
             switch type {
             case "Category":
                 DispatchQueue.main.async {

@@ -19,20 +19,27 @@ class SettingsVC: UIViewController,UITabBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarOutlet.delegate = self
-        tabBarOutlet.selectedItem = tabBarOutlet.items?[2]
+        tabBarOutlet.selectedItem = tabBarOutlet.items?[3]
     }
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if(item.tag == 0) {
             goToHomeVC()
         } else if(item.tag == 1) {
+            goToTableRecurringVC()
+        }else if(item.tag == 2) {
             print("Statistics Selected")
-        } else if(item.tag == 2) {
+        } else if(item.tag == 3) {
             print("Settings Selected")
         }
     }
     func goToLandingVC() {
         let homeViewController = storyboard?.instantiateViewController(identifier: "LandingVC") as? LandingVC
+        view.window?.rootViewController = homeViewController
+        view.window?.makeKeyAndVisible()
+    }
+    func goToTableRecurringVC() {
+        let homeViewController = storyboard?.instantiateViewController(identifier: "TableRecurringVC") as? TableRecurringVC
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
     }

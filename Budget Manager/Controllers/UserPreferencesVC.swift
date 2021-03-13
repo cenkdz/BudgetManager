@@ -24,7 +24,8 @@ class UserPreferencesVC: UIViewController, UITableViewDataSource, UITableViewDel
     var lastSelectedIndexPath = NSIndexPath(row: -1, section: 0)
     var categories: [Category] = [Category(categoryID: "1", categoryName: "Home", categoryIcon: "", uid: "6"), Category(categoryID: "2", categoryName: "Car", categoryIcon: "", uid: "6"), Category(categoryID: "3", categoryName: "Health", categoryIcon: "", uid: "6"), Category(categoryID: "4", categoryName: "Self-Care", categoryIcon: "", uid: "6")]
     var selectedCategoryNames = [String]()
-
+    var budgetGoal = ""
+    var salary = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -36,13 +37,15 @@ class UserPreferencesVC: UIViewController, UITableViewDataSource, UITableViewDel
         // Do any additional setup after loading the view.
     }
     @IBAction func finishPressed(_ sender: UIButton) {
-        if budgetGoalOutlet.text!.isEmpty {
+         budgetGoal = budgetGoalOutlet.text!.trimmingCharacters(in: .whitespaces)
+         salary = salaryOutlet.text!.trimmingCharacters(in: .whitespaces)
+        if budgetGoal.isEmpty {
             displayAlert(message: "Please set a budget goal.", title: "Budget Goal")
-        } else if budgetGoalOutlet.text!.containsOnlyDigits == false {
+        } else if budgetGoal.containsOnlyDigits == false {
             displayAlert(message: "Please enter only numbers for your budget goal.", title: "Salary")
-        } else if salaryOutlet.text!.containsOnlyDigits == false {
+        } else if salary.containsOnlyDigits == false {
             displayAlert(message: "Please enter only numbers for your salary.", title: "Salary")
-        } else if salaryOutlet.text!.isEmpty {
+        } else if salary.isEmpty {
             displayAlert(message: "Please enter your salary.", title: "Salary")
         } else if selectedCategoryNames.isEmpty {
             displayAlert(message: "Please select at least one category from the list.", title: "Categories")
@@ -137,8 +140,8 @@ class UserPreferencesVC: UIViewController, UITableViewDataSource, UITableViewDel
             for doc in docs {
                 let docData = doc.data()
                 let ref = doc.reference
-                ref.updateData(["budgetGoal": self.budgetGoalOutlet.text])
-                ref.updateData(["salary": self.salaryOutlet.text])
+                ref.updateData(["budgetGoal": self.budgetGoal])
+                ref.updateData(["salary": self.salary])
                 completion
             }
         })
@@ -147,7 +150,7 @@ class UserPreferencesVC: UIViewController, UITableViewDataSource, UITableViewDel
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
-        let entry = Entry(type: "Income", category: "Salary", source: "Salary", amount: self.salaryOutlet.text!, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid)
+        let entry = Entry(type: "Income", category: "Salary", source: "Salary", amount: salary, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "false")
         let dictionary = entry.getDictionary()
         do {
             try db.collection("entries").addDocument(data: dictionary)

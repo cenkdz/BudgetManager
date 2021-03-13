@@ -60,7 +60,6 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         tableViewOutlet.dataSource = self
         print("Id is\(entryID)")
 
-        // Do any additional setup after loading the view.
     }
 
     @IBAction func unwindToAllEditingVC(_ sender: UIStoryboardSegue) {
@@ -229,17 +228,6 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             }
         }
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
@@ -387,18 +375,17 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         var monthDifference = 1
         let user = Auth.auth().currentUser
         var type = ""
-        let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
         switch userAction {
         case "IncomeButton":
             type = "Income"
-        case "ExpenseButton":g
+        case "ExpenseButton":
             type = "Expense"
         default:
             print("Error")
         }
-        let firstRecurringEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: selectedDay, dayInWeek: String(dateFormatter.string(from: selectedDate)), year: selectedYear, month: selectedMonth, id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid)
+        let firstRecurringEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: selectedDay, dayInWeek: String(dateFormatter.string(from: selectedDate)), year: selectedYear, month: selectedMonth, id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true")
         let firstDictionary = firstRecurringEntry.getDictionary()
         do {
             try db.collection("entries").addDocument(data: firstDictionary)
@@ -408,7 +395,7 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         }
 
         if ((selectedDay != selectedEndDay && selectedMonth == selectedEndMonth && selectedYear == selectedEndYear) || (selectedYear != selectedEndYear || (selectedMonth != selectedMonth)) || (selectedYear == selectedEndYear)){
-            let lastRecurringEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: selectedEndDay, dayInWeek: String(dateFormatter.string(from: selectedEndDate)), year: selectedEndYear, month: selectedEndMonth, id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid)
+            let lastRecurringEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: selectedEndDay, dayInWeek: String(dateFormatter.string(from: selectedEndDate)), year: selectedEndYear, month: selectedEndMonth, id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true")
             let lastDictionary = lastRecurringEntry.getDictionary()
             do {
                 try db.collection("entries").addDocument(data: lastDictionary)
@@ -428,7 +415,7 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             print("\(monthDifference)IncYear is \(incrementedDate.year)")
             print("\(monthDifference)IncDayInWeek is \(String(dateFormatter.string(from: futureDate!)))")
             if (Int(selectedEndMonth) != incrementedDate.month || Int(selectedEndYear) != incrementedDate.year) {
-                let incRecurringEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: String(incrementedDate.day!), dayInWeek: String(dateFormatter.string(from: futureDate!)), year: String(incrementedDate.year!), month: String(incrementedDate.month!), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid)
+                let incRecurringEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: String(incrementedDate.day!), dayInWeek: String(dateFormatter.string(from: futureDate!)), year: String(incrementedDate.year!), month: String(incrementedDate.month!), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true")
                 let incDictionary = incRecurringEntry.getDictionary()
                 do {
                     try db.collection("entries").addDocument(data: incDictionary)
@@ -450,19 +437,16 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 vc?.type = typeType
                 vc?.name = editName
                 vc?.ID = self.entryID as! String
-                vc?.senderController = "Edit"
 
             case "Source":
                 vc?.type = typeType
                 vc?.name = editName
                 vc?.ID = self.entryID as! String
-                vc?.senderController = "Edit"
 
             default:
                 print("User wants to add a category")
                 vc?.type = typeType
                 vc?.wantToAddCategory = true
-                vc?.senderController = "Edit"
 
             }
 

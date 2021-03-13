@@ -37,20 +37,23 @@ class LandingVC: UIViewController {
         print("Forgot password Pressed!!")
     }
     @IBAction func loginPressed(_ sender: UIButton) {
-        if (emailTextFieldOutlet.text!.isEmpty) {
+        let trimmedEmail = emailTextFieldOutlet.text!.trimmingCharacters(in: .whitespaces)
+
+        if (trimmedEmail.isEmpty) {
             displayAlert(message: "E-mail Missing", title: "Warning")
         }
         else if (passwordTextFieldOutlet.text!.isEmpty){
             displayAlert(message: "Password Missing", title: "Warning")
         }
-        else if !(EmailValidator.validate(email: emailTextFieldOutlet.text!))  {
+        else if !(EmailValidator.validate(email: trimmedEmail))  {
             displayAlert(message: "Wrong e-mail", title: "Warning")
         }
         else if !(password.evaluate(with: passwordTextFieldOutlet.text)){
             displayAlert(message: "Wrong password", title: "Warning")
         }
         else {
-            Auth.auth().signIn(withEmail: emailTextFieldOutlet.text!, password: passwordTextFieldOutlet.text!) { [weak self] user, error in
+
+            Auth.auth().signIn(withEmail: trimmedEmail, password: passwordTextFieldOutlet.text!) { [weak self] user, error in
                 guard let strongSelf = self else { return }
                 if(error != nil) {
                     strongSelf.displayAlert(message: "Username or password wrong", title: "Warning")

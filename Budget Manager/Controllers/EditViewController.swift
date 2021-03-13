@@ -178,8 +178,6 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
             let vc = segue.destination as? AddCategoryViewController
             vc?.name = editName
             vc?.ID = id
-            vc?.senderController = "Edit"
-
             vc?.type = typeType
 
         }

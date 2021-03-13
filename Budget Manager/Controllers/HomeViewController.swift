@@ -61,6 +61,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
     }
+    func goToTableRecurringVC() {
+        let homeViewController = storyboard?.instantiateViewController(identifier: "TableRecurringVC") as? TableRecurringVC
+        view.window?.rootViewController = homeViewController
+        view.window?.makeKeyAndVisible()
+    }
     func goToRecurringEntryVC() {
         let homeViewController = storyboard?.instantiateViewController(identifier: "RecurringEntryVC") as? RecurringEntryVC
         view.window?.rootViewController = homeViewController
@@ -190,8 +195,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if(item.tag == 0) {
             print("Home Selected")
         } else if(item.tag == 1) {
-            print("Statistics Selected")
+            goToTableRecurringVC()
         } else if(item.tag == 2) {
+            print("Statistics Selected")
+            goToSettingsVC()
+        }else if(item.tag == 3) {
             print("Settings Selected")
             goToSettingsVC()
         }
@@ -370,7 +378,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
 
-    func getUserEntries(completionHandler: @escaping(String, String, String, String, String, String, String, String, String, String) -> (), uid: String) {
+    func getUserEntries(completionHandler: @escaping(String, String, String, String, String, String, String, String, String, String,String) -> (), uid: String) {
         entries = []
         db.collection("entries").whereField("uid", isEqualTo: uid)
             .getDocuments() { (querySnapshot, err) in
@@ -380,7 +388,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 print(uid)
                 for document in querySnapshot!.documents {
                     let data = document.data()
-                    completionHandler (data["type"] as! String, data["category"] as! String, data["source"]as! String, data["amount"] as! String, data["day"] as! String, data["dayInWeek"] as! String, data["year"]as! String, data["month"]as! String, data["id"]as! String, data["uid"]as! String)
+                    completionHandler (data["type"] as! String, data["category"] as! String, data["source"]as! String, data["amount"] as! String, data["day"] as! String, data["dayInWeek"] as! String, data["year"]as! String, data["month"]as! String, data["id"]as! String, data["uid"]as! String, data["recurring"]as! String)
                     self.tableView.reloadData()
 
                 }
@@ -407,8 +415,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let user = User(firstname: firstname, uid: uid)
                 self.users.append(user)
             }, uid: user!.uid)
-            self.getUserEntries(completionHandler: { (type, category, source, amount, day, dayInWeek, year, month, id, uid) in
-                let entry = Entry(type: type, category: category, source: source, amount: amount, day: String(day), dayInWeek: dayInWeek, year: year, month: month, id: id, uid: uid)
+            self.getUserEntries(completionHandler: { (type, category, source, amount, day, dayInWeek, year, month, id, uid,recurring) in
+                let entry = Entry(type: type, category: category, source: source, amount: amount, day: String(day), dayInWeek: dayInWeek, year: year, month: month, id: id, uid: uid, recurring: recurring)
                 self.entries.append([entry])
             }, uid: user!.uid)
             completion

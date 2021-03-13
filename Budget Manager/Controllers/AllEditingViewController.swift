@@ -37,64 +37,75 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewDidLoad()
         print("Selected User Action Is \(userAction)")
         self.hideKeyboardWhenTappedAround()
-
+        selectCategoryButtonOutlet.setTitle("Select a Category", for: .normal)
+        selectSourceButtonOutlet.setTitle("Select a Source", for: .normal)
         tableViewOutlet.isHidden = true
         tableViewOutlet.delegate = self
         tableViewOutlet.dataSource = self
+        print("Type is \(typeType)")
         print("Id is\(entryID)")
-
-        // Do any additional setup after loading the view.
-    }
-
-    @IBAction func unwindToAllEditingVC(_ sender: UIStoryboardSegue) {
-        if sender.source is AddCategoryViewController {
-            if let senderVC = sender.source as? AddCategoryViewController {
-                addedText = senderVC.selectedI
-                switch senderVC.type {
-                case "Source":
-                    source = senderVC.type
-                    DispatchQueue.main.async {
-                        self.getUserSources(completionHandler: { (sourceID, sourceIcon, sourceName, uid) in
-                            let source = Source(sourceID: sourceID, sourceName: sourceName, sourceIcon: sourceIcon, uid: uid)
-                            self.sources.append(source)
-                        }, uid: self.user!.uid)
-
-                    }
-                    tableViewOutlet.reloadData()
-
-
-                case "Category":
-                    source = senderVC.type
-                    DispatchQueue.main.async {
-                        self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryName, uid) in
-                            let category = Category(categoryID: categoryID, categoryName: categoryName, categoryIcon: categoryIcon, uid: uid)
-                            self.categories.append(category)
-                        }, uid: self.user!.uid)
-                    }
-                    tableViewOutlet.reloadData()
-
-
-                default:
-                    source = senderVC.type
-                    DispatchQueue.main.async {
-                        self.getUserSources(completionHandler: { (sourceID, sourceIcon, sourceName, uid) in
-                            let source = Source(sourceID: sourceID, sourceName: sourceName, sourceIcon: sourceIcon, uid: uid)
-                            self.sources.append(source)
-                        }, uid: self.user!.uid)
-
-                    }
-                    tableViewOutlet.reloadData()
-
-                }
-            }
+        DispatchQueue.main.async {
+            self.getUserSources(completionHandler: { (sourceID, sourceIcon, sourceName, uid) in
+                let source = Source(sourceID: sourceID, sourceName: sourceName, sourceIcon: sourceIcon, uid: uid)
+                self.sources.append(source)
+            }, uid: self.user!.uid)
+            self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryName, uid) in
+                let category = Category(categoryID: categoryID, categoryName: categoryName, categoryIcon: categoryIcon, uid: uid)
+                self.categories.append(category)
+            }, uid: self.user!.uid)
         }
+        tableViewOutlet.reloadData()
     }
+
     override func viewWillAppear(_ animated: Bool) {
         selectCategoryButtonOutlet.setAttributedTitle(NSAttributedString(string: category), for: .normal)
         selectSourceButtonOutlet.setAttributedTitle(NSAttributedString(string: source), for: .normal)
         amountTextFieldOutlet.text = amount
+        DispatchQueue.main.async {
+            self.getUserSources(completionHandler: { (sourceID, sourceIcon, sourceName, uid) in
+                let source = Source(sourceID: sourceID, sourceName: sourceName, sourceIcon: sourceIcon, uid: uid)
+                self.sources.append(source)
+            }, uid: self.user!.uid)
+        }
+        DispatchQueue.main.async {
+
+            self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryName, uid) in
+                let category = Category(categoryID: categoryID, categoryName: categoryName, categoryIcon: categoryIcon, uid: uid)
+                self.categories.append(category)
+            }, uid: self.user!.uid)
+        }
+        tableViewOutlet.reloadData()
         print("Selected User Action Is \(userAction)")
 
+    }
+
+
+
+    @IBAction func unwindToAllEditingVC(_ sender: UIStoryboardSegue) {
+        if sender.source is AddCategoryViewController {
+            if let senderVC = sender.source as? AddCategoryViewController {
+                switch senderVC.type {
+                case "Source":
+                    source = senderVC.type
+                    self.getUserSources(completionHandler: { (sourceID, sourceIcon, sourceName, uid) in
+                        let source = Source(sourceID: sourceID, sourceName: sourceName, sourceIcon: sourceIcon, uid: uid)
+                        self.sources.append(source)
+                    }, uid: self.user!.uid)
+                    tableViewOutlet.reloadData()
+                case "Category":
+                    category = senderVC.type
+                    self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryName, uid) in
+                        let category = Category(categoryID: categoryID, categoryName: categoryName, categoryIcon: categoryIcon, uid: uid)
+                        self.categories.append(category)
+                    }, uid: self.user!.uid)
+                    tableViewOutlet.reloadData()
+
+                default:
+                    print("DEFAULT")
+
+                }
+            }
+        }
     }
     @IBAction func selectCategoryPressed(_ sender: UIButton) {
         print("Select Category Pressed!")
@@ -118,6 +129,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     @IBAction func addCustomCategorySourcePressed(_ sender: UIButton) {
         print("AddCustomCategorySource Pressed!")
+        typeType = "Add"
 
         self.performSegue(withIdentifier: "goToCategory", sender: self)
     }
@@ -300,6 +312,8 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
                 let entry = self.categories[indexPath.row]
                 self.editName = entry.categoryName
                 self.entryID = entry.categoryID
+                print("Type is \(self.typeType)")
+
                 self.typeType = "Category"
 
             case "SourceButton":
@@ -307,10 +321,13 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
                 self.editName = entry.sourceName
                 self.entryID = entry.sourceID
                 self.typeType = "Source"
+                print("Type is \(self.typeType)")
 
 
             default:
                 print("ERRROR")
+                print("Type is \(self.typeType)")
+
             }
             DispatchQueue.main.async() {
                 self.performSegue(withIdentifier: "goToCategory", sender: self)
@@ -363,7 +380,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         default:
             print("Error")
         }
-        let userEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid)
+        let userEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "false")
         let dictionary = userEntry.getDictionary()
 //        if noteField.text!.isEmpty {
 //            displayAlert(message: "Name field can't be empty.", title: "Warning")
@@ -396,19 +413,19 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
                 vc?.type = typeType
                 vc?.name = editName
                 vc?.ID = self.entryID as! String
-                vc?.senderController = "Edit"
+                print("Type is \(self.typeType)")
 
             case "Source":
                 vc?.type = typeType
                 vc?.name = editName
                 vc?.ID = self.entryID as! String
-                vc?.senderController = "Edit"
+                print("Type is \(self.typeType)")
 
             default:
                 print("User wants to add a category")
                 vc?.type = typeType
                 vc?.wantToAddCategory = true
-                vc?.senderController = "Edit"
+                print("Type is \(self.typeType)")
 
             }
 

@@ -24,6 +24,8 @@
 		9BF44C2E25F6354D00A9FA96 /* HeaderCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF44C2D25F6354D00A9FA96 /* HeaderCellVC.swift */; };
 		9BF8DD4B25F65EF400D3A8AC /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8DD4A25F65EF400D3A8AC /* EditViewController.swift */; };
 		9BF8DD4F25F6733200D3A8AC /* AddCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8DD4E25F6733200D3A8AC /* AddCategoryViewController.swift */; };
+		9BFF628925FA7104002204D0 /* TableRecurringVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BFF628825FA7104002204D0 /* TableRecurringVC.swift */; };
+		9BFF628C25FA79ED002204D0 /* TableRecurringCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BFF628B25FA79ED002204D0 /* TableRecurringCellVC.swift */; };
 		BA12BBD325E4F4E800154119 /* IconListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA12BBD225E4F4E800154119 /* IconListVC.swift */; };
 		BAB3D9A4259360E400DA000F /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3D9A3259360E400DA000F /* SignUpVC.swift */; };
 		BAB3D9A625937FAF00DA000F /* LandingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3D9A525937FAF00DA000F /* LandingVC.swift */; };
@@ -55,6 +57,8 @@
 		9BF44C2D25F6354D00A9FA96 /* HeaderCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCellVC.swift; sourceTree = "<group>"; };
 		9BF8DD4A25F65EF400D3A8AC /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		9BF8DD4E25F6733200D3A8AC /* AddCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryViewController.swift; sourceTree = "<group>"; };
+		9BFF628825FA7104002204D0 /* TableRecurringVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableRecurringVC.swift; sourceTree = "<group>"; };
+		9BFF628B25FA79ED002204D0 /* TableRecurringCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableRecurringCellVC.swift; sourceTree = "<group>"; };
 		BA12BBD225E4F4E800154119 /* IconListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconListVC.swift; sourceTree = "<group>"; };
 		BAB3D9A3259360E400DA000F /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		BAB3D9A525937FAF00DA000F /* LandingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingVC.swift; sourceTree = "<group>"; };
@@ -171,6 +175,8 @@
 				9B820A8E25F9222C00B62016 /* CheckableTableViewCell.swift */,
 				9B820A9125F94D6F00B62016 /* SettingsVC.swift */,
 				9B2DE29225FA1253009A3360 /* RecurringEntryVC.swift */,
+				9BFF628825FA7104002204D0 /* TableRecurringVC.swift */,
+				9BFF628B25FA79ED002204D0 /* TableRecurringCellVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -300,6 +306,7 @@
 				9B173AC125927C540049DC2D /* Goal.swift in Sources */,
 				9BF44C2B25F6331900A9FA96 /* Source.swift in Sources */,
 				BAC2998F257A6E6F00EE1511 /* AppDelegate.swift in Sources */,
+				9BFF628925FA7104002204D0 /* TableRecurringVC.swift in Sources */,
 				9B33DC9825916BD00004CA6D /* User.swift in Sources */,
 				9BF8DD4F25F6733200D3A8AC /* AddCategoryViewController.swift in Sources */,
 				BAEC3AAB25F77BC3009B1DCE /* AllEditingViewController.swift in Sources */,
@@ -313,6 +320,7 @@
 				9BF44C2E25F6354D00A9FA96 /* HeaderCellVC.swift in Sources */,
 				BAC29991257A6E6F00EE1511 /* SceneDelegate.swift in Sources */,
 				9B820A9225F94D6F00B62016 /* SettingsVC.swift in Sources */,
+				9BFF628C25FA79ED002204D0 /* TableRecurringCellVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
