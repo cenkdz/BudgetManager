@@ -21,6 +21,7 @@ class TableRecurringCellVC: UITableViewCell {
         dayInWeekOutlet.text = String(entries[0].dayInWeek.prefix(3))
         yearAndMonthOutlet.text = entries[0].year + ".0" + entries[0].month
         categorySourceOutlet.text = entries[0].category
+        totalAmountOutlet.text = entries[0].amount
 
         for entry in entries {
             total = total + Int(entry.amount)!

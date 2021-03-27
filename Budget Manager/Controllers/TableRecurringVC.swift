@@ -18,9 +18,6 @@ class TableRecurringVC: UIViewController, UITableViewDataSource, UITableViewDele
     let user = Auth.auth().currentUser
     var entries: [[Entry]] = [[]]
 
-
-
-
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,14 +25,11 @@ class TableRecurringVC: UIViewController, UITableViewDataSource, UITableViewDele
             let entry = Entry(type: type, category: category, source: source, amount: amount, day: String(day), dayInWeek: dayInWeek, year: year, month: month, id: id, uid: uid, recurring: recurring)
             self.entries.append([entry])
         }, uid: self.user!.uid)
-        
         tableView.delegate = self
         tableView.dataSource = self
         tabBarOutlet.delegate = self
         tabBarOutlet.selectedItem = tabBarOutlet.items?[1]
-      
         tableView.reloadData()
-        // Do any additional setup after loading the view.
     }
     func goToHomeVC() {
         let homeViewController = storyboard?.instantiateViewController(identifier: "HomeViewController") as? HomeViewController
@@ -69,9 +63,7 @@ class TableRecurringVC: UIViewController, UITableViewDataSource, UITableViewDele
         let entry = entries[indexPath.row]
         cell.setEntry(entries: entry)
         return cell
-
     }
-
 
     func getUserRecurringEntries(completionHandler: @escaping(String, String, String, String, String, String, String, String, String, String, String) -> (), uid: String) {
         entries = []
@@ -86,10 +78,29 @@ class TableRecurringVC: UIViewController, UITableViewDataSource, UITableViewDele
                     dump(data)
                     completionHandler (data["type"] as! String, data["category"] as! String, data["source"]as! String, data["amount"] as! String, data["day"] as! String, data["dayInWeek"] as! String, data["year"]as! String, data["month"]as! String, data["id"]as! String, data["uid"]as! String, data["recurring"]as! String)
                     self.tableView.reloadData()
-
                 }
             }
         }
     }
+}
 
+extension UITableView {
+
+    func setEmptyMessage(_ message: String) {
+        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
+        messageLabel.text = message
+        messageLabel.textColor = .black
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.font = UIFont(name: "TrebuchetMS", size: 15)
+        messageLabel.sizeToFit()
+
+        self.backgroundView = messageLabel
+        self.separatorStyle = .none
+    }
+
+    func restore() {
+        self.backgroundView = nil
+        self.separatorStyle = .singleLine
+    }
 }

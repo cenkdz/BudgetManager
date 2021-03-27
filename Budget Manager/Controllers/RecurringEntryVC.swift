@@ -21,7 +21,7 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     @IBOutlet weak var datePicker: UIDatePicker!
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
-    var amount = "0"
+    var amount = ""
     var category = "Source"
     var selectedButton = ""
     var entryID: Any!
@@ -161,14 +161,32 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
     }
+    func displayAlert(message: String,title: String) {
+        let dialogMessage = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+        })
+        dialogMessage.addAction(ok)
+        self.present(dialogMessage, animated: true, completion: nil)
+        
+    }
     @IBAction func donePressed(_ sender: UIButton) {
         let change = selectedEndDate - selectedDate
         let monthDiff = change.month!
+        if amountTextFieldOutlet.text!.isEmpty{
+            displayAlert(message: "Amount cannot be empty!", title: "Warning")
+        }else if selectedDay == ""{
+            displayAlert(message: "Please select a start date", title: "Warning")
+        }else if selectedEndDay == ""{
+            displayAlert(message: "Please select a end date", title: "Warning")
+        }
+        else{
         DispatchQueue.main.async {
             self.addRecurringEntry(monthDiff: monthDiff)
         }
         DispatchQueue.main.async {
             self.goToHomeVC()
+        }
         }
 
 
@@ -451,15 +469,6 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             }
 
         }
-    }
-    func displayAlert(message: String, title: String) {
-        let dialogMessage = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
-        let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-        })
-        dialogMessage.addAction(ok)
-        self.present(dialogMessage, animated: true, completion: nil)
-
     }
 }
 

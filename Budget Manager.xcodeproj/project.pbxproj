@@ -22,7 +22,6 @@
 		9BCAD21B25F4F73300047059 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */; };
 		9BF44C2B25F6331900A9FA96 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF44C2A25F6331900A9FA96 /* Source.swift */; };
 		9BF44C2E25F6354D00A9FA96 /* HeaderCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF44C2D25F6354D00A9FA96 /* HeaderCellVC.swift */; };
-		9BF8DD4B25F65EF400D3A8AC /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8DD4A25F65EF400D3A8AC /* EditViewController.swift */; };
 		9BF8DD4F25F6733200D3A8AC /* AddCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8DD4E25F6733200D3A8AC /* AddCategoryViewController.swift */; };
 		9BFF628925FA7104002204D0 /* TableRecurringVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BFF628825FA7104002204D0 /* TableRecurringVC.swift */; };
 		9BFF628C25FA79ED002204D0 /* TableRecurringCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BFF628B25FA79ED002204D0 /* TableRecurringCellVC.swift */; };
@@ -55,7 +54,6 @@
 		9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		9BF44C2A25F6331900A9FA96 /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		9BF44C2D25F6354D00A9FA96 /* HeaderCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCellVC.swift; sourceTree = "<group>"; };
-		9BF8DD4A25F65EF400D3A8AC /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		9BF8DD4E25F6733200D3A8AC /* AddCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryViewController.swift; sourceTree = "<group>"; };
 		9BFF628825FA7104002204D0 /* TableRecurringVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableRecurringVC.swift; sourceTree = "<group>"; };
 		9BFF628B25FA79ED002204D0 /* TableRecurringCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableRecurringCellVC.swift; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 				9B5A05B325F26A7700A02BEF /* HomeViewController.swift */,
 				9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */,
 				9B8209D425F8D77700B62016 /* HomeTableViewCell.swift */,
-				9BF8DD4A25F65EF400D3A8AC /* EditViewController.swift */,
 				9BF8DD4E25F6733200D3A8AC /* AddCategoryViewController.swift */,
 				BAEC3AAA25F77BC3009B1DCE /* AllEditingViewController.swift */,
 				9B173AD32592918A0049DC2D /* CategoryCellVC.swift */,
@@ -312,7 +309,6 @@
 				BAEC3AAB25F77BC3009B1DCE /* AllEditingViewController.swift in Sources */,
 				9B820A8C25F91FCE00B62016 /* UserPreferencesVC.swift in Sources */,
 				9B2DE29325FA1253009A3360 /* RecurringEntryVC.swift in Sources */,
-				9BF8DD4B25F65EF400D3A8AC /* EditViewController.swift in Sources */,
 				9B173AD12592909B0049DC2D /* Category.swift in Sources */,
 				9BCAD21B25F4F73300047059 /* HeaderTableViewCell.swift in Sources */,
 				9B820A8F25F9222C00B62016 /* CheckableTableViewCell.swift in Sources */,

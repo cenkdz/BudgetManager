@@ -43,14 +43,18 @@ class UserPreferencesVC: UIViewController, UITableViewDataSource, UITableViewDel
             displayAlert(message: "Please set a budget goal.", title: "Budget Goal")
         } else if budgetGoal.containsOnlyDigits == false {
             displayAlert(message: "Please enter only numbers for your budget goal.", title: "Salary")
+        }else if Int(budgetGoal)!<0 {
+            displayAlert(message: "Please use positive numbers.", title: "Salary")
         } else if salary.containsOnlyDigits == false {
             displayAlert(message: "Please enter only numbers for your salary.", title: "Salary")
         } else if salary.isEmpty {
             displayAlert(message: "Please enter your salary.", title: "Salary")
-        } else if selectedCategoryNames.isEmpty {
+        } else if Int(salary)!<0 {
+            displayAlert(message: "Please use positive numbers.", title: "Salary")
+        }else if selectedCategoryNames.isEmpty {
             displayAlert(message: "Please select at least one category from the list.", title: "Categories")
         } else {
-            if (salaryAsIncomeOutlet.isOn == true) {
+            if (salaryAsIncomeOutlet.isOn == true && Int(salary) != 0) {
                 DispatchQueue.main.async {
                     self.addSalaryAsIncome(completion: ())
                 }
@@ -140,7 +144,9 @@ class UserPreferencesVC: UIViewController, UITableViewDataSource, UITableViewDel
             for doc in docs {
                 let docData = doc.data()
                 let ref = doc.reference
-                ref.updateData(["budgetGoal": self.budgetGoal])
+                if Int(self.budgetGoal)!>0 {
+                    ref.updateData(["budgetGoal": self.budgetGoal])
+                }
                 ref.updateData(["salary": self.salary])
                 completion
             }
