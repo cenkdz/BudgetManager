@@ -17,21 +17,14 @@ class LandingVC: UIViewController {
     @IBOutlet weak var passwordTextFieldOutlet: UITextField!
     let password = NSPredicate(format: "SELF MATCHES %@ ", "^(?=.*[a-z])(?=.*[$@$#!%*?&]).{6,}$")
     var showPassword = true
+    let helperMethods = HelperMethods()
+    let firebaseMethods = FirebaseMethods()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        passwordTextFieldOutlet.isSecureTextEntry = true
-        self.hideKeyboardWhenTappedAround()
-        emailTextFieldOutlet.attributedPlaceholder = NSAttributedString(string: "E-mail", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.01, green: 0.10, blue: 0.38, alpha: 1.00)])
-        passwordTextFieldOutlet.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.01, green: 0.10, blue: 0.38, alpha: 1.00)])
-        
-        emailTextFieldOutlet.layer.borderWidth = 1
-        emailTextFieldOutlet.layer.borderColor = CGColor(red: 164/255, green: 164/255, blue: 164/255, alpha:  1)
-        emailTextFieldOutlet.layer.cornerRadius = 10
-        passwordTextFieldOutlet.layer.borderWidth = 1
-        passwordTextFieldOutlet.layer.borderColor = CGColor(red: 164/255, green: 164/255, blue: 164/255, alpha:  1)
-        passwordTextFieldOutlet.layer.cornerRadius = 10
-        
+        setUISettings()
+        setUIAppearance()
+
     }
     @IBAction func forgotPasswordPressed(_ sender: UIButton) {
         print("Forgot password Pressed!!")
@@ -40,32 +33,22 @@ class LandingVC: UIViewController {
         let trimmedEmail = emailTextFieldOutlet.text!.trimmingCharacters(in: .whitespaces)
 
         if (trimmedEmail.isEmpty) {
-            displayAlert(message: "E-mail Missing", title: "Warning")
+            helperMethods.displayAlert(message: "E-mail Missing", title: "Warning",receiverController: self)
         }
         else if (passwordTextFieldOutlet.text!.isEmpty){
-            displayAlert(message: "Password Missing", title: "Warning")
+            helperMethods.displayAlert(message: "Password Missing", title: "Warning",receiverController: self)
         }
         else if !(EmailValidator.validate(email: trimmedEmail))  {
-            displayAlert(message: "Wrong e-mail", title: "Warning")
+            helperMethods.displayAlert(message: "Wrong e-mail", title: "Warning",receiverController: self)
         }
         else if !(password.evaluate(with: passwordTextFieldOutlet.text)){
-            displayAlert(message: "Wrong password", title: "Warning")
+            helperMethods.displayAlert(message: "Wrong password", title: "Warning",receiverController: self)
         }
         else {
-
-            Auth.auth().signIn(withEmail: trimmedEmail, password: passwordTextFieldOutlet.text!) { [weak self] user, error in
-                guard let strongSelf = self else { return }
-                if(error != nil) {
-                    strongSelf.displayAlert(message: "Username or password wrong", title: "Warning")
-                }
-                else if error == nil{
-                    self!.goToHomeVC()
-                }
-            }
+            firebaseMethods.signIn(email: trimmedEmail, password: passwordTextFieldOutlet.text!, senderController: self)
         }
     }
     @IBAction func dontHaveAnAccountPressed(_ sender: UIButton) {
-        print("DHAA Pressed!!")
         self.performSegue(withIdentifier: "goToSignUpVC", sender: self)
     }
     @IBAction func passwordTogglePressed(_ sender: UIButton) {
@@ -76,23 +59,25 @@ class LandingVC: UIViewController {
         } else {
             passwordTextFieldOutlet.isSecureTextEntry = false
             sender.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
-            
         }
     }
-    func displayAlert(message: String,title: String) {
-        let dialogMessage = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-        })
-        dialogMessage.addAction(ok)
-        self.present(dialogMessage, animated: true, completion: nil)
-        
+    
+    func setUIAppearance(){
+        emailTextFieldOutlet.attributedPlaceholder = NSAttributedString(string: "E-mail", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.01, green: 0.10, blue: 0.38, alpha: 1.00)])
+        passwordTextFieldOutlet.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.01, green: 0.10, blue: 0.38, alpha: 1.00)])
+        emailTextFieldOutlet.layer.borderWidth = 1
+        emailTextFieldOutlet.layer.borderColor = CGColor(red: 164/255, green: 164/255, blue: 164/255, alpha:  1)
+        emailTextFieldOutlet.layer.cornerRadius = 10
+        passwordTextFieldOutlet.layer.borderWidth = 1
+        passwordTextFieldOutlet.layer.borderColor = CGColor(red: 164/255, green: 164/255, blue: 164/255, alpha:  1)
+        passwordTextFieldOutlet.layer.cornerRadius = 10
     }
-    func goToHomeVC() {
-        let homeViewController = storyboard?.instantiateViewController(identifier: "HomeViewController") as? HomeViewController
-        view.window?.rootViewController = homeViewController
-        view.window?.makeKeyAndVisible()
+    
+    func setUISettings(){
+        passwordTextFieldOutlet.isSecureTextEntry = true
+        self.hideKeyboardWhenTappedAround()
     }
+
 }
 
 

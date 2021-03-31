@@ -12,79 +12,64 @@ import FirebaseAuth
 import FirebaseDatabase
 
 class UserPreferencesVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-
-
+    
     @IBOutlet weak var budgetGoalOutlet: UITextField!
     @IBOutlet weak var salaryOutlet: UITextField!
     @IBOutlet weak var salaryAsIncomeOutlet: UISwitch!
     @IBOutlet weak var tableView: UITableView!
-    let db = Firestore.firestore()
-    let user = Auth.auth().currentUser
+    let helperMethods = HelperMethods()
+    let firebaseMethods = FirebaseMethods()
     var lastSelectedIndexPath = NSIndexPath(row: -1, section: 0)
     var categories: [Category] = [Category(categoryID: "1", categoryName: "Home", categoryIcon: "", uid: "6"), Category(categoryID: "2", categoryName: "Car", categoryIcon: "", uid: "6"), Category(categoryID: "3", categoryName: "Health", categoryIcon: "", uid: "6"), Category(categoryID: "4", categoryName: "Self-Care", categoryIcon: "", uid: "6")]
     var selectedCategoryNames = [String]()
     var budgetGoal = ""
     var salary = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
-        self.hideKeyboardWhenTappedAround()
-        self.tableView.allowsMultipleSelection = true
-        self.tableView.allowsMultipleSelectionDuringEditing = true
-
-        // Do any additional setup after loading the view.
+        setTableView()
+        setUISettings()
     }
+    
     @IBAction func finishPressed(_ sender: UIButton) {
          budgetGoal = budgetGoalOutlet.text!.trimmingCharacters(in: .whitespaces)
          salary = salaryOutlet.text!.trimmingCharacters(in: .whitespaces)
         if budgetGoal.isEmpty {
-            displayAlert(message: "Please set a budget goal.", title: "Budget Goal")
+            helperMethods.displayAlert(message: "Please set a budget goal.", title: "Budget Goal",receiverController: self)
         } else if budgetGoal.containsOnlyDigits == false {
-            displayAlert(message: "Please enter only numbers for your budget goal.", title: "Salary")
+            helperMethods.displayAlert(message: "Please enter only numbers for your budget goal.", title: "Salary",receiverController: self)
         }else if Int(budgetGoal)!<0 {
-            displayAlert(message: "Please use positive numbers.", title: "Salary")
+            helperMethods.displayAlert(message: "Please use positive numbers.", title: "Salary",receiverController: self)
         } else if salary.containsOnlyDigits == false {
-            displayAlert(message: "Please enter only numbers for your salary.", title: "Salary")
+            helperMethods.displayAlert(message: "Please enter only numbers for your salary.", title: "Salary",receiverController: self)
         } else if salary.isEmpty {
-            displayAlert(message: "Please enter your salary.", title: "Salary")
+            helperMethods.displayAlert(message: "Please enter your salary.", title: "Salary",receiverController: self)
         } else if Int(salary)!<0 {
-            displayAlert(message: "Please use positive numbers.", title: "Salary")
+            helperMethods.displayAlert(message: "Please use positive numbers.", title: "Salary",receiverController: self)
         }else if selectedCategoryNames.isEmpty {
-            displayAlert(message: "Please select at least one category from the list.", title: "Categories")
+            helperMethods.displayAlert(message: "Please select at least one category from the list.", title: "Categories",receiverController: self)
         } else {
             if (salaryAsIncomeOutlet.isOn == true && Int(salary) != 0) {
                 DispatchQueue.main.async {
-                    self.addSalaryAsIncome(completion: ())
+                    self.firebaseMethods.addSalaryAsIncome(completion: (), salary: self.salary)
                 }
             }
             DispatchQueue.main.async {
-                self.addCategory(completion: ())
+                self.firebaseMethods.addSelectedMainCategory(completion: (), selectedCategoryNames: self.selectedCategoryNames)
             }
             DispatchQueue.main.async {
-                self.addPreferences(completion: ())
+                self.firebaseMethods.addPreferences(completion: (), budgetGoal: self.budgetGoal, salary: self.salary)
             }
             DispatchQueue.main.async {
-                self.goToHomeVC()
+                self.helperMethods.goToHomeVC(senderController: self)
             }
-
-
-            //print("Success!!")
         }
-    }
-
-    func goToHomeVC() {
-        let homeViewController = storyboard?.instantiateViewController(identifier: "HomeViewController") as? HomeViewController
-        view.window?.rootViewController = homeViewController
-        view.window?.makeKeyAndVisible()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell",
             for: indexPath) as? CheckableTableViewCell
         cell?.setCell(category: categories[indexPath.row])
-
         return cell!
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -94,7 +79,6 @@ class UserPreferencesVC: UIViewController, UITableViewDataSource, UITableViewDel
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell",
             for: indexPath) as? CheckableTableViewCell
         cell?.setCell(category: categories[indexPath.row])
-
         selectedCategoryNames.append(cell!.categoryNameOutlet.text!)
         print("Entry has been added Array is Now \(selectedCategoryNames)")
 
@@ -103,68 +87,21 @@ class UserPreferencesVC: UIViewController, UITableViewDataSource, UITableViewDel
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell",
             for: indexPath) as? CheckableTableViewCell
         cell?.setCell(category: categories[indexPath.row])
-
         selectedCategoryNames.removeAll { value in
             return value == cell!.categoryNameOutlet.text!
         }
         print("Entry has been removed Array is Now \(selectedCategoryNames)")
-
     }
-    func displayAlert(message: String, title: String) {
-        let dialogMessage = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
-        let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-        })
-        dialogMessage.addAction(ok)
-        self.present(dialogMessage, animated: true, completion: nil)
-
+    
+    func setTableView(){
+        tableView.delegate = self
+        tableView.dataSource = self
+        self.tableView.allowsMultipleSelection = true
+        self.tableView.allowsMultipleSelectionDuringEditing = true
     }
-
-    func addCategory(completion: ()) {
-        for category in selectedCategoryNames {
-            let category = Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)), categoryName: category, categoryIcon: "", uid: user!.uid)
-            let dictionary = category.getDictionary()
-            do {
-                try db.collection("categories").addDocument(data: dictionary)
-                completion
-            } catch let error {
-                print("Error writing entry to Firestore: \(error)")
-            }
-        }
-    }
-
-    func addPreferences(completion: ()) {
-        let entries = self.db.collection("users")
-        entries.whereField("uid", isEqualTo: user!.uid).getDocuments(completion: { querySnapshot, error in
-            if let err = error {
-                print(err.localizedDescription)
-                return
-            }
-            guard let docs = querySnapshot?.documents else { return }
-            for doc in docs {
-                let docData = doc.data()
-                let ref = doc.reference
-                if Int(self.budgetGoal)!>0 {
-                    ref.updateData(["budgetGoal": self.budgetGoal])
-                }
-                ref.updateData(["salary": self.salary])
-                completion
-            }
-        })
-    }
-    func addSalaryAsIncome(completion: ()) {
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-        let entry = Entry(type: "Income", category: "Salary", source: "Salary", amount: salary, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "false")
-        let dictionary = entry.getDictionary()
-        do {
-            try db.collection("entries").addDocument(data: dictionary)
-            completion
-
-        } catch let error {
-            print("Error writing entry to Firestore: \(error)")
-        }
+    
+    func  setUISettings(){
+        self.hideKeyboardWhenTappedAround()
     }
 }
 extension String {
