@@ -25,6 +25,8 @@ class FirebaseMethods: UIViewController{
                 strongSelf.helperMethods.displayAlert(message: "Username or password wrong", title: "Warning",receiverController: senderController)
             }
             else if error == nil{
+                UserDefaults.standard.set(Auth.auth().currentUser!.uid, forKey: "user_uid_key")
+                UserDefaults.standard.synchronize()
                 self?.helperMethods.goToHomeVC(senderController: senderController)
             }
         }
@@ -38,6 +40,8 @@ class FirebaseMethods: UIViewController{
              db.collection("users").addDocument(data: ["firstname": firstName,"uid":authResult!.user.uid,"salary": "","budgetGoal":""]) { (errorDatabase) in
                     if errorDatabase == nil{
                         self.helperMethods.displayDisappearingAlert(message: "Success", title: "Signup Successful",receiverController: senderController)
+                        UserDefaults.standard.set(Auth.auth().currentUser!.uid, forKey: "user_uid_key")
+                        UserDefaults.standard.synchronize()
                         self.helperMethods.goToUserPreferences(senderController: senderController)
                     }
                     else if errorDatabase != nil {
