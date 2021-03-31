@@ -52,9 +52,6 @@ class SettingsVC: UIViewController,UITabBarDelegate {
         let firebaseAuth = Auth.auth()
              do {
                try firebaseAuth.signOut()
-                // Remove User Session from device
-                            UserDefaults.standard.removeObject(forKey: "user_uid_key")
-                            UserDefaults.standard.synchronize()
                  goToLandingVC()
              } catch let signOutError as NSError {
                print ("Error signing out: %@", signOutError)

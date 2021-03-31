@@ -84,6 +84,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tabBarOutlet.selectedItem = tabBarOutlet.items?[0]
     }
     
+    func setData() {
+        let sortedArray = entries.sorted(by: { $0[0].day > $1[0].day })
+        entries.removeAll()
+        entries.append(contentsOf: sortedArray)
+    }
     @IBAction func unwindFromAllEditingVC(_ sender: UIStoryboardSegue) {
         DispatchQueue.main.async {
             self.fillEntries(completion: (), entries: self.entries)
