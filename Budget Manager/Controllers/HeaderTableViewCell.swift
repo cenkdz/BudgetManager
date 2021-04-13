@@ -20,7 +20,13 @@ class HeaderTableViewCell: UITableViewCell {
         dayInWeekOutlet.text = String(entries[0].dayInWeek.prefix(3))
         yearAndMonthOutlet.text = entries[0].year + ".0" + entries[0].month
         for entry in entries {
-            total = total + Int(entry.amount)!
+            if entry.type == "Expense" {
+                total = total - Int(entry.amount)!
+            }
+            else if entry.type == "Income" {
+                total = total + Int(entry.amount)!
+            }
+            
         }
     }
     

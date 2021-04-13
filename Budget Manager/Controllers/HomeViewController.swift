@@ -28,6 +28,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var editCategory = ""
     var editAmount = ""
+    let user = Auth.auth().currentUser
     let db = Firestore.firestore()
     var selectedEntryID: Any!
     var editSource = ""
@@ -41,6 +42,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var userAction = ""
     let helperMethods = HelperMethods()
     let firebaseMethods = FirebaseMethods()
+    let calculator = Calculator()
+    var income = ""
+    var expense = ""
+    var balance = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,21 +53,27 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         setUISettings()
         setTableView()
         setTabBar()
-        self.fillEntries(completion: (), entries: entries)
+        self.fillEntries()
         //self.setData()
-        //self.setFinancialOutlets()
+
     }
     
-    func fillEntries(completion: (),entries: [[Entry]]) {
+    func fillEntries() {
         self.entries = []
-        self.firebaseMethods.getUserEntries(completionHandler: { (type, category, source, amount, day, dayInWeek, year, month, id, uid, recurring) in
-            let entry = Entry(type: type, category: category, source: source, amount: amount, day: String(day), dayInWeek: dayInWeek, year: year, month: month, id: id, uid: uid, recurring: recurring)
-            self.entries.append([entry])
-            self.tableView.reloadData()
-
-        }, uid: firebaseMethods.user!.uid, entries: entries, senderController: self)
-        completion
-        tableView.reloadData()
+        db.collection("entries").whereField("uid", isEqualTo: user!.uid)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let data = document.data()
+                        self.entries.append([Entry(type: data["type"] as! String, category: data["category"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String)])
+                    }
+                    self.tableView.reloadData()
+                    self.setFinancialOutlets()
+                    
+                }
+            }
     }
     
     func setBlurEffect(){
@@ -92,7 +103,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     @IBAction func unwindFromAllEditingVC(_ sender: UIStoryboardSegue) {
         DispatchQueue.main.async {
-            self.fillEntries(completion: (), entries: self.entries)
+            self.fillEntries()
         }
         
         self.tableView.reloadData()
@@ -139,20 +150,20 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //        return todayEntries
     //    }
     
-//    func setFinancialOutlets() {
-//        let total = calculateTotal()
-//        let income = calculateIncome()
-//        let expenses = calculateExpenses()
-//        if Int(total)! < 0 {
-//            totalOutlet.textColor = UIColor(red: 0.98, green: 0.39, blue: 0.00, alpha: 1.00)
-//        }
-//        else if Int(total)! >= 0 {
-//            totalOutlet.textColor = UIColor(red: 0.24, green: 0.48, blue: 0.94, alpha: 1.00)
-//        }
-//        totalOutlet.text = total
-//        incomeOutlet.text = income
-//        expenseOutlet.text = expenses
-//    }
+    func setFinancialOutlets() {
+        let total = calculator.calculateTotal(entries: entries)
+        let income = calculator.calculateIncome(entries: entries)
+        let expenses = calculator.calculateExpenses(entries: entries)
+        if Int(total)! < 0 {
+            totalOutlet.textColor = UIColor(red: 0.98, green: 0.39, blue: 0.00, alpha: 1.00)
+        }
+        else if Int(total)! >= 0 {
+            totalOutlet.textColor = UIColor(red: 0.24, green: 0.48, blue: 0.94, alpha: 1.00)
+        }
+        totalOutlet.text = total
+        incomeOutlet.text = income
+        expenseOutlet.text = expenses
+    }
     
     @IBAction func recurringEntryPressed(_ sender: UIButton) {
         helperMethods.goToRecurringEntryVC(senderController: self)

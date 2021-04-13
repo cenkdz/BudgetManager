@@ -16,9 +16,13 @@ class Calculator{
         
         for array in entries {
             for value in array {
-                total = total + Int(value.amount)!
+                if value.type == "Expense" {
+                    total = total - Int(value.amount)!
+                }
+                else if value.type == "Income" {
+                    total = total + Int(value.amount)!
+                }
             }
-            print(" ")
         }
         return String(total)
     }
