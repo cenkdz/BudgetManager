@@ -106,7 +106,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.fillEntries()
         }
         
-        self.tableView.reloadData()
         animateOut()
         print("Came from AllEditingVC")
     }

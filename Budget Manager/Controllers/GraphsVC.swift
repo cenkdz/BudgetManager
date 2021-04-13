@@ -12,15 +12,18 @@ import Firebase
 import FirebaseAuth
 class GraphsVC: UIViewController, UITabBarDelegate{
     
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tabBarOutlet: UITabBar!
     let firebaseMethods = FirebaseMethods()
     var entries: [[Entry]] = [[]]
     var categories: [String] = []
+    var incomeCategories: [String] = []
     var grapDic:[Int:String] = [:]
     var dataSets:[IChartDataSet] = []
     var pieDataSets:[ChartDataSet] = []
     var colors: [UIColor] = []
     var total = 0.0
+    var type = "Expense"
 
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
@@ -30,6 +33,26 @@ class GraphsVC: UIViewController, UITabBarDelegate{
         super.viewDidLoad()
         setTabBar()
         fillEntries()
+    }
+    @IBAction func onChange(_ sender: UISegmentedControl) {
+        type = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)!
+        
+        switch type {
+        case "Initial":
+            print("Nothing!")
+        case "Income":
+            DispatchQueue.main.async {
+                self.createExpenseBarChart()
+            }
+        case "Expense":
+            DispatchQueue.main.async {
+                self.createExpenseBarChart()
+            }
+        default:
+            print("ERROR!")
+        }
+        
+        print(type)
     }
     
     func setTabBar(){
@@ -48,13 +71,68 @@ class GraphsVC: UIViewController, UITabBarDelegate{
             helperMethods.goToSettingsVC(senderController: self)        }
     }
     
-    func createBarChart(){
+    func createExpenseBarChart(){
+        dataSets.removeAll()
         //Create bar chart
         let barChart = BarChartView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2))
+        barChart.tag = 0
+        
+        var i = 0
+        if type == "Expense" {
+            for category in categories {
+                for entry in entries.matrixIterator() {
+                    if entry.category == category {
+                        total = total + Double(entry.amount)!
+                    }
+                }
+                dataSets.append(BarChartDataSet(entries: [BarChartDataEntry(x: Double(i), y: total)], label: String(category)))
+                barChart.notifyDataSetChanged()
+                i = i+1
+                total = 0.0
+
+            }
+        }
+        else if type == "Income" {
+            for category in incomeCategories {
+                for entry in entries.matrixIterator() {
+                    if entry.category == category {
+                        total = total + Double(entry.amount)!
+                    }
+                }
+                dataSets.append(BarChartDataSet(entries: [BarChartDataEntry(x: Double(i), y: total)], label: String(category)))
+                barChart.notifyDataSetChanged()
+                i = i+1
+                total = 0.0
+
+            }
+        }
+        barChart.notifyDataSetChanged()
+
+
+        for set in dataSets {
+            set.setColor(.random)
+        }
+        let data = BarChartData(dataSets: dataSets)
+        barChart.data = data
+        barChart.drawGridBackgroundEnabled = false
+        barChart.drawBarShadowEnabled = false
+        
+        barChart.invalidateIntrinsicContentSize()
+       
+            view.addSubview(barChart)
+        
+        barChart.center = view.center
+        
+    }
+    
+    func createIncomeBarChart(){
+        //Create bar chart
+        let barChart = BarChartView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2))
+        barChart.tag = 1
         
         var i = 0
         
-        for category in categories {
+        for category in incomeCategories {
             for entry in entries.matrixIterator() {
                 if entry.category == category {
                     total = total + Double(entry.amount)!
@@ -90,16 +168,19 @@ class GraphsVC: UIViewController, UITabBarDelegate{
                         let data = document.data()
                         self.entries.append([Entry(type: data["type"] as! String, category: data["category"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String)])
                     }
-                    self.getCategories()
-                    self.createBarChart()
+                    self.getExpenseCategories()
+                    self.getIncomeCategories()
+                    self.createExpenseBarChart()
                 }
             }
     }
     
-    func getCategories(){
+    func getExpenseCategories(){
+        categories = []
         for entry in entries.matrixIterator() {
             let category = entry.category
-            
+            if entry.type == "Expense" {
+                
             if categories.isEmpty {
                 categories.append(category)
             }
@@ -111,8 +192,40 @@ class GraphsVC: UIViewController, UITabBarDelegate{
                 }
             }
         }
+        }
         categories = categories.uniqued()
         dump(categories)
+    }
+    
+    func getIncomeCategories(){
+        incomeCategories = []
+        for entry in entries.matrixIterator() {
+            let category = entry.category
+            if entry.type == "Income" {
+                
+            if incomeCategories.isEmpty {
+                incomeCategories.append(category)
+            }
+            else{
+                for category1 in incomeCategories {
+                    if category1 != category {
+                        incomeCategories.append(category)
+                    }
+                }
+            }
+        }
+        }
+        incomeCategories = incomeCategories.uniqued()
+        dump(incomeCategories)
+    }
+    
+    func removeSubview(tag: Int){
+        
+        if let viewWithTag = self.view.viewWithTag(tag) {
+            viewWithTag.removeFromSuperview()
+        }else{
+            
+        }
     }
 
     
