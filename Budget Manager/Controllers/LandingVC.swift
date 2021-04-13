@@ -26,6 +26,17 @@ class LandingVC: UIViewController {
         setUIAppearance()
 
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+
+        super.viewDidAppear(animated)
+
+        // Check if the user is logged in
+        if UserDefaults.standard.object(forKey: "user_uid_key") != nil {
+            // send them to a new view controller or do whatever you want
+            helperMethods.goToHomeVC(senderController: self)
+        }
+    }
     @IBAction func forgotPasswordPressed(_ sender: UIButton) {
         print("Forgot password Pressed!!")
     }
