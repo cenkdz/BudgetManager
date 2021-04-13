@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lpc-7j-AkB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6kd-lv-VoL">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -143,7 +143,7 @@
                                     <fragment content="Hello, Cenk">
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="22" name="Gilroy-SemiBold"/>
+                                            <font key="NSFont" metaFont="system" size="22"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="28" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -196,6 +196,45 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GtG-Xa-xmZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="928.79999999999995" y="-1873.313343328336"/>
+        </scene>
+        <!--GraphsVC-->
+        <scene sceneID="Q9Q-X4-jld">
+            <objects>
+                <viewController storyboardIdentifier="GraphsVC" id="6kd-lv-VoL" customClass="GraphsVC" customModule="Budget_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Bzw-IL-Fao">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pVs-D9-Z6u">
+                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <items>
+                                    <tabBarItem title="Home" image="house.fill" catalog="system" id="9KW-Ak-KDU"/>
+                                    <tabBarItem tag="1" title="Recurring" image="repeat.circle.fill" catalog="system" id="Lib-MQ-hbU"/>
+                                    <tabBarItem tag="2" title="Statistics" image="chart.pie.fill" catalog="system" id="ZGl-21-fVH"/>
+                                    <tabBarItem tag="3" title="Settings" image="gearshape.fill" catalog="system" id="SUG-37-ZXi"/>
+                                </items>
+                            </tabBar>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="OQj-vR-BvU">
+                                <rect key="frame" x="16" y="20" width="343" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Expense"/>
+                                    <segment title="Income"/>
+                                </segments>
+                            </segmentedControl>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dzT-3g-f91"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <outlet property="tabBarOutlet" destination="pVs-D9-Z6u" id="2ad-FH-eEq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vgh-mh-AFX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1800.8" y="-1873.313343328336"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="UvZ-kJ-T9o">
@@ -440,7 +479,7 @@
                                                         <fragment content="Salary / AccountsSalary / Accounts">
                                                             <attributes>
                                                                 <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                <font key="NSFont" size="13" name="Gilroy-Medium"/>
+                                                                <font key="NSFont" metaFont="system"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="15" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -1354,7 +1393,7 @@
                                         <fragment content="Forgot password?">
                                             <attributes>
                                                 <color key="NSColor" red="0.12941176469999999" green="0.16862745100000001" blue="0.43529411759999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" size="13" name="Gilroy-Regular"/>
+                                                <font key="NSFont" metaFont="system"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="15" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
@@ -1373,7 +1412,7 @@
                                         <fragment content="LOGIN">
                                             <attributes>
                                                 <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <font key="NSFont" size="14" name="Gilroy-SemiBold"/>
+                                                <font key="NSFont" metaFont="system" size="14"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="18" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
@@ -1399,7 +1438,7 @@
                                         <fragment content="Don't have an account?">
                                             <attributes>
                                                 <color key="NSColor" red="0.011764705882352941" green="0.098039215686274508" blue="0.38039215686274508" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="13" name="Gilroy-Regular"/>
+                                                <font key="NSFont" metaFont="system"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
@@ -1427,7 +1466,7 @@
                                     <fragment content="WELCOME">
                                         <attributes>
                                             <color key="NSColor" red="0.011764705882352941" green="0.098039215686274508" blue="0.38039215686274508" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="13" name="Gilroy-SemiBold"/>
+                                            <font key="NSFont" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="16" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -1441,7 +1480,7 @@
                                     <fragment content="TO BUDGET MANAGER">
                                         <attributes>
                                             <color key="NSColor" red="0.011764705882352941" green="0.098039215686274508" blue="0.38039215686274508" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="13" name="Gilroy-SemiBold"/>
+                                            <font key="NSFont" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="16" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -1572,7 +1611,7 @@
                                     <fragment content="WELCOME">
                                         <attributes>
                                             <color key="NSColor" red="0.011764705882352941" green="0.098039215686274508" blue="0.38039215686274508" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="13" name="Gilroy-SemiBold"/>
+                                            <font key="NSFont" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="16" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -1586,7 +1625,7 @@
                                     <fragment content="TO BUDGET MANAGER">
                                         <attributes>
                                             <color key="NSColor" red="0.011764705882352941" green="0.098039215686274508" blue="0.38039215686274508" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="13" name="Gilroy-SemiBold"/>
+                                            <font key="NSFont" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="16" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>

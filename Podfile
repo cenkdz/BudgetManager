@@ -10,6 +10,7 @@ target 'Budget Manager' do
   pod 'Firebase/Database'
   pod ‘Firebase/Core’
   pod 'Firebase/Firestore'
+  pod 'Charts'
   # Pods for Budget Manager
 
 end

@@ -61,13 +61,13 @@ class HelperMethods {
         senderController.view.window?.makeKeyAndVisible()
     }
     func goToRecurringEntryVC(senderController: UIViewController) {
-        let homeViewController = senderController.storyboard?.instantiateViewController(identifier: "RecurringEntryVC") as? RecurringEntryVC
+        let homeViewController = senderController.storyboard?.instantiateViewController(identifier: "TableRecurringVC") as? TableRecurringVC
         senderController.view.window?.rootViewController = homeViewController
         senderController.view.window?.makeKeyAndVisible()
     }
-//    func goToStatisticsVC(senderController: UIViewController) {
-//        let homeViewController = senderController.storyboard?.instantiateViewController(identifier: "HomeViewController") as? HomeViewController
-//        senderController.view.window?.rootViewController = homeViewController
-//        senderController.view.window?.makeKeyAndVisible()
-//    }
+    func goToGraphsVC(senderController: UIViewController) {
+        let homeViewController = senderController.storyboard?.instantiateViewController(identifier: "GraphsVC") as? GraphsVC
+        senderController.view.window?.rootViewController = homeViewController
+        senderController.view.window?.makeKeyAndVisible()
+    }
 }

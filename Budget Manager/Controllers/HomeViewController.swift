@@ -58,8 +58,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.firebaseMethods.getUserEntries(completionHandler: { (type, category, source, amount, day, dayInWeek, year, month, id, uid, recurring) in
             let entry = Entry(type: type, category: category, source: source, amount: amount, day: String(day), dayInWeek: dayInWeek, year: year, month: month, id: id, uid: uid, recurring: recurring)
             self.entries.append([entry])
+            self.tableView.reloadData()
 
-        }, uid: firebaseMethods.user!.uid, entries: entries, senderController: self, tableView: self.tableView)
+        }, uid: firebaseMethods.user!.uid, entries: entries, senderController: self)
         completion
         tableView.reloadData()
     }
@@ -163,7 +164,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         } else if(item.tag == 1) {
             helperMethods.goToRecurringEntryVC(senderController: self)
         } else if(item.tag == 2) {
-            print("Statistics Selected")
+            helperMethods.goToGraphsVC(senderController: self)
         }else if(item.tag == 3) {
             print("Settings Selected")
             helperMethods.goToSettingsVC(senderController: self)        }

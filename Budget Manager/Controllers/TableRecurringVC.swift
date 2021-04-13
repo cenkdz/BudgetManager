@@ -17,6 +17,8 @@ class TableRecurringVC: UIViewController, UITableViewDataSource, UITableViewDele
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
     var entries: [[Entry]] = [[]]
+    let helperMethods = HelperMethods()
+
 
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -31,26 +33,18 @@ class TableRecurringVC: UIViewController, UITableViewDataSource, UITableViewDele
         tabBarOutlet.selectedItem = tabBarOutlet.items?[1]
         tableView.reloadData()
     }
-    func goToHomeVC() {
-        let homeViewController = storyboard?.instantiateViewController(identifier: "HomeViewController") as? HomeViewController
-        view.window?.rootViewController = homeViewController
-        view.window?.makeKeyAndVisible()
-    }
-    func goToSettingsVC() {
-        let homeViewController = storyboard?.instantiateViewController(identifier: "SettingsVC") as? SettingsVC
-        view.window?.rootViewController = homeViewController
-        view.window?.makeKeyAndVisible()
-    }
+
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if(item.tag == 0) {
-            goToHomeVC()
+            helperMethods.goToHomeVC(senderController: self)
         } else if(item.tag == 1) {
-            print("Recurring Selected")
+            helperMethods.goToRecurringEntryVC(senderController: self)
+            
         } else if(item.tag == 2) {
-            print("Statistics Selected")
+            helperMethods.goToGraphsVC(senderController: self)
         }
         else if(item.tag == 3) {
-            goToSettingsVC()
+            helperMethods.goToSettingsVC(senderController: self)
         }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

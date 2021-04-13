@@ -18,6 +18,7 @@
 		9B820A8C25F91FCE00B62016 /* UserPreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B820A8B25F91FCE00B62016 /* UserPreferencesVC.swift */; };
 		9B820A8F25F9222C00B62016 /* CheckableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B820A8E25F9222C00B62016 /* CheckableTableViewCell.swift */; };
 		9B820A9225F94D6F00B62016 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B820A9125F94D6F00B62016 /* SettingsVC.swift */; };
+		9BADD8542625C93C000E18F9 /* GraphsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BADD8532625C93C000E18F9 /* GraphsVC.swift */; };
 		9BBF4ABA2590EC3400F1290C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */; };
 		9BCAD21B25F4F73300047059 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */; };
 		9BE08E5226146AD400D25541 /* FirebaseMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE08E5126146AD400D25541 /* FirebaseMethods.swift */; };
@@ -54,6 +55,7 @@
 		9B820A8B25F91FCE00B62016 /* UserPreferencesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferencesVC.swift; sourceTree = "<group>"; };
 		9B820A8E25F9222C00B62016 /* CheckableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckableTableViewCell.swift; sourceTree = "<group>"; };
 		9B820A9125F94D6F00B62016 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		9BADD8532625C93C000E18F9 /* GraphsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphsVC.swift; sourceTree = "<group>"; };
 		9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		9BE08E5126146AD400D25541 /* FirebaseMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMethods.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				9B2DE29225FA1253009A3360 /* RecurringEntryVC.swift */,
 				9BFF628825FA7104002204D0 /* TableRecurringVC.swift */,
 				9BFF628B25FA79ED002204D0 /* TableRecurringCellVC.swift */,
+				9BADD8532625C93C000E18F9 /* GraphsVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				9BF8DD4F25F6733200D3A8AC /* AddCategoryViewController.swift in Sources */,
 				BAEC3AAB25F77BC3009B1DCE /* AllEditingViewController.swift in Sources */,
 				9BE08E5226146AD400D25541 /* FirebaseMethods.swift in Sources */,
+				9BADD8542625C93C000E18F9 /* GraphsVC.swift in Sources */,
 				9B820A8C25F91FCE00B62016 /* UserPreferencesVC.swift in Sources */,
 				9B2DE29325FA1253009A3360 /* RecurringEntryVC.swift in Sources */,
 				9B173AD12592909B0049DC2D /* Category.swift in Sources */,

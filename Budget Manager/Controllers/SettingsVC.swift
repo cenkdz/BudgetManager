@@ -13,7 +13,7 @@ import FirebaseDatabase
 
 class SettingsVC: UIViewController,UITabBarDelegate {
     @IBOutlet weak var tabBarOutlet: UITabBar!
-    
+    let helperMethods = HelperMethods()
     let user = Auth.auth().currentUser
 
     override func viewDidLoad() {
@@ -24,13 +24,13 @@ class SettingsVC: UIViewController,UITabBarDelegate {
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if(item.tag == 0) {
-            goToHomeVC()
+            helperMethods.goToHomeVC(senderController: self)
         } else if(item.tag == 1) {
-            goToTableRecurringVC()
+            helperMethods.goToRecurringEntryVC(senderController: self)
         }else if(item.tag == 2) {
-            print("Statistics Selected")
+            helperMethods.goToGraphsVC(senderController: self)
         } else if(item.tag == 3) {
-            print("Settings Selected")
+            helperMethods.goToSettingsVC(senderController: self)
         }
     }
     func goToLandingVC() {

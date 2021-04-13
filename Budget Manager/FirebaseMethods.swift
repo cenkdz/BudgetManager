@@ -104,7 +104,7 @@ class FirebaseMethods: UIViewController{
     
     //HomeVC
     
-    func getUserEntries(completionHandler: @escaping(String, String, String, String, String, String, String, String, String, String,String) -> (), uid: String,entries: [[Entry]],senderController: UIViewController,tableView : UITableView) {
+    func getUserEntries(completionHandler: @escaping(String, String, String, String, String, String, String, String, String, String,String) -> (), uid: String,entries: [[Entry]],senderController: UIViewController) {
        // entries = []
 
         db.collection("entries").whereField("uid", isEqualTo: uid)
@@ -115,9 +115,7 @@ class FirebaseMethods: UIViewController{
                     print(uid)
                     for document in querySnapshot!.documents {
                         let data = document.data()
-                        completionHandler (data["type"] as! String, data["category"] as! String, data["source"]as! String, data["amount"] as! String, data["day"] as! String, data["dayInWeek"] as! String, data["year"]as! String, data["month"]as! String, data["id"]as! String, data["uid"]as! String, data["recurring"]as! String)
-                        tableView.reloadData()
-                        
+                        completionHandler (data["type"] as! String, data["category"] as! String, data["source"]as! String, data["amount"] as! String, data["day"] as! String, data["dayInWeek"] as! String, data["year"]as! String, data["month"]as! String, data["id"]as! String, data["uid"]as! String, data["recurring"]as! String)                        
                     }
                 }
             }
