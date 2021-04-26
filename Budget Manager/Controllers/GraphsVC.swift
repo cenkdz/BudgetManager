@@ -64,7 +64,7 @@ class GraphsVC: UIViewController, UITabBarDelegate{
             print("Home Selected")
             helperMethods.goToHomeVC(senderController: self)
         } else if(item.tag == 1) {
-            helperMethods.goToRecurringEntryVC(senderController: self)
+            helperMethods.goToTableRecurringVC(senderController: self)
         } else if(item.tag == 2) {
         }else if(item.tag == 3) {
             print("Settings Selected")

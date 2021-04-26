@@ -26,7 +26,7 @@ class SettingsVC: UIViewController,UITabBarDelegate {
         if(item.tag == 0) {
             helperMethods.goToHomeVC(senderController: self)
         } else if(item.tag == 1) {
-            helperMethods.goToRecurringEntryVC(senderController: self)
+            helperMethods.goToTableRecurringVC(senderController: self)
         }else if(item.tag == 2) {
             helperMethods.goToGraphsVC(senderController: self)
         } else if(item.tag == 3) {

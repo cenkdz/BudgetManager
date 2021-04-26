@@ -38,7 +38,6 @@ class TableRecurringVC: UIViewController, UITableViewDataSource, UITableViewDele
         if(item.tag == 0) {
             helperMethods.goToHomeVC(senderController: self)
         } else if(item.tag == 1) {
-            helperMethods.goToRecurringEntryVC(senderController: self)
             
         } else if(item.tag == 2) {
             helperMethods.goToGraphsVC(senderController: self)

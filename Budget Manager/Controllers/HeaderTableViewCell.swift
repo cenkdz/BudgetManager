@@ -30,7 +30,12 @@ class HeaderTableViewCell: UITableViewCell {
         }
     }
     
-    func setTotal(){
+    func setTotal(entries: [Entry]){
+        var total = 0
+        for entry in entries {
+            total = total + Int(entry.amount)!
+        }
+
         if total>=0 {
             totalAmountOutlet.textColor = UIColor(red: 0.24, green: 0.48, blue: 0.94, alpha: 1.00)
         }
@@ -38,6 +43,7 @@ class HeaderTableViewCell: UITableViewCell {
             totalAmountOutlet.textColor = UIColor(red: 0.98, green: 0.39, blue: 0.00, alpha: 1.00)
         }
         totalAmountOutlet.text = String(total)
+        
     }
     
 }

@@ -11,6 +11,16 @@ import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 
+class DayEntry {
+    var day: String?
+    var entry: [Entry]?
+    
+    init(day: String, entry: [Entry]) {
+        self.day = day
+        self.entry = entry
+    }
+}
+
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate {
     @IBOutlet weak var customHeaderView: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -34,7 +44,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var editSource = ""
     var effect: UIVisualEffect!
     var users: [User] = []
-    var entries: [[Entry]] = [[]]
+    var entries: [[Entry]] = []
     var selectedCategories: [Category] = []
     var editName = ""
     var sections: [Int] = []
@@ -46,6 +56,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var income = ""
     var expense = ""
     var balance = ""
+    var dayEntry = [DayEntry]()
+    var firebaseEntries = [Entry]()
+    var thebestentries = [[Entry]]()
+    var hehe = [Entry]()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,13 +68,35 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         setUISettings()
         setTableView()
         setTabBar()
-        self.fillEntries()
-        //self.setData()
-
+//        self.fillEntries()
+        setData()
+        fillEntries()
+        print("Entries are:")
+    }
+    
+    func getDays(entry: [Entry]) -> [String] {
+        var days: [String] = []
+            
+            for entry in firebaseEntries {
+                var dayData = entry.day
+                
+                if !days.contains(dayData){
+                    days.append(dayData)
+                }
+                
+            }
+        
+        let sortedDays = days.sorted {
+            $0 > $1
+        }
+    
+        
+        return sortedDays
     }
     
     func fillEntries() {
         self.entries = []
+        self.firebaseEntries = []
         db.collection("entries").whereField("uid", isEqualTo: user!.uid)
             .getDocuments() { (querySnapshot, err) in
                 if let err = err {
@@ -67,13 +104,28 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 } else {
                     for document in querySnapshot!.documents {
                         let data = document.data()
-                        self.entries.append([Entry(type: data["type"] as! String, category: data["category"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String)])
+                        self.firebaseEntries.append(Entry(type: data["type"] as! String, category: data["category"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String))
                     }
-                    self.tableView.reloadData()
+                    self.getDays(entry: self.firebaseEntries)
+                    self.thebest()
                     self.setFinancialOutlets()
+
+                    self.tableView.reloadData()
                     
                 }
             }
+    }
+
+    
+    func sortDays(){
+        
+        
+        
+        for element in entries.matrixIterator() {
+            print(element)
+        }
+        
+        //dayEntry.append(DayEntry.init(day: <#T##String#>, entry: <#T##[Entry]#>))
     }
     
     func setBlurEffect(){
@@ -96,58 +148,56 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tabBarOutlet.selectedItem = tabBarOutlet.items?[0]
     }
     
-    func setData() {
-        let sortedArray = entries.sorted(by: { $0[0].day > $1[0].day })
-        entries.removeAll()
-        entries.append(contentsOf: sortedArray)
+//    func setData() {
+//        let sortedArray = entries.sorted(by: { $0[0].day > $1[0].day })
+//        entries.removeAll()
+//        entries.append(contentsOf: sortedArray)
+//    }
+    
+    func thebest(){
+        self.entries = []
+        self.thebestentries = []
+        self.hehe = []
+
+        for day in getDays(entry: firebaseEntries) {
+            if !hehe.isEmpty {
+                hehe.removeAll()
+            }
+            let day = day
+            
+            for entry in firebaseEntries {
+                if entry.day == day {
+                    
+                    hehe.append(entry)
+                    
+                }
+            }
+            thebestentries.append(hehe)
+        }
+        //let sortedArray = thebestentries.sorted(by: {$0[0].day > $1[0].day })
+               // entries.removeAll()
+                entries = thebestentries
+        
+    }
+    
+    func setData(){
+                let data = [Entry(type: "asd", category: "hv", source: "asd", amount: "-123", day: "3", dayInWeek: "jhb", year: "2021", month: "22", id: "asdas", uid: "sadasd", recurring: "asd"),Entry(type: "asd", category: "hv", source: "jhb", amount: "1", day: "3", dayInWeek: "jhb", year: "2021", month: "22", id: "asdas", uid: "sadasd", recurring: "asd")]
+                let data2 = [Entry(type: "asd", category: "hv", source: "asd", amount: "-123", day: "4", dayInWeek: "jhb", year: "2021", month: "22", id: "asdas", uid: "sadasd", recurring: "asd"),Entry(type: "asd", category: "hv", source: "jhb", amount: "2", day: "4", dayInWeek: "jhb", year: "2021", month: "22", id: "asdas", uid: "sadasd", recurring: "asd"),Entry(type: "asd", category: "hv", source: "asd", amount: "-123", day: "4", dayInWeek: "jhb", year: "2021", month: "22", id: "asdas", uid: "sadasd", recurring: "asd"),Entry(type: "asd", category: "hv", source: "jhb", amount: "1", day: "4", dayInWeek: "jhb", year: "2021", month: "22", id: "asdas", uid: "sadasd", recurring: "asd")]
+
+                entries.append(data)
+                entries.append(data2)
+                
+        let sortedArray = entries.sorted(by: {$0[0].day > $1[0].day })
+                entries.removeAll()
+                entries.append(contentsOf: sortedArray)
+            
     }
     @IBAction func unwindFromAllEditingVC(_ sender: UIStoryboardSegue) {
-        DispatchQueue.main.async {
-            self.fillEntries()
-        }
-        
+        self.fillEntries()
+        tableView.reloadData()
         animateOut()
         print("Came from AllEditingVC")
     }
-    
-   
-    //
-    //    func getTodayEntries() -> [Entry] {
-    //
-    //        let date = Date()
-    //
-    //        let dateFormatter = DateFormatter()
-    //
-    //        func getCurrentYear() -> String{
-    //
-    //            return String(Calendar.current.component(.year, from: date))
-    //        }
-    //
-    //        func getCurrentMonth()-> String{
-    //            return String(Calendar.current.component(.month, from: date))
-    //        }
-    //
-    //        func getCurrentDay()-> String{
-    //            return String(Calendar.current.component(.day, from: date))
-    //        }
-    //
-    //        func getCurrentDayInWeek()-> String{
-    //            dateFormatter.dateFormat = "EEEE"
-    //
-    //            return String(dateFormatter.string(from: date))
-    //
-    //        }
-    //
-    //        let todayDay = getCurrentDay()
-    //        let todayMonth = getCurrentMonth()
-    //        let todayYear = getCurrentYear()
-    //        let todayDayInWeek = getCurrentDayInWeek()
-    //
-    //        let todayEntries = entries.filter({
-    //            $0.day == Int(todayDay)! && $0.month == todayMonth && $0.year == todayYear
-    //        })
-    //        return todayEntries
-    //    }
     
     func setFinancialOutlets() {
         let total = calculator.calculateTotal(entries: entries)
@@ -172,7 +222,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if(item.tag == 0) {
             print("Home Selected")
         } else if(item.tag == 1) {
-            helperMethods.goToRecurringEntryVC(senderController: self)
+            helperMethods.goToTableRecurringVC(senderController: self)
         } else if(item.tag == 2) {
             helperMethods.goToGraphsVC(senderController: self)
         }else if(item.tag == 3) {
@@ -232,7 +282,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         weeklyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         monthlyButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
         totalButton.backgroundColor = UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)
-        
     }
     
     @IBAction func weeklyPressed(_ sender: UIButton) {
@@ -266,8 +315,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeTableViewCell
-        cell.categorySourceOutlet.text = "Section \(indexPath.section) Row \(indexPath.row)"
         let entry = entries[indexPath.section][indexPath.row]
+        print(entry.category)
         cell.setEntry(entry: entry)
         return cell
     }
@@ -277,14 +326,14 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let entry = entries[section]
         if entry.count != 0 {
             cell.setEntry(entries: entry)
-            cell.setTotal()
+            cell.setTotal(entries: entry)
             return cell
         }
         return nil
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 96
+        return 50
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
@@ -292,9 +341,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //deleteUserCategory(selectedEntryID: entry.categoryID)
             var changedEntries = self.entries
             changedEntries[indexPath.section].remove(at: indexPath.row)
-            if changedEntries[indexPath.section].count == 0 {
-                changedEntries.remove(at: indexPath.section)
-                self.firebaseMethods.deleteUserEntry(selectedEntryID: entry.id)            }
+                //changedEntries.remove(at: indexPath.section)
+                self.firebaseMethods.deleteUserEntry(selectedEntryID: entry.id)
             self.entries = changedEntries
             tableView.reloadData()
         }
@@ -327,4 +375,49 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+}
+
+
+fileprivate extension Array where Element : Collection, Element.Index == Int {
+
+    typealias InnerCollection = Element
+    typealias InnerElement = InnerCollection.Iterator.Element
+
+    func matrixIterator() -> AnyIterator<InnerElement> {
+        var outerIndex = self.startIndex
+        var innerIndex: Int?
+
+        return AnyIterator({
+            guard !self.isEmpty else { return nil }
+
+            var innerArray = self[outerIndex]
+            if !innerArray.isEmpty && innerIndex == nil {
+                innerIndex = innerArray.startIndex
+            }
+
+            // This loop makes sure to skip empty internal arrays
+            while innerArray.isEmpty || (innerIndex != nil && innerIndex! == innerArray.endIndex) {
+                outerIndex = self.index(after: outerIndex)
+                if outerIndex == self.endIndex { return nil }
+                innerArray = self[outerIndex]
+                innerIndex = innerArray.startIndex
+            }
+
+            let result = self[outerIndex][innerIndex!]
+            innerIndex = innerArray.index(after: innerIndex!)
+
+            return result
+        })
+    }
+
+}
+
+extension NSCountedSet {
+    var occurences: [(object: Any, count: Int)] { map { ($0, count(for: $0))} }
+    var dictionary: [AnyHashable: Int] {
+        reduce(into: [:]) {
+            guard let key = $1 as? AnyHashable else { return }
+            $0[key] = count(for: key)
+        }
+    }
 }
