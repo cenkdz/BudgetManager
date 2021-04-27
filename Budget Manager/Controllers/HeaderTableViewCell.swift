@@ -14,11 +14,88 @@ class HeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var dayInWeekOutlet: UILabel!
     @IBOutlet weak var yearAndMonthOutlet: UILabel!
     @IBOutlet weak var totalAmountOutlet: UILabel!
+    @IBOutlet weak var weekLabel: UILabel!
+    
+    var modeFromHomeVC = ""
     var total = 0
     func setEntry(entries: [Entry]){
-        dayOutlet.text = String(entries[0].day)
-        dayInWeekOutlet.text = String(entries[0].dayInWeek.prefix(3))
-        yearAndMonthOutlet.text = entries[0].year + ".0" + entries[0].month
+        switch modeFromHomeVC {
+        case "Today":
+            weekLabel.isHidden = true
+            dayInWeekOutlet.text = String(entries[0].dayInWeek.prefix(3))
+
+            if abs(Int(entries[0].day)!) > 9 && abs(Int(entries[0].month)!) > 9 {
+                dayOutlet.text = String(entries[0].day)
+                yearAndMonthOutlet.text = entries[0].year + "." + entries[0].month
+            }
+            else if abs(Int(entries[0].day)!) < 10 && abs(Int(entries[0].month)!) < 10{
+                dayOutlet.text = "0"+String(entries[0].day)
+                yearAndMonthOutlet.text = entries[0].year + ".0" + entries[0].month
+
+            }
+            else if abs(Int(entries[0].day)!) > 10 && abs(Int(entries[0].month)!) < 10{
+                dayOutlet.text = String(entries[0].day)
+                yearAndMonthOutlet.text = entries[0].year + ".0" + entries[0].month
+
+            }
+            else if abs(Int(entries[0].day)!) < 10 && abs(Int(entries[0].month)!) > 10{
+                dayOutlet.text = "0"+String(entries[0].day)
+                yearAndMonthOutlet.text = entries[0].year + "." + entries[0].month
+
+            }
+        case "Weekly":
+            dayOutlet.text = String(entries[0].weekOfMonth)
+            dayInWeekOutlet.isHidden = true
+            yearAndMonthOutlet.isHidden = true
+        case "Monthly":
+            weekLabel.isHidden = true
+            dayInWeekOutlet.text = String(entries[0].dayInWeek.prefix(3))
+
+            if abs(Int(entries[0].day)!) > 9 && abs(Int(entries[0].month)!) > 9 {
+                dayOutlet.text = String(entries[0].day)
+                yearAndMonthOutlet.text = entries[0].year + "." + entries[0].month
+            }
+            else if abs(Int(entries[0].day)!) < 10 && abs(Int(entries[0].month)!) < 10{
+                dayOutlet.text = "0"+String(entries[0].day)
+                yearAndMonthOutlet.text = entries[0].year + ".0" + entries[0].month
+
+            }
+            else if abs(Int(entries[0].day)!) > 10 && abs(Int(entries[0].month)!) < 10{
+                dayOutlet.text = String(entries[0].day)
+                yearAndMonthOutlet.text = entries[0].year + ".0" + entries[0].month
+
+            }
+            else if abs(Int(entries[0].day)!) < 10 && abs(Int(entries[0].month)!) > 10{
+                dayOutlet.text = "0"+String(entries[0].day)
+                yearAndMonthOutlet.text = entries[0].year + "." + entries[0].month
+
+            }
+        case "Total":
+            weekLabel.isHidden = true
+            dayInWeekOutlet.text = String(entries[0].dayInWeek.prefix(3))
+            if abs(Int(entries[0].day)!) > 9 && abs(Int(entries[0].month)!) > 9 {
+                dayOutlet.text = String(entries[0].day)
+                yearAndMonthOutlet.text = entries[0].year + "." + entries[0].month
+            }
+            else if abs(Int(entries[0].day)!) < 10 && abs(Int(entries[0].month)!) < 10{
+                dayOutlet.text = "0"+String(entries[0].day)
+                yearAndMonthOutlet.text = entries[0].year + ".0" + entries[0].month
+
+            }
+            else if abs(Int(entries[0].day)!) > 10 && abs(Int(entries[0].month)!) < 10{
+                dayOutlet.text = String(entries[0].day)
+                yearAndMonthOutlet.text = entries[0].year + ".0" + entries[0].month
+
+            }
+            else if abs(Int(entries[0].day)!) < 10 && abs(Int(entries[0].month)!) > 10{
+                dayOutlet.text = "0"+String(entries[0].day)
+                yearAndMonthOutlet.text = entries[0].year + "." + entries[0].month
+
+            }
+        default:
+print("Error")
+            
+        }
         for entry in entries {
             if entry.type == "Expense" {
                 total = total - Int(entry.amount)!
@@ -28,6 +105,10 @@ class HeaderTableViewCell: UITableViewCell {
             }
             
         }
+    }
+    
+    func setMode(mode: String){
+        modeFromHomeVC = mode
     }
     
     func setTotal(entries: [Entry]){

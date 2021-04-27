@@ -380,7 +380,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         default:
             print("Error")
         }
-        let userEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "false")
+        let userEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "false",weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: date)))
         let dictionary = userEntry.getDictionary()
 //        if noteField.text!.isEmpty {
 //            displayAlert(message: "Name field can't be empty.", title: "Warning")

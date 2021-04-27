@@ -70,4 +70,15 @@ class HelperMethods {
         senderController.view.window?.rootViewController = homeViewController
         senderController.view.window?.makeKeyAndVisible()
     }
+    func goToRecurringGraphVC(senderController: UIViewController) {
+        let homeViewController = senderController.storyboard?.instantiateViewController(identifier: "RecurringGraphVC") as? RecurringGraphVC
+        senderController.view.window?.rootViewController = homeViewController
+        senderController.view.window?.makeKeyAndVisible()
+    }
+    
+    func goToIncomeGraphVC(senderController: UIViewController) {
+        let homeViewController = senderController.storyboard?.instantiateViewController(identifier: "IncomeGraphVC") as? IncomeGraphVC
+        senderController.view.window?.rootViewController = homeViewController
+        senderController.view.window?.makeKeyAndVisible()
+    }
 }

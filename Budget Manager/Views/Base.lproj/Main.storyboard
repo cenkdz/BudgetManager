@@ -222,6 +222,7 @@
                                 <segments>
                                     <segment title="Expense"/>
                                     <segment title="Income"/>
+                                    <segment title="Recurring"/>
                                 </segments>
                                 <connections>
                                     <action selector="onChange:" destination="6kd-lv-VoL" eventType="valueChanged" id="1qj-xc-kkr"/>
@@ -238,7 +239,97 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vgh-mh-AFX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1800.8" y="-1873.313343328336"/>
+            <point key="canvasLocation" x="1905" y="-1873"/>
+        </scene>
+        <!--Recurring GraphVC-->
+        <scene sceneID="mxC-cn-QEd">
+            <objects>
+                <viewController storyboardIdentifier="RecurringGraphVC" id="a2A-Bd-sbe" customClass="RecurringGraphVC" customModule="Budget_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QbO-VI-xk6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8ac-aK-QaL">
+                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <items>
+                                    <tabBarItem title="Home" image="house.fill" catalog="system" id="XIq-K0-3ra"/>
+                                    <tabBarItem tag="1" title="Recurring" image="repeat.circle.fill" catalog="system" id="D51-tk-UZs"/>
+                                    <tabBarItem tag="2" title="Statistics" image="chart.pie.fill" catalog="system" id="rQ9-l6-7Yc"/>
+                                    <tabBarItem tag="3" title="Settings" image="gearshape.fill" catalog="system" id="J7G-vt-E9q"/>
+                                </items>
+                            </tabBar>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ALb-od-EVN">
+                                <rect key="frame" x="16" y="20" width="343" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Expense"/>
+                                    <segment title="Income"/>
+                                    <segment title="Recurring"/>
+                                </segments>
+                                <connections>
+                                    <action selector="onChange:" destination="a2A-Bd-sbe" eventType="valueChanged" id="pFK-M6-viQ"/>
+                                    <action selector="onChange:" destination="6kd-lv-VoL" eventType="valueChanged" id="r2v-XT-rt9"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="u7g-xZ-4Gm"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <connections>
+                        <outlet property="segmentedControl" destination="ALb-od-EVN" id="HhH-BK-9s1"/>
+                        <outlet property="tabBarOutlet" destination="8ac-aK-QaL" id="bgf-eD-6rJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ybz-pP-lnH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2662" y="-1873"/>
+        </scene>
+        <!--Income GraphVC-->
+        <scene sceneID="xzI-0y-l1h">
+            <objects>
+                <viewController storyboardIdentifier="IncomeGraphVC" id="GEt-y8-rFS" customClass="IncomeGraphVC" customModule="Budget_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="K6L-rQ-Vz7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bpn-Ia-NT7">
+                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <items>
+                                    <tabBarItem title="Home" image="house.fill" catalog="system" id="DUt-66-R1u"/>
+                                    <tabBarItem tag="1" title="Recurring" image="repeat.circle.fill" catalog="system" id="qi7-lZ-5Cj"/>
+                                    <tabBarItem tag="2" title="Statistics" image="chart.pie.fill" catalog="system" id="5lV-A5-QdO"/>
+                                    <tabBarItem tag="3" title="Settings" image="gearshape.fill" catalog="system" id="PCH-pe-irT"/>
+                                </items>
+                            </tabBar>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="hVn-3e-miA">
+                                <rect key="frame" x="16" y="20" width="343" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Expense"/>
+                                    <segment title="Income"/>
+                                    <segment title="Recurring"/>
+                                </segments>
+                                <connections>
+                                    <action selector="onChange:" destination="GEt-y8-rFS" eventType="valueChanged" id="IX6-ge-EWU"/>
+                                    <action selector="onChange:" destination="6kd-lv-VoL" eventType="valueChanged" id="LAX-4T-YCB"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="etQ-qn-u7d"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <connections>
+                        <outlet property="segmentedControl" destination="hVn-3e-miA" id="cBd-df-DIC"/>
+                        <outlet property="tabBarOutlet" destination="Bpn-Ia-NT7" id="U7q-lX-KlE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fTq-pE-5up" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3342" y="-1873"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="UvZ-kJ-T9o">
@@ -274,109 +365,6 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="153"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iSp-q1-QB4">
-                                        <rect key="frame" x="39" y="21" width="66" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.92941176469999998" green="0.94117647059999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="Daily">
-                                                    <attributes>
-                                                        <font key="NSFont" metaFont="label" size="12"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="8"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="dailyPressed:" destination="9gV-tl-r7V" eventType="touchUpInside" id="1o4-VM-o8n"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" alpha="0.44" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uqO-EP-x4b">
-                                        <rect key="frame" x="116" y="21" width="66" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.92941176469999998" green="0.94117647059999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="Weekly">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.396078431372549" green="0.396078431372549" blue="0.396078431372549" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" metaFont="label" size="12"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="8"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="weeklyPressed:" destination="9gV-tl-r7V" eventType="touchUpInside" id="J9v-K3-Ud2"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" alpha="0.43999999761581421" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="use-zz-AVb">
-                                        <rect key="frame" x="194" y="21" width="66" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.92941176469999998" green="0.94117647059999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="Monthly">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.396078431372549" green="0.396078431372549" blue="0.396078431372549" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" metaFont="label" size="12"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="8"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="monthlyPressed:" destination="9gV-tl-r7V" eventType="touchUpInside" id="9wt-g9-F9U"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" alpha="0.43999999761581421" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7yj-JS-0qy">
-                                        <rect key="frame" x="271" y="21" width="66" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.92941176469999998" green="0.94117647059999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="Total">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.396078431372549" green="0.396078431372549" blue="0.396078431372549" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" metaFont="label" size="12"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <state key="selected">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="Total">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.12549019607843137" green="0.17254901960784313" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" metaFont="label" size="12"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="8"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="totalPressed:" destination="9gV-tl-r7V" eventType="touchUpInside" id="T5J-1u-vxq"/>
-                                        </connections>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LDX-sH-DtU">
                                         <rect key="frame" x="48" y="85" width="58" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -461,6 +449,19 @@
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="KFm-QF-7uJ">
+                                        <rect key="frame" x="8" y="27" width="359" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <segments>
+                                            <segment title="Today"/>
+                                            <segment title="Weekly"/>
+                                            <segment title="Monthly"/>
+                                            <segment title="Total"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="onChange:" destination="9gV-tl-r7V" eventType="valueChanged" id="7uz-94-Ejb"/>
+                                        </connections>
+                                    </segmentedControl>
                                 </subviews>
                                 <color key="backgroundColor" red="0.12549019607843137" green="0.17254901960784313" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -643,6 +644,85 @@
                                             <outlet property="yearAndMonthOutlet" destination="4jc-0R-D7K" id="b53-yk-OK0"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="weekCell" id="RY9-Xq-oon" customClass="WeekCell" customModule="Budget_Manager" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="143.5" width="344" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RY9-Xq-oon" id="JBa-4e-NVY">
+                                            <rect key="frame" x="0.0" y="0.0" width="344" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SQ1-0D-M4l">
+                                                    <rect key="frame" x="16" y="5" width="32" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.42745098040000001" green="0.44705882349999998" blue="0.47058823529999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Thu">
+                                                            <attributes>
+                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" metaFont="system" size="10"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="3"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mM1-RY-RtL">
+                                                    <rect key="frame" x="16" y="20" width="58" height="19"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="2021.02.25">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.42745098039215684" green="0.44705882352941173" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" metaFont="miniSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYB-sv-jff">
+                                                    <rect key="frame" x="80" y="14" width="174" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Salary / AccountsSalary">
+                                                            <attributes>
+                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" metaFont="system"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="15" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lZS-yp-Hk8">
+                                                    <rect key="frame" x="258" y="11" width="66" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="671,921.00">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.24313725490196078" green="0.47843137254901957" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" metaFont="system"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="20" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="amountLabel" destination="lZS-yp-Hk8" id="82j-0f-GDB"/>
+                                            <outlet property="categoryLabel" destination="cYB-sv-jff" id="52E-kF-gwk"/>
+                                            <outlet property="dayInWeekLabel" destination="SQ1-0D-M4l" id="yov-AN-spV"/>
+                                            <outlet property="yearMonthDayLabel" destination="mM1-RY-RtL" id="lhc-8x-VGJ"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <sections/>
                                 <userDefinedRuntimeAttributes>
@@ -781,16 +861,13 @@
                         <outlet property="addButtonOutlet" destination="u7h-oP-rPN" id="fFb-CE-r7U"/>
                         <outlet property="addView" destination="fTz-HZ-KK6" id="YEn-S2-lqR"/>
                         <outlet property="customHeaderView" destination="n5C-qo-bZo" id="6qM-5G-7ZL"/>
-                        <outlet property="dailyButton" destination="iSp-q1-QB4" id="soX-5I-Ujk"/>
                         <outlet property="expenseOutlet" destination="lXG-f7-wBj" id="GUH-ve-JP2"/>
                         <outlet property="incomeOutlet" destination="HyZ-a7-zg5" id="p4t-wo-gMh"/>
-                        <outlet property="monthlyButton" destination="use-zz-AVb" id="2fv-4v-hFr"/>
+                        <outlet property="segmentedControl" destination="KFm-QF-7uJ" id="hiM-Y5-cRg"/>
                         <outlet property="tabBarOutlet" destination="Xsn-1h-gxM" id="nSs-Mb-smw"/>
                         <outlet property="tableView" destination="N1K-Rk-DE5" id="4gn-x1-2sK"/>
-                        <outlet property="totalButton" destination="7yj-JS-0qy" id="2PZ-bj-at6"/>
                         <outlet property="totalOutlet" destination="DxM-y2-M43" id="mJI-GV-CtY"/>
                         <outlet property="visualEffectView" destination="CtP-1B-3g9" id="AeJ-59-ngJ"/>
-                        <outlet property="weeklyButton" destination="uqO-EP-x4b" id="sRo-Hn-WS3"/>
                         <segue destination="fzB-FG-33X" kind="show" identifier="goToAllEditingVC" id="xIO-VU-81W"/>
                     </connections>
                 </viewController>

@@ -92,7 +92,7 @@ class FirebaseMethods: UIViewController{
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
-        let entry = Entry(type: "Income", category: "Salary", source: "Salary", amount: salary, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "false")
+        let entry = Entry(type: "Income", category: "Salary", source: "Salary", amount: salary, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "false",weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: date)))
         let dictionary = entry.getDictionary()
         do {
             try db.collection("entries").addDocument(data: dictionary)

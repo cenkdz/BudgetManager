@@ -23,8 +23,8 @@ class TableRecurringVC: UIViewController, UITableViewDataSource, UITableViewDele
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.getUserRecurringEntries(completionHandler: { (type, category, source, amount, day, dayInWeek, year, month, id, uid, recurring) in
-            let entry = Entry(type: type, category: category, source: source, amount: amount, day: String(day), dayInWeek: dayInWeek, year: year, month: month, id: id, uid: uid, recurring: recurring)
+        self.getUserRecurringEntries(completionHandler: { (type, category, source, amount, day, dayInWeek, year, month, id, uid, recurring,weekOfMonth) in
+            let entry = Entry(type: type, category: category, source: source, amount: amount, day: String(day), dayInWeek: dayInWeek, year: year, month: month, id: id, uid: uid, recurring: recurring, weekOfMonth: weekOfMonth)
             self.entries.append([entry])
         }, uid: self.user!.uid)
         tableView.delegate = self
@@ -58,7 +58,7 @@ class TableRecurringVC: UIViewController, UITableViewDataSource, UITableViewDele
         return cell
     }
 
-    func getUserRecurringEntries(completionHandler: @escaping(String, String, String, String, String, String, String, String, String, String, String) -> (), uid: String) {
+    func getUserRecurringEntries(completionHandler: @escaping(String, String, String, String, String, String, String, String, String, String, String, String) -> (), uid: String) {
         entries = []
         db.collection("entries").whereField("uid", isEqualTo: uid).whereField("recurring", isEqualTo: "true")
             .getDocuments() { (querySnapshot, err) in
@@ -69,7 +69,7 @@ class TableRecurringVC: UIViewController, UITableViewDataSource, UITableViewDele
                 for document in querySnapshot!.documents {
                     let data = document.data()
                     dump(data)
-                    completionHandler (data["type"] as! String, data["category"] as! String, data["source"]as! String, data["amount"] as! String, data["day"] as! String, data["dayInWeek"] as! String, data["year"]as! String, data["month"]as! String, data["id"]as! String, data["uid"]as! String, data["recurring"]as! String)
+                    completionHandler (data["type"] as! String, data["category"] as! String, data["source"]as! String, data["amount"] as! String, data["day"] as! String, data["dayInWeek"] as! String, data["year"]as! String, data["month"]as! String, data["id"]as! String, data["uid"]as! String, data["recurring"]as! String, data["weekOfMonth"]as! String)
                     self.tableView.reloadData()
                 }
             }
