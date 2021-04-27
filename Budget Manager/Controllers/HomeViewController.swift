@@ -128,22 +128,20 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     case "Today":
                         self.thebest3()
                         self.setFinancialOutlets()
-                        self.tableView.reloadData()
                     case "Weekly":
                         self.thebest2()
                         self.setFinancialOutlets()
-                        self.tableView.reloadData()
                     case "Monthly":
                         self.thebest()
                         self.setFinancialOutlets()
-                        self.tableView.reloadData()
                     case "Total":
                         self.thebest()
                         self.setFinancialOutlets()
-                        self.tableView.reloadData()
                     default:
                         print("ERROR")
                     }
+                    self.tableView.reloadData()
+
                     
                 }
             }
@@ -173,6 +171,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func setTableView(){
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.setContentOffset(tableView.contentOffset, animated: false)
+
     }
     func setTabBar(){
         tabBarOutlet.delegate = self
@@ -328,6 +328,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         userAction = "ExpenseButton"
         self.performSegue(withIdentifier: "goToAllEditingVC", sender: self)
         
+    }
+    @IBAction func recurringPressed(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "goRec", sender: self)
     }
     func animateIn() {
         self.view.addSubview(addView)

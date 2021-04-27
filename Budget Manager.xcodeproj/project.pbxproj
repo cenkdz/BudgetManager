@@ -22,6 +22,7 @@
 		9BAC831226371052006A3D14 /* IncomeGraphVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC831126371052006A3D14 /* IncomeGraphVC.swift */; };
 		9BAC831526371C89006A3D14 /* WeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC831426371C89006A3D14 /* WeekCell.swift */; };
 		9BADD8542625C93C000E18F9 /* GraphsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BADD8532625C93C000E18F9 /* GraphsVC.swift */; };
+		9BAFE2B12638B79E00FBD1E4 /* RecurringHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAFE2B02638B79E00FBD1E4 /* RecurringHeaderCell.swift */; };
 		9BBF4ABA2590EC3400F1290C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */; };
 		9BCAD21B25F4F73300047059 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */; };
 		9BE08E5226146AD400D25541 /* FirebaseMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE08E5126146AD400D25541 /* FirebaseMethods.swift */; };
@@ -62,6 +63,7 @@
 		9BAC831126371052006A3D14 /* IncomeGraphVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeGraphVC.swift; sourceTree = "<group>"; };
 		9BAC831426371C89006A3D14 /* WeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCell.swift; sourceTree = "<group>"; };
 		9BADD8532625C93C000E18F9 /* GraphsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphsVC.swift; sourceTree = "<group>"; };
+		9BAFE2B02638B79E00FBD1E4 /* RecurringHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringHeaderCell.swift; sourceTree = "<group>"; };
 		9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		9BE08E5126146AD400D25541 /* FirebaseMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMethods.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				9BAC830D26370F7B006A3D14 /* RecurringGraphVC.swift */,
 				9BAC831126371052006A3D14 /* IncomeGraphVC.swift */,
 				9BAC831426371C89006A3D14 /* WeekCell.swift */,
+				9BAFE2B02638B79E00FBD1E4 /* RecurringHeaderCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				9BFF628925FA7104002204D0 /* TableRecurringVC.swift in Sources */,
 				9B33DC9825916BD00004CA6D /* User.swift in Sources */,
 				9BF8DD4F25F6733200D3A8AC /* AddCategoryViewController.swift in Sources */,
+				9BAFE2B12638B79E00FBD1E4 /* RecurringHeaderCell.swift in Sources */,
 				BAEC3AAB25F77BC3009B1DCE /* AllEditingViewController.swift in Sources */,
 				9BE08E5226146AD400D25541 /* FirebaseMethods.swift in Sources */,
 				9BAC831226371052006A3D14 /* IncomeGraphVC.swift in Sources */,

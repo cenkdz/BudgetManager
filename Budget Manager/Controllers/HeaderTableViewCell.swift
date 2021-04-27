@@ -15,6 +15,7 @@ class HeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var yearAndMonthOutlet: UILabel!
     @IBOutlet weak var totalAmountOutlet: UILabel!
     @IBOutlet weak var weekLabel: UILabel!
+    @IBOutlet weak var weekTextLabel: UILabel!
     
     var modeFromHomeVC = ""
     var total = 0
@@ -22,6 +23,8 @@ class HeaderTableViewCell: UITableViewCell {
         switch modeFromHomeVC {
         case "Today":
             weekLabel.isHidden = true
+            weekTextLabel.isHidden = true
+
             dayInWeekOutlet.text = String(entries[0].dayInWeek.prefix(3))
 
             if abs(Int(entries[0].day)!) > 9 && abs(Int(entries[0].month)!) > 9 {
@@ -47,7 +50,20 @@ class HeaderTableViewCell: UITableViewCell {
             dayOutlet.text = String(entries[0].weekOfMonth)
             dayInWeekOutlet.isHidden = true
             yearAndMonthOutlet.isHidden = true
+            
+            switch entries[0].weekOfMonth {
+            case "1":
+                weekLabel.text = "st"
+            case "2":
+                weekLabel.text = "nd"
+            case "3":
+                weekLabel.text = "rd"
+            default:
+                weekLabel.text = "th"
+
+            }
         case "Monthly":
+            weekTextLabel.isHidden = true
             weekLabel.isHidden = true
             dayInWeekOutlet.text = String(entries[0].dayInWeek.prefix(3))
 
@@ -72,6 +88,8 @@ class HeaderTableViewCell: UITableViewCell {
             }
         case "Total":
             weekLabel.isHidden = true
+            weekTextLabel.isHidden = true
+            
             dayInWeekOutlet.text = String(entries[0].dayInWeek.prefix(3))
             if abs(Int(entries[0].day)!) > 9 && abs(Int(entries[0].month)!) > 9 {
                 dayOutlet.text = String(entries[0].day)
@@ -110,6 +128,7 @@ print("Error")
     func setMode(mode: String){
         modeFromHomeVC = mode
     }
+    
     
     func setTotal(entries: [Entry]){
         var total = 0

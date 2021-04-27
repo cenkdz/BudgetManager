@@ -66,9 +66,7 @@ class HelperMethods {
         senderController.view.window?.makeKeyAndVisible()
     }
     func goToRecurringEntryVC(senderController: UIViewController) {
-        let homeViewController = senderController.storyboard?.instantiateViewController(identifier: "RecurringEntryVC") as? RecurringEntryVC
-        senderController.view.window?.rootViewController = homeViewController
-        senderController.view.window?.makeKeyAndVisible()
+        senderController.performSegue(withIdentifier: "goRec", sender: senderController.self)
     }
     func goToRecurringGraphVC(senderController: UIViewController) {
         let homeViewController = senderController.storyboard?.instantiateViewController(identifier: "RecurringGraphVC") as? RecurringGraphVC

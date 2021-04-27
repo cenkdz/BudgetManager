@@ -634,6 +634,20 @@
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="st" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jch-ik-k8M">
+                                                    <rect key="frame" x="41" y="4" width="9" height="11"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Week" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2vE-Xl-8S8">
+                                                    <rect key="frame" x="58" y="10" width="43" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -641,6 +655,8 @@
                                             <outlet property="dayInWeekOutlet" destination="lEQ-Iv-IgW" id="jPC-As-yrU"/>
                                             <outlet property="dayOutlet" destination="2yz-Cl-6mF" id="UaW-Dg-ANd"/>
                                             <outlet property="totalAmountOutlet" destination="6xz-PK-a66" id="b7o-0r-6GJ"/>
+                                            <outlet property="weekLabel" destination="jch-ik-k8M" id="vZW-UN-xJO"/>
+                                            <outlet property="weekTextLabel" destination="2vE-Xl-8S8" id="GL5-Id-aRw"/>
                                             <outlet property="yearAndMonthOutlet" destination="4jc-0R-D7K" id="b53-yk-OK0"/>
                                         </connections>
                                     </tableViewCell>
@@ -796,8 +812,6 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="incomePressed:" destination="9gV-tl-r7V" eventType="touchUpInside" id="FRg-E4-HTw"/>
-                                            <action selector="recurringEntryPressed:" destination="9gV-tl-r7V" eventType="touchUpInside" id="7IQ-Zj-1nb"/>
                                             <segue destination="myE-c6-qnN" kind="show" id="np0-Yj-fAu"/>
                                         </connections>
                                     </button>
@@ -1396,6 +1410,48 @@
                                             <outlet property="dayOutlet" destination="gt2-91-SN4" id="XUg-Ib-dfE"/>
                                             <outlet property="totalAmountOutlet" destination="1PA-Ld-iIk" id="ZWi-my-po5"/>
                                             <outlet property="yearAndMonthOutlet" destination="WER-aW-32z" id="FPa-Gw-AXH"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="recurringHeaderCell" rowHeight="97" id="nuo-13-gYh" customClass="RecurringHeaderCell" customModule="Budget_Manager" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="125" width="375" height="97"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nuo-13-gYh" id="SnI-8o-pXG">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="97"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Brw-ZV-mjx">
+                                                    <rect key="frame" x="126" y="26" width="123" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="January">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.12941176470588234" green="0.16862745098039217" blue="0.43529411764705883" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" metaFont="system" size="36"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="44" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8SK-x5-E9T">
+                                                    <rect key="frame" x="170" y="75" width="35.5" height="11"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="2021">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.42745098039215684" green="0.44705882352941173" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" metaFont="miniSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="monthOutlet" destination="Brw-ZV-mjx" id="hjs-wH-gyh"/>
+                                            <outlet property="yearOutlet" destination="8SK-x5-E9T" id="kmm-8m-ckg"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

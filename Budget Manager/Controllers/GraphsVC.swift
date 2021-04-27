@@ -116,6 +116,8 @@ class GraphsVC: UIViewController, UITabBarDelegate{
             }
         }
         barChart.notifyDataSetChanged()
+       
+        
 
 
         for set in dataSets {
@@ -125,6 +127,10 @@ class GraphsVC: UIViewController, UITabBarDelegate{
         barChart.data = data
         barChart.drawGridBackgroundEnabled = false
         barChart.drawBarShadowEnabled = false
+        barChart.leftAxis.enabled = false
+        barChart.rightAxis.enabled = false
+        barChart.xAxis.enabled = false
+        
         
         barChart.invalidateIntrinsicContentSize()
        
@@ -160,6 +166,9 @@ class GraphsVC: UIViewController, UITabBarDelegate{
         barChart.data = data
         barChart.drawGridBackgroundEnabled = false
         barChart.drawBarShadowEnabled = false
+        barChart.leftAxis.enabled = false
+        barChart.rightAxis.enabled = false
+        barChart.xAxis.enabled = false
         
         view.addSubview(barChart)
         barChart.center = view.center

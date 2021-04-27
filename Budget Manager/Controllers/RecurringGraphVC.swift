@@ -125,6 +125,9 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate {
         barChart.data = data
         barChart.drawGridBackgroundEnabled = false
         barChart.drawBarShadowEnabled = false
+        barChart.leftAxis.enabled = false
+        barChart.rightAxis.enabled = false
+        barChart.xAxis.enabled = false
         
         barChart.invalidateIntrinsicContentSize()
        
@@ -160,6 +163,9 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate {
         barChart.data = data
         barChart.drawGridBackgroundEnabled = false
         barChart.drawBarShadowEnabled = false
+        barChart.leftAxis.enabled = false
+        barChart.rightAxis.enabled = false
+        barChart.xAxis.enabled = false
         
         view.addSubview(barChart)
         barChart.center = view.center
