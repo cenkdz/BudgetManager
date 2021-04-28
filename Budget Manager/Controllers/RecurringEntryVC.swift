@@ -19,14 +19,15 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     @IBOutlet weak var tableViewOutlet: UITableView!
     @IBOutlet weak var doneButtonOutlet: UIButton!
     @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var endDatePicker: UIDatePicker!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
     var amount = ""
-    var category = "Source"
+    var category = "Category"
     var selectedButton = ""
     var entryID: Any!
-    var source = "Category"
+    var source = "Source"
     var categories: [Category] = []
     var sources: [Source] = []
     var typeType = ""
@@ -61,11 +62,40 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         tableViewOutlet.delegate = self
         tableViewOutlet.dataSource = self
         selectedType = "Expense"
-        print("Id is\(entryID)")
+        datePicker.minimumDate = Date()
+        endDatePicker.minimumDate = Date()
+        setStartDate()
+        setEndDate()
 
     }
     @IBAction func onChange(_ sender: UISegmentedControl) {
         selectedType = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)!
+    }
+    
+    func setStartDate(){
+        selectedDate = datePicker.date
+        let comp = datePicker.calendar.dateComponents([.day, .month, .year, .hour, .minute], from: datePicker.date)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        selectedDay = String(comp.day!)
+        selectedYear = String(comp.year!)
+        selectedMonth = String(comp.month!)
+        selectedHour = String(comp.hour!)
+        selectedMinute = String(comp.minute!)
+        selectedDayInWeek = String(dateFormatter.string(from: selectedDate))
+    }
+    
+    func setEndDate(){
+        selectedEndDate = endDatePicker.date
+        let comp = datePicker.calendar.dateComponents([.day, .month, .year, .hour, .minute], from: endDatePicker.date)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        selectedEndDay = String(comp.day!)
+        selectedEndYear = String(comp.year!)
+        selectedEndMonth = String(comp.month!)
+        selectedEndHour = String(comp.hour!)
+        selectedEndMinute = String(comp.minute!)
+        selectedEndDayInWeek = String(dateFormatter.string(from: selectedDate))
     }
     
     @IBAction func unwindToAllEditingVC(_ sender: UIStoryboardSegue) {
@@ -120,7 +150,7 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     @IBAction func datePickerSelected(_ sender: UIDatePicker) {
         selectedDate = sender.date
-        let comp = datePicker.calendar.dateComponents([.day, .month, .year, .hour, .minute], from: datePicker.date)
+        let comp = datePicker.calendar.dateComponents([.day, .month, .year, .hour, .minute], from: sender.date)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
         selectedDay = String(comp.day!)
@@ -129,6 +159,9 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         selectedHour = String(comp.hour!)
         selectedMinute = String(comp.minute!)
         selectedDayInWeek = String(dateFormatter.string(from: selectedDate))
+        
+        endDatePicker.minimumDate = selectedDate
+        setEndDate()
     }
     @IBAction func endDateSelected(_ sender: UIDatePicker) {
         selectedEndDate = sender.date
@@ -181,10 +214,10 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         let monthDiff = change.month!
         if amountTextFieldOutlet.text!.isEmpty{
             displayAlert(message: "Amount cannot be empty!", title: "Warning")
-        }else if selectedDay == ""{
-            displayAlert(message: "Please select a start date", title: "Warning")
-        }else if selectedEndDay == ""{
-            displayAlert(message: "Please select a end date", title: "Warning")
+        }else if selectedDay == selectedEndDay && selectedMonth == selectedEndMonth && selectedYear == selectedYear{
+            displayAlert(message: "Please select a different date from Start Date", title: "End Date")
+        }else if String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string) == "Category" || String(self.selectSourceButtonOutlet.currentAttributedTitle!.string) == "Source"{
+            displayAlert(message: "Please select both source and category", title: "Warning")
         }
         else{
         DispatchQueue.main.async {

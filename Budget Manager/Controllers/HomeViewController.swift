@@ -57,7 +57,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         setUISettings()
         setTableView()
         setTabBar()
-        //        self.fillEntries()
         setData()
         fillEntries()
         print("Entries are:")
@@ -130,6 +129,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         let data = document.data()
                         self.firebaseEntries.append(Entry(type: data["type"] as! String, category: data["category"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String,weekOfMonth: data["weekOfMonth"]as! String))
                     }
+                    //Get STATUS
+                    self.thebest()
+                    self.setFinancialOutlets()
+                    UserDefaults.standard.set(self.totalOutlet.text, forKey: "userStatus")
+                    UserDefaults.standard.synchronize()
                     switch self.selectedMode {
                     case "Today":
                         self.thebest3()
@@ -307,6 +311,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func setFinancialOutlets() {
         let total = calculator.calculateTotal(entries: entries)
+        
         let income = calculator.calculateIncome(entries: entries)
         let expenses = calculator.calculateExpenses(entries: entries)
         if Int(total)! < 0 {
@@ -394,6 +399,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if selectedMode == "Weekly"{
             let cell = tableView.dequeueReusableCell(withIdentifier: "weekCell", for: indexPath) as! WeekCell
             let entry = entries[indexPath.section][indexPath.row]
+            
             print(entry.category)
             cell.setEntry(entries: [entry])
             return cell

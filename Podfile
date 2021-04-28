@@ -11,6 +11,7 @@ target 'Budget Manager' do
   pod ‘Firebase/Core’
   pod 'Firebase/Firestore'
   pod 'Charts'
+  pod "MBCircularProgressBar"
   # Pods for Budget Manager
 
 end

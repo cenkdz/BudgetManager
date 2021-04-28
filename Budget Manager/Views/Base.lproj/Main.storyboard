@@ -136,13 +136,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fWh-9a-Fvp" customClass="MBCircularProgressBarView">
+                                <rect key="frame" x="107" y="403" width="161" height="173"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZAP-WC-8cK">
                                 <rect key="frame" x="108" y="142" width="158" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Hello, Cenk">
                                         <attributes>
-                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <font key="NSFont" metaFont="system" size="22"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="28" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -150,25 +155,6 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YYc-Du-WJ9">
-                                <rect key="frame" x="16" y="216" width="344" height="368"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="SwG-74-M9a">
-                                        <rect key="frame" x="132" y="320" width="80" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="Log out"/>
-                                        <connections>
-                                            <action selector="logOutButtonPressed:" destination="0yd-gT-Mf2" eventType="touchUpInside" id="6y8-Nq-a93"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.borderRadius" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                             <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wuy-SA-f0a">
                                 <rect key="frame" x="1" y="618" width="375" height="49"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -185,11 +171,93 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <imageReference key="image" image="person.crop.circle.fill" catalog="system" symbolScale="default"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="SwG-74-M9a">
+                                <rect key="frame" x="148" y="0.0" width="80" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Log out"/>
+                                <connections>
+                                    <action selector="logOutButtonPressed:" destination="0yd-gT-Mf2" eventType="touchUpInside" id="6y8-Nq-a93"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your Budget Goal Progress:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBo-4y-qNy">
+                                <rect key="frame" x="83" y="374" width="210" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Salary" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LvJ-5B-bc8">
+                                <rect key="frame" x="16" y="206" width="110" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Budget Goal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lif-Or-8MN">
+                                <rect key="frame" x="202" y="206" width="157" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oAf-on-Vcl">
+                                <rect key="frame" x="42" y="235" width="59" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="20000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Kr-p1-ugx">
+                                <rect key="frame" x="255" y="235" width="51" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TMz-X8-2U0">
+                                <rect key="frame" x="45" y="264" width="53" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Change"/>
+                                <connections>
+                                    <action selector="changeSalaryButtonPressed:" destination="0yd-gT-Mf2" eventType="touchUpInside" id="52J-OQ-BAE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JSu-t1-5Ff">
+                                <rect key="frame" x="257" y="264" width="53" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Change"/>
+                                <connections>
+                                    <action selector="changeBudgetGoalButtonPressed:" destination="0yd-gT-Mf2" eventType="touchUpInside" id="J2C-tZ-shL"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nhc-N1-ZjE">
+                                <rect key="frame" x="138" y="294" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FiG-bR-QQ7">
+                                <rect key="frame" x="168" y="336" width="37" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="donePressed:" destination="0yd-gT-Mf2" eventType="touchUpInside" id="gHj-Nl-hBG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="S96-o3-a9o"/>
-                        <color key="backgroundColor" red="0.12549019607843137" green="0.17254901960784313" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <connections>
+                        <outlet property="budgetGoalOutlet" destination="2Kr-p1-ugx" id="LH5-dl-fBo"/>
+                        <outlet property="changeSalaryBGOutlet" destination="JSu-t1-5Ff" id="g32-xD-EBe"/>
+                        <outlet property="changeSalaryBOutlet" destination="TMz-X8-2U0" id="rGf-Sf-HBU"/>
+                        <outlet property="doneButtonOutlet" destination="FiG-bR-QQ7" id="dx8-At-6Z3"/>
+                        <outlet property="nameOutlet" destination="ZAP-WC-8cK" id="cYK-Xp-GY8"/>
+                        <outlet property="newInputOutlet" destination="nhc-N1-ZjE" id="mmN-Za-yyy"/>
+                        <outlet property="progressBar" destination="fWh-9a-Fvp" id="DLC-Zd-aXG"/>
+                        <outlet property="salaryOutlet" destination="oAf-on-Vcl" id="5K6-xQ-MIj"/>
                         <outlet property="tabBarOutlet" destination="wuy-SA-f0a" id="SCS-qs-TPr"/>
                     </connections>
                 </viewController>
@@ -454,9 +522,8 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <segments>
                                             <segment title="Today"/>
+                                            <segment title="Daily"/>
                                             <segment title="Weekly"/>
-                                            <segment title="Monthly"/>
-                                            <segment title="Total"/>
                                         </segments>
                                         <connections>
                                             <action selector="onChange:" destination="9gV-tl-r7V" eventType="valueChanged" id="7uz-94-Ejb"/>
@@ -1299,6 +1366,7 @@
                         <outlet property="amountTextFieldOutlet" destination="YXa-wa-Wfj" id="7QS-OX-1Aj"/>
                         <outlet property="datePicker" destination="i5x-Xe-CIJ" id="5Vy-uw-NJU"/>
                         <outlet property="doneButtonOutlet" destination="Kma-cQ-iec" id="SuN-TZ-cCe"/>
+                        <outlet property="endDatePicker" destination="ZvF-pj-JiT" id="Blg-eb-oVM"/>
                         <outlet property="segmentedControl" destination="LqH-2X-890" id="N11-GA-DYk"/>
                         <outlet property="selectCategoryButtonOutlet" destination="hMZ-gV-lOY" id="fAB-5w-ys3"/>
                         <outlet property="selectSourceButtonOutlet" destination="bDg-mO-J3w" id="3j5-ZI-vE6"/>

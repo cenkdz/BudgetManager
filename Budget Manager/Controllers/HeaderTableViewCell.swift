@@ -20,6 +20,7 @@ class HeaderTableViewCell: UITableViewCell {
     var modeFromHomeVC = ""
     var total = 0
     func setEntry(entries: [Entry]){
+        
         switch modeFromHomeVC {
         case "Today":
             weekLabel.isHidden = true
@@ -51,6 +52,8 @@ class HeaderTableViewCell: UITableViewCell {
             dayInWeekOutlet.isHidden = true
             yearAndMonthOutlet.isHidden = true
             
+            
+            
             switch entries[0].weekOfMonth {
             case "1":
                 weekLabel.text = "st"
@@ -62,7 +65,7 @@ class HeaderTableViewCell: UITableViewCell {
                 weekLabel.text = "th"
 
             }
-        case "Monthly":
+        case "Daily":
             weekTextLabel.isHidden = true
             weekLabel.isHidden = true
             dayInWeekOutlet.text = String(entries[0].dayInWeek.prefix(3))

@@ -14,22 +14,24 @@ class WeekCell: UITableViewCell {
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
         func setEntry(entries: [Entry]){
-            dayInWeekLabel.text = String(entries[0].dayInWeek.prefix(3))
-            if abs(Int(entries[0].day)!) > 9 && abs(Int(entries[0].month)!) > 9 {
-                yearMonthDayLabel.text = entries[0].year + "." + entries[0].month + "." + entries[0].day
-            }
-            else if abs(Int(entries[0].day)!) < 10 && abs(Int(entries[0].month)!) < 10{
-                yearMonthDayLabel.text = entries[0].year + ".0" + entries[0].month + ".0" + entries[0].day
-
-            }
-            else if abs(Int(entries[0].day)!) > 10 && abs(Int(entries[0].month)!) < 10{
-                yearMonthDayLabel.text = entries[0].year + ".0" + entries[0].month + "." + entries[0].day
-
-            }
-            else if abs(Int(entries[0].day)!) < 10 && abs(Int(entries[0].month)!) > 10{
-                yearMonthDayLabel.text = entries[0].year + "." + entries[0].month + ".0" + entries[0].day
-
-            }
+            dayInWeekLabel.isHidden = true
+            yearMonthDayLabel.isHidden = true
+//            dayInWeekLabel.text = String(entries[0].dayInWeek.prefix(3))
+//            if abs(Int(entries[0].day)!) > 9 && abs(Int(entries[0].month)!) > 9 {
+//                yearMonthDayLabel.text = entries[0].year + "." + entries[0].month + "." + entries[0].day
+//            }
+//            else if abs(Int(entries[0].day)!) < 10 && abs(Int(entries[0].month)!) < 10{
+//                yearMonthDayLabel.text = entries[0].year + ".0" + entries[0].month + ".0" + entries[0].day
+//
+//            }
+//            else if abs(Int(entries[0].day)!) > 10 && abs(Int(entries[0].month)!) < 10{
+//                yearMonthDayLabel.text = entries[0].year + ".0" + entries[0].month + "." + entries[0].day
+//
+//            }
+//            else if abs(Int(entries[0].day)!) < 10 && abs(Int(entries[0].month)!) > 10{
+//                yearMonthDayLabel.text = entries[0].year + "." + entries[0].month + ".0" + entries[0].day
+//
+//            }
             
             amountLabel.text = entries[0].amount
             categoryLabel.text = entries[0].category+" / "+entries[0].source
