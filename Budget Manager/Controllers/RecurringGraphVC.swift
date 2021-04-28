@@ -181,7 +181,9 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate {
                 } else {
                     for document in querySnapshot!.documents {
                         let data = document.data()
+                        if data["recurring"] as! String == "true" {
                         self.entries.append([Entry(type: data["type"] as! String, category: data["category"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String, weekOfMonth: data["weekOfMonth"] as! String)])
+                        }
                     }
                 }
                 self.getRecurringCategories()

@@ -78,9 +78,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         for entry in firebaseEntries {
             let dayData = entry.day
+            if entry.recurring == "false" {
             
             if !days.contains(dayData){
                 days.append(dayData)
+            }
             }
             
         }
@@ -98,9 +100,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         for entry in firebaseEntries {
             let weekData = entry.weekOfMonth
+            if entry.recurring == "false" {
+
             
             if !weeks.contains(weekData){
                 weeks.append(weekData)
+            }
             }
             
         }

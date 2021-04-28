@@ -399,10 +399,14 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         var monthDifference = 1
         let user = Auth.auth().currentUser
         var type = ""
+        var AMOUNT = amountTextFieldOutlet.text!
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
-
-        let firstRecurringEntry = Entry(type: selectedType, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: selectedDay, dayInWeek: String(dateFormatter.string(from: selectedDate)), year: selectedYear, month: selectedMonth, id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true", weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: selectedDate)))
+        if selectedType == "Expense" {
+            AMOUNT = "-" + AMOUNT
+        }
+        
+        let firstRecurringEntry = Entry(type: selectedType, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: AMOUNT, day: selectedDay, dayInWeek: String(dateFormatter.string(from: selectedDate)), year: selectedYear, month: selectedMonth, id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true", weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: selectedDate)))
         let firstDictionary = firstRecurringEntry.getDictionary()
         do {
             try db.collection("entries").addDocument(data: firstDictionary)
@@ -412,7 +416,7 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         }
 
         if ((selectedDay != selectedEndDay && selectedMonth == selectedEndMonth && selectedYear == selectedEndYear) || (selectedYear != selectedEndYear || (selectedMonth != selectedMonth)) || (selectedYear == selectedEndYear)){
-            let lastRecurringEntry = Entry(type: selectedType, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: selectedEndDay, dayInWeek: String(dateFormatter.string(from: selectedEndDate)), year: selectedEndYear, month: selectedEndMonth, id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true", weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: selectedEndDate)))
+            let lastRecurringEntry = Entry(type: selectedType, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: AMOUNT, day: selectedEndDay, dayInWeek: String(dateFormatter.string(from: selectedEndDate)), year: selectedEndYear, month: selectedEndMonth, id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true", weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: selectedEndDate)))
             let lastDictionary = lastRecurringEntry.getDictionary()
             do {
                 try db.collection("entries").addDocument(data: lastDictionary)
@@ -432,7 +436,7 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             print("\(monthDifference)IncYear is \(incrementedDate.year)")
             print("\(monthDifference)IncDayInWeek is \(String(dateFormatter.string(from: futureDate!)))")
             if (Int(selectedEndMonth) != incrementedDate.month || Int(selectedEndYear) != incrementedDate.year) {
-                let incRecurringEntry = Entry(type: selectedType, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amountTextFieldOutlet.text!, day: String(incrementedDate.day!), dayInWeek: String(dateFormatter.string(from: futureDate!)), year: String(incrementedDate.year!), month: String(incrementedDate.month!), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true", weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: futureDate!)))
+                let incRecurringEntry = Entry(type: selectedType, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: AMOUNT, day: String(incrementedDate.day!), dayInWeek: String(dateFormatter.string(from: futureDate!)), year: String(incrementedDate.year!), month: String(incrementedDate.month!), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true", weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: futureDate!)))
                 let incDictionary = incRecurringEntry.getDictionary()
                 do {
                     try db.collection("entries").addDocument(data: incDictionary)
