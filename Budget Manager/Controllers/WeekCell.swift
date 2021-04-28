@@ -33,14 +33,14 @@ class WeekCell: UITableViewCell {
             
             amountLabel.text = entries[0].amount
             categoryLabel.text = entries[0].category+" / "+entries[0].source
-//        if entry.type == "Expense" {
-//            amountLabel.textColor = UIColor(red: 0.98, green: 0.39, blue: 0.00, alpha: 1.00)
-//
-//        }
-//        else if entry.type == "Income" {
-//            amountLabel.textColor = UIColor(red: 0.24, green: 0.48, blue: 0.94, alpha: 1.00)
-//
-//        }
+        if entries[0].type == "Expense" {
+            amountLabel.textColor = UIColor(red: 0.98, green: 0.39, blue: 0.00, alpha: 1.00)
+
+        }
+        else if entries[0].type == "Income" {
+            amountLabel.textColor = UIColor(red: 0.24, green: 0.48, blue: 0.94, alpha: 1.00)
+
+        }
  
     }
     

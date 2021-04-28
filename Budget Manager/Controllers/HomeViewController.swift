@@ -38,6 +38,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var editName = ""
     var sections: [Int] = []
     var count = 0
+    var TYPE = ""
     var userAction = ""
     let helperMethods = HelperMethods()
     let firebaseMethods = FirebaseMethods()
@@ -201,7 +202,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 if entry.day == day {
                     if month == String(Calendar.current.component(.month, from: Date())){
-                        hehe.append(entry)
+                        if(entry.recurring == "false"){
+                            hehe.append(entry)
+                        }
                     }
                 }
             }
@@ -228,12 +231,19 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let month = entry.month
                 
                 if entry.weekOfMonth == weekOfMonth {
+                    
                     if month == String(Calendar.current.component(.month, from: Date())){
-                        hehe.append(entry)
+                        
+                        if(entry.recurring == "false"){
+                            
+                            hehe.append(entry)
+                        }
                     }
                 }
             }
+            
             thebestentries.append(hehe)
+            
         }
         //let sortedArray = thebestentries.sorted(by: {$0[0].day > $1[0].day })
         // entries.removeAll()
@@ -256,7 +266,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 if month == String(Calendar.current.component(.month, from: Date())) || year == String(Calendar.current.component(.year, from: Date()))  {
                     
-                    hehe.append(entry)
+                    if(entry.recurring == "false"){
+                        hehe.append(entry)
+                    }
                     
                 }
             }
@@ -303,10 +315,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         expenseOutlet.text = expenses
     }
     
-    @IBAction func recurringEntryPressed(_ sender: UIButton) {
-        helperMethods.goToRecurringEntryVC(senderController: self)
-    }
-    
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if(item.tag == 0) {
             print("Home Selected")
@@ -329,9 +337,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.performSegue(withIdentifier: "goToAllEditingVC", sender: self)
         
     }
-    @IBAction func recurringPressed(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "goRec", sender: self)
-    }
+    
     func animateIn() {
         self.view.addSubview(addView)
         addView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
@@ -403,6 +409,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! HeaderTableViewCell
+        
         let entry = entries[section]
         if entry.count != 0 {
             cell.setMode(mode: selectedMode)
@@ -435,6 +442,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.selectedEntryID = entry.id
             self.editSource = entry.source
             self.userAction = "EditEntry"
+            self.TYPE = entry.type
             self.performSegue(withIdentifier: "goToAllEditingVC", sender: self)
         }
         edit.backgroundColor = UIColor(red: 0.13, green: 0.17, blue: 0.40, alpha: 1.00)
@@ -453,6 +461,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             vc?.entryID = selectedEntryID
             vc?.source = editSource
             vc?.userAction = userAction
+            vc?.TYPE = TYPE
         }
     }
     
