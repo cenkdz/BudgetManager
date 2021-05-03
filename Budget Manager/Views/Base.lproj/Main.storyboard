@@ -245,6 +245,13 @@
                                     <action selector="donePressed:" destination="0yd-gT-Mf2" eventType="touchUpInside" id="gHj-Nl-hBG"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="+3000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbO-7p-FnC">
+                                <rect key="frame" x="162" y="584" width="52" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="S96-o3-a9o"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -259,6 +266,7 @@
                         <outlet property="progressBar" destination="fWh-9a-Fvp" id="DLC-Zd-aXG"/>
                         <outlet property="salaryOutlet" destination="oAf-on-Vcl" id="5K6-xQ-MIj"/>
                         <outlet property="tabBarOutlet" destination="wuy-SA-f0a" id="SCS-qs-TPr"/>
+                        <outlet property="totalOutlet" destination="hbO-7p-FnC" id="5Mq-wQ-Ens"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GtG-Xa-xmZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

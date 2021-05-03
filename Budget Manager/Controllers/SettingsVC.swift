@@ -22,6 +22,7 @@ class SettingsVC: UIViewController,UITabBarDelegate {
     @IBOutlet weak var changeSalaryBOutlet: UIButton!
     @IBOutlet weak var changeSalaryBGOutlet: UIButton!
     @IBOutlet weak var doneButtonOutlet: UIButton!
+    @IBOutlet weak var totalOutlet: UILabel!
     let helperMethods = HelperMethods()
     let user = Auth.auth().currentUser
     var userStatus = ""
@@ -219,6 +220,15 @@ class SettingsVC: UIViewController,UITabBarDelegate {
                     print(Int(userStatus)!*100)
                     
                     print(hunderedPercent)
+                    if Int(UserDefaults.standard.string(forKey: "userStatus")!)! > 0 {
+                        
+                        totalOutlet.text = "+" + UserDefaults.standard.string(forKey: "userStatus")!
+                        
+                    }
+                    else {
+                        totalOutlet.text = UserDefaults.standard.string(forKey: "userStatus")!
+                    }
+                  
                     
                     print(CGFloat((Int(userStatus)!*100)/Int(budgetGoalOutlet.text!)!))
                 }
