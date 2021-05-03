@@ -433,6 +433,31 @@
                                                 <blurEffect style="extraLight"/>
                                             </vibrancyEffect>
                                         </visualEffectView>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dTc-MZ-eNi">
+                                            <rect key="frame" x="45" y="548" width="30" height="42"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                            <state key="normal" title="-"/>
+                                            <connections>
+                                                <action selector="minusPressed:" destination="9gV-tl-r7V" eventType="touchUpInside" id="w4C-Sa-pEb"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ANT-hb-S4O">
+                                            <rect key="frame" x="217" y="548" width="30" height="42"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                            <state key="normal" title="+"/>
+                                            <connections>
+                                                <action selector="plusPressed:" destination="9gV-tl-r7V" eventType="touchUpInside" id="5Qz-J7-QzP"/>
+                                            </connections>
+                                        </button>
+                                        <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="nrs-or-FKF">
+                                            <rect key="frame" x="83" y="545" width="126" height="49"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                            <connections>
+                                                <action selector="dateChanged:" destination="9gV-tl-r7V" eventType="valueChanged" id="1v4-Oa-8sA"/>
+                                            </connections>
+                                        </datePicker>
                                     </subviews>
                                 </view>
                                 <blurEffect style="systemUltraThinMaterialLight"/>
@@ -956,6 +981,9 @@
                         <outlet property="tabBarOutlet" destination="Xsn-1h-gxM" id="nSs-Mb-smw"/>
                         <outlet property="tableView" destination="N1K-Rk-DE5" id="4gn-x1-2sK"/>
                         <outlet property="totalOutlet" destination="DxM-y2-M43" id="mJI-GV-CtY"/>
+                        <outlet property="userDateMinus" destination="dTc-MZ-eNi" id="Ftu-S4-QAq"/>
+                        <outlet property="userDatePicker" destination="nrs-or-FKF" id="B0y-D1-PaY"/>
+                        <outlet property="userDatePlus" destination="ANT-hb-S4O" id="k4o-3q-nUY"/>
                         <outlet property="visualEffectView" destination="CtP-1B-3g9" id="AeJ-59-ngJ"/>
                         <segue destination="fzB-FG-33X" kind="show" identifier="goToAllEditingVC" id="xIO-VU-81W"/>
                     </connections>

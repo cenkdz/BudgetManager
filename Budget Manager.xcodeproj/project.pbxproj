@@ -23,6 +23,8 @@
 		9BAC831526371C89006A3D14 /* WeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC831426371C89006A3D14 /* WeekCell.swift */; };
 		9BADD8542625C93C000E18F9 /* GraphsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BADD8532625C93C000E18F9 /* GraphsVC.swift */; };
 		9BAFE2B12638B79E00FBD1E4 /* RecurringHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAFE2B02638B79E00FBD1E4 /* RecurringHeaderCell.swift */; };
+		9BB0C25726401BF500F40B2D /* MonthSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0C25626401BF500F40B2D /* MonthSelection.swift */; };
+		9BB0C25A26403D9B00F40B2D /* EntryFiller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0C25926403D9B00F40B2D /* EntryFiller.swift */; };
 		9BBF4ABA2590EC3400F1290C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */; };
 		9BCAD21B25F4F73300047059 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */; };
 		9BE08E5226146AD400D25541 /* FirebaseMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE08E5126146AD400D25541 /* FirebaseMethods.swift */; };
@@ -64,6 +66,8 @@
 		9BAC831426371C89006A3D14 /* WeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCell.swift; sourceTree = "<group>"; };
 		9BADD8532625C93C000E18F9 /* GraphsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphsVC.swift; sourceTree = "<group>"; };
 		9BAFE2B02638B79E00FBD1E4 /* RecurringHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringHeaderCell.swift; sourceTree = "<group>"; };
+		9BB0C25626401BF500F40B2D /* MonthSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthSelection.swift; sourceTree = "<group>"; };
+		9BB0C25926403D9B00F40B2D /* EntryFiller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryFiller.swift; sourceTree = "<group>"; };
 		9BBF4AB92590EC3400F1290C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9BCAD21A25F4F73300047059 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		9BE08E5126146AD400D25541 /* FirebaseMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMethods.swift; sourceTree = "<group>"; };
@@ -154,6 +158,8 @@
 				9BE08E5426146BBC00D25541 /* HelperMethods.swift */,
 				9BE08E57261479C700D25541 /* UISettings.swift */,
 				9BE08E5A26149DF200D25541 /* Calculator.swift */,
+				9BB0C25626401BF500F40B2D /* MonthSelection.swift */,
+				9BB0C25926403D9B00F40B2D /* EntryFiller.swift */,
 			);
 			path = "Budget Manager";
 			sourceTree = "<group>";
@@ -325,6 +331,7 @@
 				9B173AC7259281A90049DC2D /* Entry.swift in Sources */,
 				BAB3D9A4259360E400DA000F /* SignUpVC.swift in Sources */,
 				BA12BBD325E4F4E800154119 /* IconListVC.swift in Sources */,
+				9BB0C25A26403D9B00F40B2D /* EntryFiller.swift in Sources */,
 				9B173AD42592918A0049DC2D /* CategoryCellVC.swift in Sources */,
 				9B5A05B425F26A7700A02BEF /* HomeViewController.swift in Sources */,
 				9BE08E5B26149DF200D25541 /* Calculator.swift in Sources */,
@@ -343,6 +350,7 @@
 				9B820A8C25F91FCE00B62016 /* UserPreferencesVC.swift in Sources */,
 				9B2DE29325FA1253009A3360 /* RecurringEntryVC.swift in Sources */,
 				9BAC831526371C89006A3D14 /* WeekCell.swift in Sources */,
+				9BB0C25726401BF500F40B2D /* MonthSelection.swift in Sources */,
 				9B173AD12592909B0049DC2D /* Category.swift in Sources */,
 				9BCAD21B25F4F73300047059 /* HeaderTableViewCell.swift in Sources */,
 				9B820A8F25F9222C00B62016 /* CheckableTableViewCell.swift in Sources */,

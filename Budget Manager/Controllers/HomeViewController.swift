@@ -23,6 +23,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var totalOutlet: UILabel!
     @IBOutlet weak var tabBarOutlet: UITabBar!
     
+    @IBOutlet weak var userDatePicker: UIDatePicker!
+    @IBOutlet weak var userDatePlus: UIButton!
+    @IBOutlet weak var userDateMinus: UIButton!
     var editCategory = ""
     var selectedMode = "Today"
     
@@ -49,7 +52,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var firebaseEntries = [Entry]()
     var thebestentries = [[Entry]]()
     var hehe = [Entry]()
-    
+    let monthSelection = MonthSelection()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +73,19 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         print(weeksCount)
         print("NOMBER IS\(Calendar.current.component(.weekOfMonth, from: date))")
         
+    }
+    
+    @IBAction func minusPressed(_ sender: UIButton) {
+        //DECREMENT MONTH
+        monthSelection.decrement()
+        userDatePicker.date = monthSelection.getDate()
+    }
+    @IBAction func plusPressed(_ sender: UIButton) {
+        //INCREMENT MONTH
+        monthSelection.increment()
+        userDatePicker.date = monthSelection.getDate()
+    }
+    @IBAction func dateChanged(_ sender: UIDatePicker) {
     }
     
     func getDays(entry: [Entry]) -> [String] {
