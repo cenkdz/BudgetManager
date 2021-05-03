@@ -11,16 +11,20 @@ import Foundation
 
 class MonthSelection{
     
-    var date = Date()
+    var date: Date
+    
+    init(date: Date) {
+        self.date = date
+    }
     func increment(){
         let monthsToAdd = 1
-        date = Calendar.current.date(byAdding: .month, value: monthsToAdd, to: date)!
+        date = Calendar.current.date(byAdding: .day, value: monthsToAdd, to: date)!
         print(date)
     }
     
     func decrement(){
         let monthsToAdd = 1
-        date = Calendar.current.date(byAdding: .month, value: -monthsToAdd, to: date)!
+        date = Calendar.current.date(byAdding: .day, value: -monthsToAdd, to: date)!
         print(date)
     }
     
