@@ -102,7 +102,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 } else {
                     for document in querySnapshot!.documents {
                         let data = document.data()
-                        self.entryFiller.firebaseEntries.append(Entry(type: data["type"] as! String, category: data["category"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String,weekOfMonth: data["weekOfMonth"]as! String))
+                        self.entryFiller.firebaseEntries.append(Entry(type: data["type"] as! String, category: data["category"] as! String,mainCategory: data["mainCategory"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String,weekOfMonth: data["weekOfMonth"]as! String))
                     }
                     
                     //Get STATUS
@@ -196,18 +196,21 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             helperMethods.goToTableRecurringVC(senderController: self)
         } else if(item.tag == 2) {
             helperMethods.goToGraphsVC(senderController: self)
-        }else if(item.tag == 3) {
+        } else if(item.tag == 3) {
             print("Settings Selected")
-            helperMethods.goToSettingsVC(senderController: self)        }
+            helperMethods.goToSettingsVC(senderController: self)
+        }
     }
     
     @IBAction func incomePressed(_ sender: UIButton) {
         userAction = "IncomeButton"
+        TYPE = "Income"
         self.performSegue(withIdentifier: "goToAllEditingVC", sender: self)
     }
     
     @IBAction func expensePressed(_ sender: UIButton) {
         userAction = "ExpenseButton"
+        TYPE = "Expense"
         self.performSegue(withIdentifier: "goToAllEditingVC", sender: self)
         
     }

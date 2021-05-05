@@ -18,6 +18,7 @@ class Entry: Hashable,Equatable,Comparable {
     }
     var type: String
     var category: String
+    var mainCategory: String
     var source: String
     var amount: String
     var day: String
@@ -33,9 +34,10 @@ class Entry: Hashable,Equatable,Comparable {
         hasher.combine(day)
     }
     
-    init(type: String,category:String,source: String,amount:String,day:String,dayInWeek:String,year:String,month:String,id:String,uid:String,recurring:String,weekOfMonth:String) {
+    init(type: String,category:String,mainCategory:String,source: String,amount:String,day:String,dayInWeek:String,year:String,month:String,id:String,uid:String,recurring:String,weekOfMonth:String) {
         self.type = type
         self.category = category
+        self.mainCategory = mainCategory
         self.source = source
         self.amount = amount
         self.day = day
@@ -48,6 +50,6 @@ class Entry: Hashable,Equatable,Comparable {
         self.weekOfMonth = weekOfMonth
     }
     func getDictionary() -> [String: Any]{
-        return ["type": type,"category":category,"source":source,"amount":amount,"day":day,"dayInWeek":dayInWeek,"year":year,"month":month,"id":id,"uid":uid,"recurring":recurring,"weekOfMonth":weekOfMonth]
+        return ["type": type,"category":category,"mainCategory":mainCategory,"source":source,"amount":amount,"day":day,"dayInWeek":dayInWeek,"year":year,"month":month,"id":id,"uid":uid,"recurring":recurring,"weekOfMonth":weekOfMonth]
     }
 }

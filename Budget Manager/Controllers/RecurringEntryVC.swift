@@ -118,8 +118,8 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 case "Category":
                     source = senderVC.type
                     DispatchQueue.main.async {
-                        self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryName, uid) in
-                            let category = Category(categoryID: categoryID, categoryName: categoryName, categoryIcon: categoryIcon, uid: uid)
+                        self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryMainName,categorySubName, uid) in
+                            let category = Category(categoryID: categoryID, categoryMainName: categoryMainName,categorySubName:categorySubName, categoryIcon: categoryIcon, categoryType: "", uid: uid)
                             self.categories.append(category)
                         }, uid: self.user!.uid)
                     }
@@ -178,8 +178,8 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     @IBAction func selectCategoryPressed(_ sender: UIButton) {
         print("Select Category Pressed!")
         selectedButton = "CategoryButton"
-        self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryName, uid) in
-            let category = Category(categoryID: categoryID, categoryName: categoryName, categoryIcon: categoryIcon, uid: uid)
+        self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryMainName,categorySubName, uid) in
+            let category = Category(categoryID: categoryID, categoryMainName: categoryMainName,categorySubName: categorySubName, categoryIcon: categoryIcon, categoryType: "Expense", uid: uid)
             self.categories.append(category)
         }, uid: self.user!.uid)
         self.tableViewOutlet.isHidden = false
@@ -230,7 +230,7 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
 
     }
-    func getUserCategories(completionHandler: @escaping(String, String, String, String) -> (), uid: String) {
+    func getUserCategories(completionHandler: @escaping(String,String, String, String, String) -> (), uid: String) {
         categories = []
         db.collection("categories").whereField("uid", isEqualTo: uid)
             .getDocuments() { (querySnapshot, err) in
@@ -239,7 +239,7 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             } else {
                 for document in querySnapshot!.documents {
                     let data = document.data()
-                    completionHandler (data["categoryID"] as! String, data["categoryIcon"] as! String, data["categoryName"] as! String, data["uid"] as! String)
+                    completionHandler (data["categoryID"] as! String, data["categoryIcon"] as! String, data["categoryMainName"] as! String,data["categorySubName"] as! String, data["uid"] as! String)
                     self.tableViewOutlet.reloadData()
                 }
             }
@@ -332,7 +332,7 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         NSLog("You selected cell number: \(indexPath.row)!")
         if selectedButton == "CategoryButton" {
-            let title = categories[indexPath.row].categoryName
+            let title = categories[indexPath.row].categoryMainName
             selectCategoryButtonOutlet.setAttributedTitle((NSAttributedString(string: title)), for: .normal)
         }
         else if selectedButton == "SourceButton" {
@@ -377,7 +377,7 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             switch self.selectedButton {
             case "CategoryButton":
                 let entry = self.categories[indexPath.row]
-                self.editName = entry.categoryName
+                self.editName = entry.categoryMainName
                 self.entryID = entry.categoryID
                 self.typeType = "Category"
 
@@ -439,7 +439,7 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             AMOUNT = "-" + AMOUNT
         }
         
-        let firstRecurringEntry = Entry(type: selectedType, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: AMOUNT, day: selectedDay, dayInWeek: String(dateFormatter.string(from: selectedDate)), year: selectedYear, month: selectedMonth, id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true", weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: selectedDate)))
+        let firstRecurringEntry = Entry(type: selectedType, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string),mainCategory: "", source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: AMOUNT, day: selectedDay, dayInWeek: String(dateFormatter.string(from: selectedDate)), year: selectedYear, month: selectedMonth, id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true", weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: selectedDate)))
         let firstDictionary = firstRecurringEntry.getDictionary()
         do {
             try db.collection("entries").addDocument(data: firstDictionary)
@@ -449,7 +449,7 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         }
 
         if ((selectedDay != selectedEndDay && selectedMonth == selectedEndMonth && selectedYear == selectedEndYear) || (selectedYear != selectedEndYear || (selectedMonth != selectedMonth)) || (selectedYear == selectedEndYear)){
-            let lastRecurringEntry = Entry(type: selectedType, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: AMOUNT, day: selectedEndDay, dayInWeek: String(dateFormatter.string(from: selectedEndDate)), year: selectedEndYear, month: selectedEndMonth, id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true", weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: selectedEndDate)))
+            let lastRecurringEntry = Entry(type: selectedType, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string),mainCategory: "", source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: AMOUNT, day: selectedEndDay, dayInWeek: String(dateFormatter.string(from: selectedEndDate)), year: selectedEndYear, month: selectedEndMonth, id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true", weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: selectedEndDate)))
             let lastDictionary = lastRecurringEntry.getDictionary()
             do {
                 try db.collection("entries").addDocument(data: lastDictionary)
@@ -469,7 +469,7 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             print("\(monthDifference)IncYear is \(incrementedDate.year)")
             print("\(monthDifference)IncDayInWeek is \(String(dateFormatter.string(from: futureDate!)))")
             if (Int(selectedEndMonth) != incrementedDate.month || Int(selectedEndYear) != incrementedDate.year) {
-                let incRecurringEntry = Entry(type: selectedType, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: AMOUNT, day: String(incrementedDate.day!), dayInWeek: String(dateFormatter.string(from: futureDate!)), year: String(incrementedDate.year!), month: String(incrementedDate.month!), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true", weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: futureDate!)))
+                let incRecurringEntry = Entry(type: selectedType, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string),mainCategory: "", source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: AMOUNT, day: String(incrementedDate.day!), dayInWeek: String(dateFormatter.string(from: futureDate!)), year: String(incrementedDate.year!), month: String(incrementedDate.month!), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "true", weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: futureDate!)))
                 let incDictionary = incRecurringEntry.getDictionary()
                 do {
                     try db.collection("entries").addDocument(data: incDictionary)

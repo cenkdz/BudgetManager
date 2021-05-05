@@ -31,7 +31,7 @@ class CheckableTableViewCell: UITableViewCell {
         }
     
     func setCell(category: Category){
-        categoryNameOutlet.text = category.categoryName
+        categoryNameOutlet.text = category.categoryMainName
     }
     
 

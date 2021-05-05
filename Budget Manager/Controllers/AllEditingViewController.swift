@@ -26,13 +26,23 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     var selectedButton = ""
     var entryID: Any!
     var source = "Category"
-    var categories: [Category] = []
+
+    var mainUserCategories: [String] = []
     var sources: [Source] = []
     var TYPE = ""
     var typeType = ""
     var editName = ""
     var addedText = ""
     var userAction = ""
+    
+    var categories: [[Category]] = []
+    var hehe = [Category]()
+    var firebaseCategories = [Category]()
+    var thebestcategories = [[Category]]()
+    
+    var USERSELECTEDCATEGORY: Category!
+
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,17 +56,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         print("Type is \(typeType)")
         print("TYPE is \(TYPE)")
         print("Id is\(entryID)")
-        DispatchQueue.main.async {
-            self.getUserSources(completionHandler: { (sourceID, sourceIcon, sourceName, uid) in
-                let source = Source(sourceID: sourceID, sourceName: sourceName, sourceIcon: sourceIcon, uid: uid)
-                self.sources.append(source)
-            }, uid: self.user!.uid)
-            self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryName, uid) in
-                let category = Category(categoryID: categoryID, categoryName: categoryName, categoryIcon: categoryIcon, uid: uid)
-                self.categories.append(category)
-            }, uid: self.user!.uid)
-        }
-        tableViewOutlet.reloadData()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,22 +68,55 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         else if TYPE == "Income" {
             amountTextFieldOutlet.text = amount
         }
-        
-        DispatchQueue.main.async {
-            self.getUserSources(completionHandler: { (sourceID, sourceIcon, sourceName, uid) in
-                let source = Source(sourceID: sourceID, sourceName: sourceName, sourceIcon: sourceIcon, uid: uid)
-                self.sources.append(source)
-            }, uid: self.user!.uid)
-        }
-        DispatchQueue.main.async {
-            
-            self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryName, uid) in
-                let category = Category(categoryID: categoryID, categoryName: categoryName, categoryIcon: categoryIcon, uid: uid)
-                self.categories.append(category)
-            }, uid: self.user!.uid)
-        }
-        tableViewOutlet.reloadData()
         print("Selected User Action Is \(userAction)")
+        
+    }
+    
+    func getMainCategories(categories: [Category]) -> [String]{
+        var mainCategories: [String] = []
+        
+        for category in categories {
+            let mainCategory = category.categoryMainName
+            
+            if !mainCategories.contains(mainCategory){
+                mainCategories.append(mainCategory)
+            }
+            
+            
+        }
+        
+//        let sortedDays = days.sorted {
+//            Int($0)! > Int($1)!
+//        }
+        
+        mainUserCategories = mainCategories
+        
+        return mainUserCategories
+    }
+    
+    func thebest(){
+        self.categories = []
+        self.thebestcategories = []
+        self.hehe = []
+        
+        for main in getMainCategories(categories: firebaseCategories) {
+            if !hehe.isEmpty {
+                hehe.removeAll()
+            }
+            let main = main
+            
+            for cat in firebaseCategories {
+                let mainCat = cat.categoryMainName
+                
+                if cat.categoryMainName == main {
+                            hehe.append(cat)
+                }
+            }
+            thebestcategories.append(hehe)
+        }
+        //let sortedArray = thebestentries.sorted(by: {$0[0].day > $1[0].day })
+        // entries.removeAll()
+        categories = thebestcategories
         
     }
     
@@ -102,9 +135,11 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
                     tableViewOutlet.reloadData()
                 case "Category":
                     category = senderVC.type
-                    self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryName, uid) in
-                        let category = Category(categoryID: categoryID, categoryName: categoryName, categoryIcon: categoryIcon, uid: uid)
-                        self.categories.append(category)
+                    self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryMainName,categorySubName,categoryType, uid) in
+                        let category = Category(categoryID: categoryID, categoryMainName: categoryMainName,categorySubName:categorySubName, categoryIcon: categoryIcon, categoryType: categoryType, uid: uid)
+                        self.firebaseCategories.append(category)
+                        self.thebest()
+                        self.tableViewOutlet.reloadData()
                     }, uid: self.user!.uid)
                     tableViewOutlet.reloadData()
                     
@@ -118,12 +153,42 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBAction func selectCategoryPressed(_ sender: UIButton) {
         print("Select Category Pressed!")
         selectedButton = "CategoryButton"
-        self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryName, uid) in
-            let category = Category(categoryID: categoryID, categoryName: categoryName, categoryIcon: categoryIcon, uid: uid)
-            self.categories.append(category)
+        if categories.isEmpty {
+        self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryMainName,categorySubName,categoryType, uid) in
+            let category = Category(categoryID: categoryID, categoryMainName: categoryMainName,categorySubName:categorySubName, categoryIcon: categoryIcon, categoryType: categoryType, uid: uid)
+            self.categories = []
+            self.thebestcategories = []
+            self.hehe = []
+            if self.TYPE == "Expense"{
+            if category.categoryType == "Expense"{
+            self.firebaseCategories.append(category)
+            }
+            }else if self.TYPE == "Income"{
+                if category.categoryType == "Income"{
+                self.firebaseCategories.append(category)
+                }
+                }
+            self.thebest()
+            self.tableViewOutlet.reloadData()
         }, uid: self.user!.uid)
+        }else{
+            categories.removeAll()
+            thebestcategories.removeAll()
+            hehe.removeAll()
+            firebaseCategories.removeAll()
+            self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryMainName,categorySubName,categoryType, uid) in
+                let category = Category(categoryID: categoryID, categoryMainName: categoryMainName,categorySubName:categorySubName, categoryIcon: categoryIcon, categoryType: categoryType, uid: uid)
+                self.categories = []
+                self.thebestcategories = []
+                self.hehe = []
+                if category.categoryType == "Expense"{
+                self.firebaseCategories.append(category)
+                }
+                self.thebest()
+                self.tableViewOutlet.reloadData()
+            }, uid: self.user!.uid)
+        }
         self.tableViewOutlet.isHidden = false
-        self.tableViewOutlet.reloadData()
     }
     @IBAction func selectSourcePressed(_ sender: UIButton) {
         print("Select Source Pressed!")
@@ -160,8 +225,10 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         
     }
     
-    func getUserCategories(completionHandler: @escaping(String, String, String, String) -> (), uid: String) {
-        categories = []
+    func getUserCategories(completionHandler: @escaping(String,String, String, String, String,String) -> (), uid: String) {
+        self.categories = []
+        self.thebestcategories = []
+        self.hehe = []
         db.collection("categories").whereField("uid", isEqualTo: uid)
             .getDocuments() { (querySnapshot, err) in
                 if let err = err {
@@ -169,7 +236,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
                 } else {
                     for document in querySnapshot!.documents {
                         let data = document.data()
-                        completionHandler (data["categoryID"] as! String, data["categoryIcon"] as! String, data["categoryName"] as! String, data["uid"] as! String)
+                        completionHandler (data["categoryID"] as! String, data["categoryIcon"] as! String, data["categoryMainName"] as! String,data["categorySubName"] as! String,data["categoryType"] as! String, data["uid"] as! String)
                         self.tableViewOutlet.reloadData()
                     }
                 }
@@ -226,33 +293,52 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
      // Pass the selected object to the new view controller.
      }
      */
+    
+    func getCountOfMainCategory(categoryName:String) -> Int{
+        var count = 0
+        for category in firebaseCategories {
+            if category.categoryMainName == categoryName {
+                count = count + 1
+            }
+        }
+        return count
+
+    }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        switch selectedButton {
+        case "CategoryButton":
+            return categories.count
+        case "SourceButton":
+            return 1
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch selectedButton {
         case "CategoryButton":
-            return categories.count
+            return categories[section].count
         case "SourceButton":
             return sources.count
         default:
-            return 0
+            return 1
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch selectedButton {
         case "CategoryButton":
-            return "Categories"
+            
+            return getMainCategories(categories: firebaseCategories)[section]
         case "SourceButton":
             return "Sources"
         default:
-            return ""
+            return "ERROR"
         }
         
     }
@@ -260,20 +346,26 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CategoryCellVC
+        
         if selectedButton == "CategoryButton" {
-            cell.setCategories(category: categories[indexPath.row])
+            
+            print("tHIS IS\(categories[indexPath.section][indexPath.row])")
+            cell.setCategories(category: categories[indexPath.section][indexPath.row])
         }
         else if selectedButton == "SourceButton" {
+            
             cell.setSources(source: sources[indexPath.row])
             
         }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         NSLog("You selected cell number: \(indexPath.row)!")
         if selectedButton == "CategoryButton" {
-            let title = categories[indexPath.row].categoryName
+            let title = categories[indexPath.section][indexPath.row].categorySubName
+            USERSELECTEDCATEGORY = categories[indexPath.section][indexPath.row]
             selectCategoryButtonOutlet.setAttributedTitle((NSAttributedString(string: title)), for: .normal)
         }
         else if selectedButton == "SourceButton" {
@@ -287,14 +379,14 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         let delete = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
             switch self.selectedButton {
             case "CategoryButton":
-                let entry = self.categories[indexPath.row]
+                let entry = self.categories[indexPath.section][indexPath.row]
                 self.entryID = entry.categoryID
                 
                 print("BUTTON\(self.selectedButton)")
                 self.deleteUserCategory(selectedEntryID: entry.categoryID)
                 
                 var changedEntries = self.categories
-                changedEntries.remove(at: indexPath.row)
+                changedEntries[indexPath.section].remove(at: indexPath.row)
                 self.categories = changedEntries
                 tableView.reloadData()
             case "SourceButton":
@@ -317,8 +409,8 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         let edit = UITableViewRowAction(style: .default, title: "Edit") { (action, indexPath) in
             switch self.selectedButton {
             case "CategoryButton":
-                let entry = self.categories[indexPath.row]
-                self.editName = entry.categoryName
+                let entry = self.categories[indexPath.section][indexPath.row]
+                self.editName = entry.categorySubName
                 self.entryID = entry.categoryID
                 print("Type is \(self.typeType)")
                 
@@ -371,6 +463,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
                 ref.updateData(["amount": willBeNewAmount])
                 ref.updateData(["category": String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string)])
                 ref.updateData(["source": String(self.selectSourceButtonOutlet.currentAttributedTitle!.string)])
+                ref.updateData(["mainCategory": self.USERSELECTEDCATEGORY.categoryMainName])
                 completion
             }
             DispatchQueue.main.async {
@@ -385,6 +478,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         var type = ""
         var amount = amountTextFieldOutlet.text!
         let date = Date()
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
         switch userAction {
@@ -398,7 +492,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         if type == "Expense" {
             amount = "-"+amountTextFieldOutlet.text!
         }
-        let userEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amount, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "false",weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: date)))
+        let userEntry = Entry(type: type, category: String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string), mainCategory: USERSELECTEDCATEGORY.categoryMainName, source: String(self.selectSourceButtonOutlet.currentAttributedTitle!.string), amount: amount, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "false",weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: date)))
         let dictionary = userEntry.getDictionary()
         //        if noteField.text!.isEmpty {
         //            displayAlert(message: "Name field can't be empty.", title: "Warning")

@@ -11,17 +11,21 @@ import UIKit
 class Category {
     var categoryID: String
     var categoryIcon: String
-    var categoryName: String
+    var categoryMainName: String
+    var categorySubName: String
+    var categoryType: String
     var uid: String
-    init(categoryID:String,categoryName:String,categoryIcon: String,uid: String) {
+    init(categoryID:String,categoryMainName:String,categorySubName:String,categoryIcon: String,categoryType: String,uid: String) {
         self.categoryID = categoryID
-        self.categoryName = categoryName
+        self.categoryMainName = categoryMainName
+        self.categorySubName = categorySubName
         self.categoryIcon = categoryIcon
+        self.categoryType = categoryType
         self.uid = uid
         
     }
     
     func getDictionary() -> [String: Any]{
-         return ["categoryID": categoryID,"categoryName":categoryName,"categoryIcon":categoryIcon,"uid":uid]
+        return ["categoryID": categoryID,"categoryMainName":categoryMainName,"categorySubName":categorySubName,"categoryIcon":categoryIcon,"categoryType":categoryType,"uid":uid]
      }
 }

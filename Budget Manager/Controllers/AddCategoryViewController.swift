@@ -154,7 +154,7 @@ class AddCategoryViewController: UIViewController {
     
     func addCategory(){
         let user = Auth.auth().currentUser
-        let category = Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)), categoryName: nameTextOutlet.text!, categoryIcon: "", uid: user!.uid)
+        let category = Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)), categoryMainName: nameTextOutlet.text!,categorySubName:"", categoryIcon: "", categoryType: "Expense", uid: user!.uid)
         let dictionary = category.getDictionary()
         if nameTextOutlet.text!.isEmpty {
             displayAlert(message: "Name field can't be empty.", title: "Warning")
