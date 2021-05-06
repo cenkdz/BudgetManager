@@ -26,9 +26,10 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     var selectedButton = ""
     var entryID: Any!
     var source = "Category"
+    var SELECTEDCAT = ""
 
     var mainUserCategories: [String] = []
-    var sources: [Source] = []
+    var sources: [Category] = []
     var TYPE = ""
     var typeType = ""
     var editName = ""
@@ -48,8 +49,20 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewDidLoad()
         print("Selected User Action Is \(userAction)")
         self.hideKeyboardWhenTappedAround()
-        selectCategoryButtonOutlet.setTitle("Select a Category", for: .normal)
-        selectSourceButtonOutlet.setTitle("Select a Source", for: .normal)
+
+        print("asd1\(TYPE)")
+        print("asd2\(typeType)")
+        print("asd3\(category)")
+        print("asd4\(source)")
+        print("asd5\(userAction)")
+        
+        if TYPE == "Income" {
+            selectSourceButtonOutlet.isHidden = true
+            selectCategoryButtonOutlet.setTitle("Select a Source", for: .normal)
+        }else{
+            selectSourceButtonOutlet.isHidden = false
+        }
+
         tableViewOutlet.isHidden = true
         tableViewOutlet.delegate = self
         tableViewOutlet.dataSource = self
@@ -64,6 +77,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         selectSourceButtonOutlet.setAttributedTitle(NSAttributedString(string: source), for: .normal)
         if TYPE == "Expense" {
             amountTextFieldOutlet.text = String(amount.dropFirst())
+//            addCustomCategorySourceOutlet.setTitle("Add Custom Category", for: .normal)
         }
         else if TYPE == "Income" {
             amountTextFieldOutlet.text = amount
@@ -128,9 +142,13 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
                 switch senderVC.type {
                 case "Source":
                     source = senderVC.type
-                    self.getUserSources(completionHandler: { (sourceID, sourceIcon, sourceName, uid) in
-                        let source = Source(sourceID: sourceID, sourceName: sourceName, sourceIcon: sourceIcon, uid: uid)
-                        self.sources.append(source)
+                    self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryMainName,categorySubName,categoryType, uid) in
+                        let category = Category(categoryID: categoryID, categoryMainName: categoryMainName,categorySubName:categorySubName, categoryIcon: categoryIcon, categoryType: categoryType, uid: uid)
+                        if category.categoryType == "Income"{
+                        self.sources.append(category)
+                        }
+                        self.tableViewOutlet.isHidden = false
+                        self.tableViewOutlet.reloadData()
                     }, uid: self.user!.uid)
                     tableViewOutlet.reloadData()
                 case "Category":
@@ -152,6 +170,10 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     @IBAction func selectCategoryPressed(_ sender: UIButton) {
         print("Select Category Pressed!")
+        categories.removeAll()
+        thebestcategories.removeAll()
+        hehe.removeAll()
+        firebaseCategories.removeAll()
         selectedButton = "CategoryButton"
         if categories.isEmpty {
         self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryMainName,categorySubName,categoryType, uid) in
@@ -193,12 +215,17 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBAction func selectSourcePressed(_ sender: UIButton) {
         print("Select Source Pressed!")
         selectedButton = "SourceButton"
-        self.getUserSources(completionHandler: { (sourceID, sourceIcon, sourceName, uid) in
-            let source = Source(sourceID: sourceID, sourceName: sourceName, sourceIcon: sourceIcon, uid: uid)
-            self.sources.append(source)
+        sources = []
+        self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryMainName,categorySubName,categoryType, uid) in
+            let category = Category(categoryID: categoryID, categoryMainName: categoryMainName,categorySubName:categorySubName, categoryIcon: categoryIcon, categoryType: categoryType, uid: uid)
+            if category.categoryType == "Income"{
+            self.sources.append(category)
+            }
+            self.tableViewOutlet.isHidden = false
+            self.tableViewOutlet.reloadData()
         }, uid: self.user!.uid)
-        self.tableViewOutlet.isHidden = false
-        self.tableViewOutlet.reloadData()
+
+
     }
     @IBAction func addCustomCategorySourcePressed(_ sender: UIButton) {
         print("AddCustomCategorySource Pressed!")
@@ -272,7 +299,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func deleteUserSource(selectedEntryID: Any) {
-        db.collection("sources").whereField("sourceID", isEqualTo: selectedEntryID).getDocuments { (querySnapshot, err) in
+        db.collection("categories").whereField("categoryID", isEqualTo: selectedEntryID).getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -369,7 +396,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
             selectCategoryButtonOutlet.setAttributedTitle((NSAttributedString(string: title)), for: .normal)
         }
         else if selectedButton == "SourceButton" {
-            let title = sources[indexPath.row].sourceName
+            let title = sources[indexPath.row].categorySubName
             selectSourceButtonOutlet.setAttributedTitle((NSAttributedString(string: title)), for: .normal)
         }
     }
@@ -391,8 +418,9 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
                 tableView.reloadData()
             case "SourceButton":
                 let entry = self.sources[indexPath.row]
-                self.entryID = entry.sourceID
-                self.deleteUserSource(selectedEntryID: entry.sourceID)
+                self.entryID = entry.categoryID
+                
+                self.deleteUserSource(selectedEntryID: entry.categoryID)
                 
                 var changedEntries = self.sources
                 changedEntries.remove(at: indexPath.row)
@@ -418,8 +446,8 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
                 
             case "SourceButton":
                 let entry = self.sources[indexPath.row]
-                self.editName = entry.sourceName
-                self.entryID = entry.sourceID
+                self.editName = entry.categorySubName
+                self.entryID = entry.categoryID
                 self.typeType = "Source"
                 print("Type is \(self.typeType)")
                 
@@ -463,7 +491,12 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
                 ref.updateData(["amount": willBeNewAmount])
                 ref.updateData(["category": String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string)])
                 ref.updateData(["source": String(self.selectSourceButtonOutlet.currentAttributedTitle!.string)])
-                ref.updateData(["mainCategory": self.USERSELECTEDCATEGORY.categoryMainName])
+                if self.USERSELECTEDCATEGORY != nil {
+                    ref.updateData(["mainCategory": self.USERSELECTEDCATEGORY.categoryMainName])
+                }else{
+                    ref.updateData(["mainCategory": self.SELECTEDCAT])
+                }
+                
                 completion
             }
             DispatchQueue.main.async {

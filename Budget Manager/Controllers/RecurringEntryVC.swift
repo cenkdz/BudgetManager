@@ -323,7 +323,7 @@ class RecurringEntryVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             cell.setCategories(category: categories[indexPath.row])
         }
         else if selectedButton == "SourceButton" {
-            cell.setSources(source: sources[indexPath.row])
+            cell.setSources(source: categories[indexPath.row])
 
         }
         return cell

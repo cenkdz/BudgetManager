@@ -58,9 +58,14 @@ class FirebaseMethods: UIViewController{
     //UserPreferencesVC
     func addSelectedMainCategory(completion: (),selectedCategoryNames:[String]) {
         var names = ["Home","Vehicle","Health","Cosmetics","Clothing","Accessories","Market","Taxes","Restaurants","Entertaintment","Bills","Electronics","Insurance"]
+        
+        var incomeCategories: [Category] = [Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)), categoryMainName: "Source",categorySubName: "Cash", categoryIcon: "", categoryType: "Income", uid: user!.uid),Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)), categoryMainName: "Source",categorySubName: "Credit Card", categoryIcon: "", categoryType: "Income", uid: user!.uid),Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)), categoryMainName: "Source",categorySubName: "Bank Account", categoryIcon: "", categoryType: "Income", uid: user!.uid)]
 
         var subCat = [Category]()
         var main = ""
+
+        
+        subCat = incomeCategories
         for category in selectedCategoryNames {
             
             switch category {

@@ -11,9 +11,10 @@ import UIKit
 import Charts
 import Firebase
 import FirebaseAuth
-class RecurringGraphVC: UIViewController, UITabBarDelegate {
+class RecurringGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tabBarOutlet: UITabBar!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     let firebaseMethods = FirebaseMethods()
     var entries: [[Entry]] = [[]]
@@ -26,6 +27,7 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate {
     var colors: [UIColor] = []
     var total = 0.0
     var type = ""
+    var specialTotal: [Double] = []
 
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
@@ -34,6 +36,7 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         type = "Recurring"
+        setTableView()
         segmentedControl.selectedSegmentIndex = 2
         setTabBar()
         fillEntries()
@@ -83,7 +86,7 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate {
     func createExpenseBarChart(){
         dataSets.removeAll()
         //Create bar chart
-        let barChart = BarChartView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2))
+        let barChart = BarChartView(frame: CGRect(x: 0, y: 100, width: view.frame.width, height: 300))
         barChart.tag = 0
         
         var i = 0
@@ -97,6 +100,7 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate {
                 dataSets.append(BarChartDataSet(entries: [BarChartDataEntry(x: Double(i), y: total)], label: String(category)))
                 barChart.notifyDataSetChanged()
                 i = i+1
+                specialTotal.append(total)
                 total = 0.0
 
             }
@@ -133,20 +137,19 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate {
        
             view.addSubview(barChart)
         
-        barChart.center = view.center
         
     }
     
     func createRecurringBarChart(){
         //Create bar chart
-        let barChart = BarChartView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2))
+        let barChart = BarChartView(frame: CGRect(x: 0, y: 100, width: view.frame.width, height: 300))
         barChart.tag = 1
         
         var i = 0
         
         for category in categories {
             for entry in entries.matrixIterator() {
-                if entry.category == category && entry.recurring == "true" {
+                if entry.mainCategory == category && entry.recurring == "true" {
                     total = total + Double(entry.amount)!
                 }
             }
@@ -168,7 +171,7 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate {
         barChart.xAxis.enabled = false
         
         view.addSubview(barChart)
-        barChart.center = view.center
+       
         
     }
     
@@ -188,13 +191,15 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate {
                 }
                 self.getRecurringCategories()
                 self.createRecurringBarChart()
+                self.tableView.reloadData()
+
             }
     }
 
     func getRecurringCategories(){
         categories = []
         for entry in entries.matrixIterator() {
-            let category = entry.category
+            let category = entry.mainCategory
             if entry.recurring == "true" {
                 
             if categories.isEmpty {
@@ -222,7 +227,24 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate {
             
         }
     }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return categories.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "recurringCell", for: indexPath) as! GraphCell3
+        cell.setRecurringTable(mainCategory: categories[indexPath.row], totalIncome: "String(specialTotal[indexPath.row])")
+        return cell
+    }
+    
+    func setTableView(){
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.setContentOffset(tableView.contentOffset, animated: false)
 
+    }
     
 }
 

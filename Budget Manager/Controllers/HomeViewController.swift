@@ -28,6 +28,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var userDateMinus: UIButton!
     var editCategory = ""
     var selectedMode = "Today"
+    var SELECTEDCAT = ""
     
     var editAmount = ""
     let user = Auth.auth().currentUser
@@ -317,6 +318,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let entry = self.entryFiller.entries[indexPath.section][indexPath.row]
             self.editAmount = entry.amount
             self.editCategory = entry.category
+            self.SELECTEDCAT = entry.mainCategory
+            
             self.selectedEntryID = entry.id
             self.editSource = entry.source
             self.userAction = "EditEntry"
@@ -340,6 +343,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             vc?.source = editSource
             vc?.userAction = userAction
             vc?.TYPE = TYPE
+            vc?.SELECTEDCAT = SELECTEDCAT
         }
     }
     

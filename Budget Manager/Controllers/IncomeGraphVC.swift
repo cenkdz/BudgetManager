@@ -11,8 +11,9 @@ import UIKit
 import Charts
 import Firebase
 import FirebaseAuth
-class IncomeGraphVC: UIViewController, UITabBarDelegate {
-
+class IncomeGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet weak var tableView: UITableView!
+    
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tabBarOutlet: UITabBar!
     let firebaseMethods = FirebaseMethods()
@@ -30,10 +31,12 @@ class IncomeGraphVC: UIViewController, UITabBarDelegate {
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
     let helperMethods = HelperMethods()
+    var specialTotal: [Double] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         type = "Income"
+        setTableView()
         segmentedControl.selectedSegmentIndex = 1
         setTabBar()
         fillEntries()
@@ -72,19 +75,20 @@ class IncomeGraphVC: UIViewController, UITabBarDelegate {
     
     func createIncomeBarChart(){
         //Create bar chart
-        let barChart = BarChartView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2))
+        let barChart = BarChartView(frame: CGRect(x: 0, y: 100, width: view.frame.width, height: 300))
         barChart.tag = 1
         
         var i = 0
         
         for category in categories {
             for entry in entries.matrixIterator() {
-                if entry.category == category && entry.type == "Income" {
+                if entry.mainCategory == category && entry.type == "Income" {
                     total = total + Double(entry.amount)!
                 }
             }
             dataSets.append(BarChartDataSet(entries: [BarChartDataEntry(x: Double(i), y: total)], label: String(category)))
             i = i+1
+            specialTotal.append(total)
             total = 0.0
 
         }
@@ -101,7 +105,6 @@ class IncomeGraphVC: UIViewController, UITabBarDelegate {
         barChart.xAxis.enabled = false
         
         view.addSubview(barChart)
-        barChart.center = view.center
         
     }
     
@@ -121,13 +124,15 @@ class IncomeGraphVC: UIViewController, UITabBarDelegate {
                 }
                 self.getIncomeCategories()
                 self.createIncomeBarChart()
+                self.tableView.reloadData()
+
             }
     }
 
     func getIncomeCategories(){
         categories = []
         for entry in entries.matrixIterator() {
-            let category = entry.category
+            let category = entry.mainCategory
             if entry.type == "Income" {
                 
             if categories.isEmpty {
@@ -154,6 +159,24 @@ class IncomeGraphVC: UIViewController, UITabBarDelegate {
         }else{
             
         }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return categories.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "incomeCell", for: indexPath) as! GraphCell2
+        cell.setIncomeTable(mainCategory: categories[indexPath.row], totalIncome: String(specialTotal[indexPath.row]))
+        return cell
+    }
+    
+    func setTableView(){
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.setContentOffset(tableView.contentOffset, animated: false)
+
     }
 
     
