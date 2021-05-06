@@ -31,6 +31,12 @@
 		9BDB488C2644488300763C99 /* GraphCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDB488B2644488300763C99 /* GraphCell.swift */; };
 		9BDB488F26444B6C00763C99 /* GraphCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDB488E26444B6C00763C99 /* GraphCell2.swift */; };
 		9BDB489226444B7600763C99 /* GraphCell3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDB489126444B7600763C99 /* GraphCell3.swift */; };
+		9BDB4895264468D000763C99 /* GraphSubCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDB4894264468D000763C99 /* GraphSubCell.swift */; };
+		9BDB4898264468E000763C99 /* GraphSubCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDB4897264468E000763C99 /* GraphSubCell2.swift */; };
+		9BDB489B264468EC00763C99 /* GraphSubCell3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDB489A264468EC00763C99 /* GraphSubCell3.swift */; };
+		9BDB489E2644697600763C99 /* SubVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDB489D2644697600763C99 /* SubVC.swift */; };
+		9BDB48A12644698000763C99 /* SubVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDB48A02644698000763C99 /* SubVC2.swift */; };
+		9BDB48A42644698B00763C99 /* SubVC3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDB48A32644698B00763C99 /* SubVC3.swift */; };
 		9BE08E5226146AD400D25541 /* FirebaseMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE08E5126146AD400D25541 /* FirebaseMethods.swift */; };
 		9BE08E5526146BBC00D25541 /* HelperMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE08E5426146BBC00D25541 /* HelperMethods.swift */; };
 		9BE08E58261479C700D25541 /* UISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE08E57261479C700D25541 /* UISettings.swift */; };
@@ -78,6 +84,12 @@
 		9BDB488B2644488300763C99 /* GraphCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphCell.swift; sourceTree = "<group>"; };
 		9BDB488E26444B6C00763C99 /* GraphCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphCell2.swift; sourceTree = "<group>"; };
 		9BDB489126444B7600763C99 /* GraphCell3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphCell3.swift; sourceTree = "<group>"; };
+		9BDB4894264468D000763C99 /* GraphSubCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphSubCell.swift; sourceTree = "<group>"; };
+		9BDB4897264468E000763C99 /* GraphSubCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphSubCell2.swift; sourceTree = "<group>"; };
+		9BDB489A264468EC00763C99 /* GraphSubCell3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphSubCell3.swift; sourceTree = "<group>"; };
+		9BDB489D2644697600763C99 /* SubVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubVC.swift; sourceTree = "<group>"; };
+		9BDB48A02644698000763C99 /* SubVC2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubVC2.swift; sourceTree = "<group>"; };
+		9BDB48A32644698B00763C99 /* SubVC3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubVC3.swift; sourceTree = "<group>"; };
 		9BE08E5126146AD400D25541 /* FirebaseMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMethods.swift; sourceTree = "<group>"; };
 		9BE08E5426146BBC00D25541 /* HelperMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperMethods.swift; sourceTree = "<group>"; };
 		9BE08E57261479C700D25541 /* UISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISettings.swift; sourceTree = "<group>"; };
@@ -219,6 +231,12 @@
 				9BDB488B2644488300763C99 /* GraphCell.swift */,
 				9BDB488E26444B6C00763C99 /* GraphCell2.swift */,
 				9BDB489126444B7600763C99 /* GraphCell3.swift */,
+				9BDB4894264468D000763C99 /* GraphSubCell.swift */,
+				9BDB4897264468E000763C99 /* GraphSubCell2.swift */,
+				9BDB489A264468EC00763C99 /* GraphSubCell3.swift */,
+				9BDB489D2644697600763C99 /* SubVC.swift */,
+				9BDB48A02644698000763C99 /* SubVC2.swift */,
+				9BDB48A32644698B00763C99 /* SubVC3.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -342,6 +360,7 @@
 				9BDB488C2644488300763C99 /* GraphCell.swift in Sources */,
 				9BAC830E26370F7C006A3D14 /* RecurringGraphVC.swift in Sources */,
 				9BDB488F26444B6C00763C99 /* GraphCell2.swift in Sources */,
+				9BDB489E2644697600763C99 /* SubVC.swift in Sources */,
 				9B173AC7259281A90049DC2D /* Entry.swift in Sources */,
 				BAB3D9A4259360E400DA000F /* SignUpVC.swift in Sources */,
 				BA12BBD325E4F4E800154119 /* IconListVC.swift in Sources */,
@@ -354,11 +373,15 @@
 				9BAA00F42643086F00AB8BDA /* AddCategoryCell.swift in Sources */,
 				9B173AC125927C540049DC2D /* Goal.swift in Sources */,
 				9BF44C2B25F6331900A9FA96 /* Source.swift in Sources */,
+				9BDB48A12644698000763C99 /* SubVC2.swift in Sources */,
+				9BDB48A42644698B00763C99 /* SubVC3.swift in Sources */,
+				9BDB489B264468EC00763C99 /* GraphSubCell3.swift in Sources */,
 				BAC2998F257A6E6F00EE1511 /* AppDelegate.swift in Sources */,
 				9BFF628925FA7104002204D0 /* TableRecurringVC.swift in Sources */,
 				9B33DC9825916BD00004CA6D /* User.swift in Sources */,
 				9BF8DD4F25F6733200D3A8AC /* AddCategoryViewController.swift in Sources */,
 				9BAFE2B12638B79E00FBD1E4 /* RecurringHeaderCell.swift in Sources */,
+				9BDB4898264468E000763C99 /* GraphSubCell2.swift in Sources */,
 				BAEC3AAB25F77BC3009B1DCE /* AllEditingViewController.swift in Sources */,
 				9BE08E5226146AD400D25541 /* FirebaseMethods.swift in Sources */,
 				9BAC831226371052006A3D14 /* IncomeGraphVC.swift in Sources */,
@@ -373,6 +396,7 @@
 				BAB3D9A625937FAF00DA000F /* LandingVC.swift in Sources */,
 				9BF44C2E25F6354D00A9FA96 /* HeaderCellVC.swift in Sources */,
 				BAC29991257A6E6F00EE1511 /* SceneDelegate.swift in Sources */,
+				9BDB4895264468D000763C99 /* GraphSubCell.swift in Sources */,
 				9BE08E58261479C700D25541 /* UISettings.swift in Sources */,
 				9BE08E5526146BBC00D25541 /* HelperMethods.swift in Sources */,
 				9B820A9225F94D6F00B62016 /* SettingsVC.swift in Sources */,

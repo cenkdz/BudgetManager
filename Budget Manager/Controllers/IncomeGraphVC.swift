@@ -18,6 +18,7 @@ class IncomeGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UIT
     @IBOutlet weak var tabBarOutlet: UITabBar!
     let firebaseMethods = FirebaseMethods()
     var entries: [[Entry]] = [[]]
+    var incomes: [Entry] = []
     var categories: [String] = []
     var incomeCategories: [String] = []
     var recurringCategories: [String] = []
@@ -27,11 +28,12 @@ class IncomeGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UIT
     var colors: [UIColor] = []
     var total = 0.0
     var type = ""
+    var selSub = ""
 
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
     let helperMethods = HelperMethods()
-    var specialTotal: [Double] = []
+    var specialTotal: [Int] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,7 +90,7 @@ class IncomeGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UIT
             }
             dataSets.append(BarChartDataSet(entries: [BarChartDataEntry(x: Double(i), y: total)], label: String(category)))
             i = i+1
-            specialTotal.append(total)
+            specialTotal.append(Int(total))
             total = 0.0
 
         }
@@ -118,6 +120,9 @@ class IncomeGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UIT
                     for document in querySnapshot!.documents {
                         let data = document.data()
                         if data["recurring"] as! String == "false" {
+                            if data["type"] as! String == "Income" {
+                                self.incomes.append(Entry(type: data["type"] as! String, category: data["category"] as! String,mainCategory: data["mainCategory"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String, weekOfMonth: data["weekOfMonth"] as! String))
+                            }
                         self.entries.append([Entry(type: data["type"] as! String, category: data["category"] as! String,mainCategory: data["mainCategory"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String, weekOfMonth: data["weekOfMonth"] as! String)])
                         }
                     }
@@ -177,6 +182,19 @@ class IncomeGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UIT
         tableView.dataSource = self
         tableView.setContentOffset(tableView.contentOffset, animated: false)
 
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(categories[indexPath.row])
+        selSub = categories[indexPath.row]
+        goToSubVC2(senderController: self)
+    }
+    func goToSubVC2(senderController: UIViewController) {
+        let homeViewController = senderController.storyboard?.instantiateViewController(identifier: "SubVC2") as? SubVC2
+        homeViewController?.selectedSubCategory = selSub
+        homeViewController?.entries = self.incomes
+
+        senderController.view.window?.rootViewController = homeViewController
+        senderController.view.window?.makeKeyAndVisible()
     }
 
     

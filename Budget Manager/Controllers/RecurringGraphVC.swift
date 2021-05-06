@@ -27,7 +27,8 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, 
     var colors: [UIColor] = []
     var total = 0.0
     var type = ""
-    var specialTotal: [Double] = []
+    var specialTotal: [Int] = []
+    var selSub = ""
 
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
@@ -100,7 +101,7 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, 
                 dataSets.append(BarChartDataSet(entries: [BarChartDataEntry(x: Double(i), y: total)], label: String(category)))
                 barChart.notifyDataSetChanged()
                 i = i+1
-                specialTotal.append(total)
+                specialTotal.append(Int(total))
                 total = 0.0
 
             }
@@ -185,6 +186,7 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, 
                     for document in querySnapshot!.documents {
                         let data = document.data()
                         if data["recurring"] as! String == "true" {
+                            
                             self.entries.append([Entry(type: data["type"] as! String, category: data["category"] as! String,mainCategory: data["mainCategory"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String, weekOfMonth: data["weekOfMonth"] as! String)])
                         }
                     }
@@ -244,6 +246,20 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, 
         tableView.dataSource = self
         tableView.setContentOffset(tableView.contentOffset, animated: false)
 
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(categories[indexPath.row])
+        selSub = categories[indexPath.row]
+        goToSubVC3(senderController: self)
+    }
+    func goToSubVC3(senderController: UIViewController) {
+        let homeViewController = senderController.storyboard?.instantiateViewController(identifier: "SubVC3") as? SubVC3
+        homeViewController?.selectedSubCategory = selSub
+        homeViewController?.entries = self.entries
+
+        senderController.view.window?.rootViewController = homeViewController
+        senderController.view.window?.makeKeyAndVisible()
     }
     
 }

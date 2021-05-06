@@ -17,6 +17,8 @@ class GraphsVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UITableV
     @IBOutlet weak var tabBarOutlet: UITabBar!
     let firebaseMethods = FirebaseMethods()
     var entries: [[Entry]] = [[]]
+    var expenses: [Entry] = []
+
     var categories: [String] = []
     var incomeCategories: [String] = []
     var recurringCategories: [String] = []
@@ -26,11 +28,12 @@ class GraphsVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UITableV
     var colors: [UIColor] = []
     var total = 0.0
     var type = ""
-    var specialTotal: [Double] = []
+    var specialTotal: [Int] = []
 
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
     let helperMethods = HelperMethods()
+    var selSub = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,7 +103,7 @@ class GraphsVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UITableV
                 dataSets.append(BarChartDataSet(entries: [BarChartDataEntry(x: Double(i), y: total)], label: String(category)))
                 barChart.notifyDataSetChanged()
                 i = i+1
-                specialTotal.append(total)
+                specialTotal.append(Int(total))
                 total = 0.0
 
             }
@@ -154,6 +157,9 @@ class GraphsVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UITableV
                     for document in querySnapshot!.documents {
                         let data = document.data()
                         if data["recurring"] as! String == "false" {
+                            if data["type"] as! String == "Expense" {
+                                self.expenses.append(Entry(type: data["type"] as! String, category: data["category"] as! String,mainCategory: data["mainCategory"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String, weekOfMonth: data["weekOfMonth"] as! String))
+                            }
                             self.entries.append([Entry(type: data["type"] as! String, category: data["category"] as! String,mainCategory: data["mainCategory"] as! String, source: data["source"]as! String, amount: String((data["amount"] as! String).dropFirst()), day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String, weekOfMonth: data["weekOfMonth"] as! String)])
                         }
                      
@@ -243,7 +249,6 @@ class GraphsVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UITableV
         }
     }
     
-    //COPY START
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories.count
@@ -255,13 +260,26 @@ class GraphsVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UITableV
         return cell
     }
     
-    //COPY END
     func setTableView(){
         tableView.delegate = self
         tableView.dataSource = self
         tableView.setContentOffset(tableView.contentOffset, animated: false)
 
     }
+    //COPY START
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(categories[indexPath.row])
+        selSub = categories[indexPath.row]
+        goToSubVC(senderController: self)
+    }
+    func goToSubVC(senderController: UIViewController) {
+        let homeViewController = senderController.storyboard?.instantiateViewController(identifier: "SubVC") as? SubVC
+        homeViewController?.selectedSubCategory = selSub
+        homeViewController?.entries = self.expenses
+        senderController.view.window?.rootViewController = homeViewController
+        senderController.view.window?.makeKeyAndVisible()
+    }
+    //COPY END
     
 }
 
