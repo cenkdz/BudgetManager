@@ -183,11 +183,7 @@ class IncomeGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UIT
         tableView.setContentOffset(tableView.contentOffset, animated: false)
 
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(categories[indexPath.row])
-        selSub = categories[indexPath.row]
-        goToSubVC2(senderController: self)
-    }
+
     func goToSubVC2(senderController: UIViewController) {
         let homeViewController = senderController.storyboard?.instantiateViewController(identifier: "SubVC2") as? SubVC2
         homeViewController?.selectedSubCategory = selSub

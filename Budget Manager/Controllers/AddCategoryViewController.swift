@@ -227,8 +227,8 @@ class AddCategoryViewController: UIViewController, UITableViewDataSource, UITabl
     func editSource(completion: ()){
         print(ID)
         
-        let entries = self.db.collection("categories")
-        entries.whereField("categoryID", isEqualTo: ID).getDocuments(completion: { querySnapshot, error in
+        let entries = self.db.collection("sources")
+        entries.whereField("sourceID", isEqualTo: ID).getDocuments(completion: { querySnapshot, error in
             if let err = error {
                 print(err.localizedDescription)
                 return
@@ -242,7 +242,7 @@ class AddCategoryViewController: UIViewController, UITableViewDataSource, UITabl
                 print(docData)
                 
                 let ref = doc.reference
-                ref.updateData(["categorySubName": self.nameTextOutlet.text!])
+                ref.updateData(["sourceName": self.nameTextOutlet.text!])
                 completion
             }
             self.performSegue(withIdentifier: "unwindToAllEditingVC", sender: self)
@@ -271,14 +271,16 @@ class AddCategoryViewController: UIViewController, UITableViewDataSource, UITabl
     
     func addSource(){
         let user = Auth.auth().currentUser
-        let category = Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)), categoryMainName: "Source" ,categorySubName:nameTextOutlet.text!, categoryIcon: "", categoryType: "Income", uid: user!.uid)
-        let dictionary = category.getDictionary()
+
+        let source = Source(sourceID: String(Int.random(in: 10000000000 ..< 100000000000000000)), sourceName: nameTextOutlet.text!, sourceIcon: "", uid: user!.uid)
+
+        let dictionary = source.getDictionary()
         if nameTextOutlet.text!.isEmpty {
             displayAlert(message: "Name field can't be empty.", title: "Warning")
         }
         else{
             do {
-                try db.collection("categories").addDocument(data: dictionary)
+                try db.collection("sources").addDocument(data: dictionary)
                 
             } catch let error {
                 print("Error writing entry to Firestore: \(error)")

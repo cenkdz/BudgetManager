@@ -42,10 +42,11 @@ class CategoryCellVC: UITableViewCell {
 
         }
     
-    func setSources(source: Category){
+    func setSources(source: Source){
         
-            imageOutlet.image = UIImage(systemName: source.categoryIcon)
-            nameOutlet.text = source.categorySubName
+            imageOutlet.image = UIImage(systemName: source.sourceIcon)
+        nameOutlet.text = source.sourceName
+        
 
         }
         

@@ -16,10 +16,8 @@ class SettingsVC: UIViewController,UITabBarDelegate {
     @IBOutlet weak var tabBarOutlet: UITabBar!
     @IBOutlet weak var progressBar: MBCircularProgressBarView!
     @IBOutlet weak var nameOutlet: UILabel!
-    @IBOutlet weak var salaryOutlet: UILabel!
     @IBOutlet weak var budgetGoalOutlet: UILabel!
     @IBOutlet weak var newInputOutlet: UITextField!
-    @IBOutlet weak var changeSalaryBOutlet: UIButton!
     @IBOutlet weak var changeSalaryBGOutlet: UIButton!
     @IBOutlet weak var doneButtonOutlet: UIButton!
     @IBOutlet weak var totalOutlet: UILabel!
@@ -35,11 +33,14 @@ class SettingsVC: UIViewController,UITabBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         getBudgetGoal()
-        getSalary()
         tabBarOutlet.delegate = self
         tabBarOutlet.selectedItem = tabBarOutlet.items?[3]
     }
     override func viewDidAppear(_ animated: Bool) {
+        anim()
+    }
+    
+    func anim(){
         UIView.animate(withDuration: 5.0) {
             self.progressBar.value = CGFloat(self.hunderedPercent)
         }
@@ -47,10 +48,6 @@ class SettingsVC: UIViewController,UITabBarDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         hideNewInput()
-    }
-    
-    func setProgress(){
-        
     }
     
     func showNewInput(){
@@ -65,32 +62,14 @@ class SettingsVC: UIViewController,UITabBarDelegate {
     
     func setDefaultView(){
         hideNewInput()
-        changeSalaryBOutlet.isHidden = false
         changeSalaryBGOutlet.isHidden = false
-        changeSalaryBOutlet.setTitle("Change", for: .normal)
         changeSalaryBGOutlet.setTitle("Change", for: .normal)
         newInputOutlet.text = ""
     }
 
-    @IBAction func changeSalaryButtonPressed(_ sender: UIButton) {
-        changeSalaryBGOutlet.isHidden = true
-        newInputOutlet.text = salaryOutlet.text
-        switch changeSalaryBOutlet.title(for: .normal) {
-        case "Change":
-        changeSalaryBOutlet.setTitle("Cancel", for: .normal)
-        showNewInput()
-        case "Cancel":
-        changeSalaryBOutlet.setTitle("Change", for: .normal)
-        hideNewInput()
-        changeSalaryBGOutlet.isHidden = false
-        default:
-            print("Error")
-        }
-
-    }
+ 
     
     @IBAction func changeBudgetGoalButtonPressed(_ sender: UIButton) {
-        changeSalaryBOutlet.isHidden = true
         newInputOutlet.text = budgetGoalOutlet.text
         switch changeSalaryBGOutlet.title(for: .normal) {
         case "Change":
@@ -99,29 +78,18 @@ class SettingsVC: UIViewController,UITabBarDelegate {
         case "Cancel":
         changeSalaryBGOutlet.setTitle("Change", for: .normal)
         hideNewInput()
-        changeSalaryBOutlet.isHidden = false
         default:
             print("Error")
         }
     }
     @IBAction func donePressed(_ sender: UIButton) {
         
-        if changeSalaryBOutlet.isHidden {
             newBudgetGoal = newInputOutlet.text!
             editBudgetGoal(completion: ())
             setDefaultView()
-                getSalary()
             budgetGoalOutlet.text = newBudgetGoal
+        anim()
 
-        }
-        else if changeSalaryBGOutlet.isHidden{
-            newSalary = newInputOutlet.text!
-            editSalary(completion: ())
-            setDefaultView()
-            getBudgetGoal()
-            salaryOutlet.text = newSalary
-
-        }
     }
 
     
@@ -235,19 +203,7 @@ class SettingsVC: UIViewController,UITabBarDelegate {
             }
     }
     
-    func getSalary(){
-        db.collection("users").whereField("uid", isEqualTo: user!.uid)
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    for document in querySnapshot!.documents {
-                        let data = document.data()
-                        self.salaryOutlet.text = data["salary"] as! String
-                    }
-                }
-            }
-    }
+
     
 
 }

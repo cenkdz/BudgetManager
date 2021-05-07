@@ -59,7 +59,9 @@ class FirebaseMethods: UIViewController{
     func addSelectedMainCategory(completion: (),selectedCategoryNames:[String]) {
         var names = ["Home","Vehicle","Health","Cosmetics","Clothing","Accessories","Market","Taxes","Restaurants","Entertaintment","Bills","Electronics","Insurance"]
         
-        var incomeCategories: [Category] = [Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)), categoryMainName: "Source",categorySubName: "Cash", categoryIcon: "", categoryType: "Income", uid: user!.uid),Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)), categoryMainName: "Source",categorySubName: "Credit Card", categoryIcon: "", categoryType: "Income", uid: user!.uid),Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)), categoryMainName: "Source",categorySubName: "Bank Account", categoryIcon: "", categoryType: "Income", uid: user!.uid)]
+        var incomeCategories: [Category] = [Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)), categoryMainName: "Salary",categorySubName: "Salary", categoryIcon: "", categoryType: "Income", uid: user!.uid),Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)), categoryMainName: "Stock Market",categorySubName: "Stock Market", categoryIcon: "", categoryType: "Income", uid: user!.uid),Category(categoryID: String(Int.random(in: 10000000000 ..< 100000000000000000)), categoryMainName: "Cryptocurrency",categorySubName: "Cryptocurrency", categoryIcon: "", categoryType: "Income", uid: user!.uid)]
+        
+        var source: [Source] = [Source(sourceID: String(Int.random(in: 10000000000 ..< 100000000000000000)), sourceName: "Cash", sourceIcon: "", uid: user!.uid),Source(sourceID: String(Int.random(in: 10000000000 ..< 100000000000000000)), sourceName: "Bank Account", sourceIcon: "", uid: user!.uid),Source(sourceID: String(Int.random(in: 10000000000 ..< 100000000000000000)), sourceName: "Credit Card", sourceIcon: "", uid: user!.uid),Source(sourceID: String(Int.random(in: 10000000000 ..< 100000000000000000)), sourceName: "Salary", sourceIcon: "", uid: user!.uid)]
 
         var subCat = [Category]()
         var main = ""
@@ -155,7 +157,19 @@ class FirebaseMethods: UIViewController{
                     print("Error writing entry to Firestore: \(error)")
                 }
             }
+            
+            for s in source {
+                let dictionary = s.getDictionary()
+                
+                do {
+                    try db.collection("sources").addDocument(data: dictionary)
+                    completion
+                } catch let error {
+                    print("Error writing entry to Firestore: \(error)")
+                }
+            }
           
+            source = []
             subCat = []
 
         }
@@ -184,7 +198,7 @@ class FirebaseMethods: UIViewController{
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
-        let entry = Entry(type: "Income", category: "Salary", mainCategory: "", source: "Salary", amount: salary, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "false",weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: date)))
+        let entry = Entry(type: "Income", category: "Salary", mainCategory: "Salary", source: "Bank Account", amount: salary, day: String(Calendar.current.component(.day, from: date)), dayInWeek: String(dateFormatter.string(from: date)), year: String(Calendar.current.component(.year, from: date)), month: String(Calendar.current.component(.month, from: date)), id: String(Int.random(in: 10000000000 ..< 100000000000000000)), uid: user!.uid, recurring: "false",weekOfMonth: String(Calendar.current.component(.weekOfMonth, from: date)))
         let dictionary = entry.getDictionary()
         do {
             try db.collection("entries").addDocument(data: dictionary)
