@@ -13,6 +13,7 @@ import Firebase
 import FirebaseAuth
 class RecurringGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var titleOutlet: UILabel!
     @IBOutlet weak var tabBarOutlet: UITabBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
@@ -41,6 +42,14 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, 
         segmentedControl.selectedSegmentIndex = 2
         setTabBar()
         fillEntries()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let now = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "LLLL"
+        let nameOfMonth = dateFormatter.string(from: now)
+        titleOutlet.text = (nameOfMonth + "'s Recurring Incomes/Expenses")
     }
     @IBAction func onChange(_ sender: UISegmentedControl) {
         type = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)!
@@ -83,63 +92,7 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, 
             print("Settings Selected")
             helperMethods.goToSettingsVC(senderController: self)        }
     }
-    
-    func createExpenseBarChart(){
-        dataSets.removeAll()
-        //Create bar chart
-        let barChart = BarChartView(frame: CGRect(x: 0, y: 100, width: view.frame.width, height: 300))
-        barChart.tag = 0
-        
-        var i = 0
-        if type == "Expense" {
-            for category in categories {
-                for entry in entries.matrixIterator() {
-                    if entry.category == category {
-                        total = total + Double(entry.amount)!
-                    }
-                }
-                dataSets.append(BarChartDataSet(entries: [BarChartDataEntry(x: Double(i), y: total)], label: String(category)))
-                barChart.notifyDataSetChanged()
-                i = i+1
-                specialTotal.append(Int(total))
-                total = 0.0
 
-            }
-        }
-        else if type == "Income" {
-            for category in incomeCategories {
-                for entry in entries.matrixIterator() {
-                    if entry.category == category {
-                        total = total + Double(entry.amount)!
-                    }
-                }
-                dataSets.append(BarChartDataSet(entries: [BarChartDataEntry(x: Double(i), y: total)], label: String(category)))
-                barChart.notifyDataSetChanged()
-                i = i+1
-                total = 0.0
-
-            }
-        }
-        barChart.notifyDataSetChanged()
-
-
-        for set in dataSets {
-            set.setColor(.random)
-        }
-        let data = BarChartData(dataSets: dataSets)
-        barChart.data = data
-        barChart.drawGridBackgroundEnabled = false
-        barChart.drawBarShadowEnabled = false
-        barChart.leftAxis.enabled = false
-        barChart.rightAxis.enabled = false
-        barChart.xAxis.enabled = false
-        
-        barChart.invalidateIntrinsicContentSize()
-       
-            view.addSubview(barChart)
-        
-        
-    }
     
     func createRecurringBarChart(){
         //Create bar chart
@@ -150,12 +103,17 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, 
         
         for category in categories {
             for entry in entries.matrixIterator() {
-                if entry.mainCategory == category && entry.recurring == "true" {
+                
+                if entry.category == category && entry.recurring == "true" {
+                    
                     total = total + Double(entry.amount)!
                 }
             }
+            specialTotal.append(Int(total))
+
             dataSets.append(BarChartDataSet(entries: [BarChartDataEntry(x: Double(i), y: total)], label: String(category)))
             i = i+1
+            
             total = 0.0
 
         }
@@ -186,8 +144,9 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, 
                     for document in querySnapshot!.documents {
                         let data = document.data()
                         if data["recurring"] as! String == "true" {
-                            
+                            if data["month"] as! String == String(Calendar.current.component(.month, from: Date())){
                             self.entries.append([Entry(type: data["type"] as! String, category: data["category"] as! String,mainCategory: data["mainCategory"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String, weekOfMonth: data["weekOfMonth"] as! String)])
+                            }
                         }
                     }
                 }
@@ -201,7 +160,7 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, 
     func getRecurringCategories(){
         categories = []
         for entry in entries.matrixIterator() {
-            let category = entry.mainCategory
+            let category = entry.category
             if entry.recurring == "true" {
                 
             if categories.isEmpty {
@@ -217,6 +176,7 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, 
         }
         }
         categories = categories.uniqued()
+        
         dump(categories)
         
     }
@@ -237,7 +197,8 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "recurringCell", for: indexPath) as! GraphCell3
-        cell.setRecurringTable(mainCategory: categories[indexPath.row], totalIncome: "String(specialTotal[indexPath.row])")
+        cell.setRecurringTable(mainCategory: categories[indexPath.row], totalIncome: String(specialTotal[indexPath.row]))
+
         return cell
     }
     
@@ -248,19 +209,6 @@ class RecurringGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, 
 
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(categories[indexPath.row])
-        selSub = categories[indexPath.row]
-        goToSubVC3(senderController: self)
-    }
-    func goToSubVC3(senderController: UIViewController) {
-        let homeViewController = senderController.storyboard?.instantiateViewController(identifier: "SubVC3") as? SubVC3
-        homeViewController?.selectedSubCategory = selSub
-        homeViewController?.entries = self.entries
-
-        senderController.view.window?.rootViewController = homeViewController
-        senderController.view.window?.makeKeyAndVisible()
-    }
     
 }
 

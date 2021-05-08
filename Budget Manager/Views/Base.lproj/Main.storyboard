@@ -378,14 +378,13 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="cZF-Jz-rsi">
-                                <rect key="frame" x="20" y="425" width="388" height="32"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="January's Expenses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GHD-o0-Jtc">
+                                <rect key="frame" x="109" y="424" width="211" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Sub Categories View"/>
-                                    <segment title="Sources View"/>
-                                </segments>
-                            </segmentedControl>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="dzT-3g-f91"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -394,6 +393,7 @@
                         <outlet property="segmentedControl" destination="OQj-vR-BvU" id="1h3-Cd-Khm"/>
                         <outlet property="tabBarOutlet" destination="pVs-D9-Z6u" id="2ad-FH-eEq"/>
                         <outlet property="tableView" destination="IcJ-pC-zee" id="gPE-XX-yiM"/>
+                        <outlet property="titleOutlet" destination="GHD-o0-Jtc" id="wou-zA-FXo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vgh-mh-AFX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -432,14 +432,6 @@
                                     <tabBarItem tag="3" title="Settings" image="gearshape.fill" catalog="system" id="J7G-vt-E9q"/>
                                 </items>
                             </tabBar>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Jn6-nr-vpQ">
-                                <rect key="frame" x="20" y="425" width="388" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Sub Categories View"/>
-                                    <segment title="Sources View"/>
-                                </segments>
-                            </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="y2C-GU-CNO">
                                 <rect key="frame" x="0.0" y="464" width="428" height="379"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -475,6 +467,13 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="January's Recurring Incomes/Expenses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TXi-hh-8hs">
+                                <rect key="frame" x="65" y="424" width="299" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="u7g-xZ-4Gm"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -483,6 +482,7 @@
                         <outlet property="segmentedControl" destination="ALb-od-EVN" id="HhH-BK-9s1"/>
                         <outlet property="tabBarOutlet" destination="8ac-aK-QaL" id="bgf-eD-6rJ"/>
                         <outlet property="tableView" destination="y2C-GU-CNO" id="OVT-LN-Ir7"/>
+                        <outlet property="titleOutlet" destination="TXi-hh-8hs" id="sJN-g5-8Ai"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ybz-pP-lnH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -556,14 +556,13 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ops-j1-CUB">
-                                <rect key="frame" x="20" y="425" width="388" height="32"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="January's Incomes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yd-5q-DyZ">
+                                <rect key="frame" x="109" y="424" width="211" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Sub Categories View"/>
-                                    <segment title="Sources View"/>
-                                </segments>
-                            </segmentedControl>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="etQ-qn-u7d"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -572,11 +571,12 @@
                         <outlet property="segmentedControl" destination="hVn-3e-miA" id="cBd-df-DIC"/>
                         <outlet property="tabBarOutlet" destination="Bpn-Ia-NT7" id="U7q-lX-KlE"/>
                         <outlet property="tableView" destination="s0v-19-7MR" id="fOX-4W-9Dh"/>
+                        <outlet property="titleOutlet" destination="8yd-5q-DyZ" id="gCU-Nd-jso"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fTq-pE-5up" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2612" y="-1873"/>
+            <point key="canvasLocation" x="2611.6822429906542" y="-1873.2181425485962"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="UvZ-kJ-T9o">
@@ -804,9 +804,9 @@
                                                     <rect key="frame" x="8" y="52" width="412" height="32"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <segments>
-                                                        <segment title="Today"/>
                                                         <segment title="Daily"/>
                                                         <segment title="Weekly"/>
+                                                        <segment title="Monthly"/>
                                                     </segments>
                                                     <connections>
                                                         <action selector="onChange:" destination="9gV-tl-r7V" eventType="valueChanged" id="7uz-94-Ejb"/>
@@ -1040,14 +1040,14 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Week" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2vE-Xl-8S8">
-                                                    <rect key="frame" x="58" y="10" width="43" height="21"/>
+                                                    <rect key="frame" x="62" y="10" width="43" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="st" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jch-ik-k8M">
-                                                    <rect key="frame" x="50" y="4" width="11" height="13"/>
+                                                    <rect key="frame" x="47" y="4" width="15" height="15"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                     <nil key="textColor"/>
@@ -1134,6 +1134,10 @@
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="repeat.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="4UD-PJ-4i1">
+                                                    <rect key="frame" x="239" y="13" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1141,6 +1145,7 @@
                                             <outlet property="amountLabel" destination="lZS-yp-Hk8" id="82j-0f-GDB"/>
                                             <outlet property="categoryLabel" destination="cYB-sv-jff" id="52E-kF-gwk"/>
                                             <outlet property="dayInWeekLabel" destination="SQ1-0D-M4l" id="yov-AN-spV"/>
+                                            <outlet property="recurringImg" destination="4UD-PJ-4i1" id="ghG-hH-UAQ"/>
                                             <outlet property="yearMonthDayLabel" destination="mM1-RY-RtL" id="lhc-8x-VGJ"/>
                                         </connections>
                                     </tableViewCell>

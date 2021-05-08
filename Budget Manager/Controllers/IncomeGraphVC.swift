@@ -12,6 +12,7 @@ import Charts
 import Firebase
 import FirebaseAuth
 class IncomeGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet weak var titleOutlet: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
@@ -42,6 +43,14 @@ class IncomeGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UIT
         segmentedControl.selectedSegmentIndex = 1
         setTabBar()
         fillEntries()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let now = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "LLLL"
+        let nameOfMonth = dateFormatter.string(from: now)
+        titleOutlet.text = (nameOfMonth + "'s Incomes")
     }
     @IBAction func onChange(_ sender: UISegmentedControl) {
         type = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)!
@@ -121,9 +130,13 @@ class IncomeGraphVC: UIViewController, UITabBarDelegate,UITableViewDelegate, UIT
                         let data = document.data()
                         if data["recurring"] as! String == "false" {
                             if data["type"] as! String == "Income" {
+                                if data["month"] as! String == String(Calendar.current.component(.month, from: Date())){
                                 self.incomes.append(Entry(type: data["type"] as! String, category: data["category"] as! String,mainCategory: data["mainCategory"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String, weekOfMonth: data["weekOfMonth"] as! String))
+                                }
                             }
+                            if data["month"] as! String == String(Calendar.current.component(.month, from: Date())){
                         self.entries.append([Entry(type: data["type"] as! String, category: data["category"] as! String,mainCategory: data["mainCategory"] as! String, source: data["source"]as! String, amount: data["amount"] as! String, day: data["day"] as! String, dayInWeek: data["dayInWeek"] as! String, year: data["year"]as! String, month: data["month"]as! String, id: data["id"]as! String, uid: data["uid"]as! String, recurring: data["recurring"]as! String, weekOfMonth: data["weekOfMonth"] as! String)])
+                        }
                         }
                     }
                 }

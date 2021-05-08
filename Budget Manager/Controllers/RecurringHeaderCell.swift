@@ -13,7 +13,6 @@ class RecurringHeaderCell: UITableViewCell {
     @IBOutlet weak var monthOutlet: UILabel!
     @IBOutlet weak var yearOutlet: UILabel!
     
-    
     func setEntry(entries: [Entry]){
         
         let month = switchToText(month: Int(entries[0].month)!)
@@ -21,7 +20,6 @@ class RecurringHeaderCell: UITableViewCell {
         monthOutlet.text = month
         yearOutlet.text = entries[0].year
     }
-    
     
     func switchToText(month: Int) -> String{
         switch month {

@@ -29,12 +29,15 @@ class SettingsVC: UIViewController,UITabBarDelegate {
     var newBudgetGoal = ""
     let db = Firestore.firestore()
     var hunderedPercent = 0
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         getBudgetGoal()
         tabBarOutlet.delegate = self
         tabBarOutlet.selectedItem = tabBarOutlet.items?[3]
+        hunderedPercent = 0
     }
     override func viewDidAppear(_ animated: Bool) {
         anim()
@@ -44,6 +47,16 @@ class SettingsVC: UIViewController,UITabBarDelegate {
         UIView.animate(withDuration: 5.0) {
             self.progressBar.value = CGFloat(self.hunderedPercent)
         }
+    }
+    
+    func calc(){
+        var currencyDouble: Float = 100.0
+        var totalCreditCounter: Float = 10.0
+        var totalSpending: Float = 30.0
+
+        let perCent = 100*totalSpending/currencyDouble
+
+        var perCentCGFloat =  CGFloat(perCent)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,7 +101,8 @@ class SettingsVC: UIViewController,UITabBarDelegate {
             editBudgetGoal(completion: ())
             setDefaultView()
             budgetGoalOutlet.text = newBudgetGoal
-        anim()
+
+        
 
     }
 
@@ -196,7 +210,6 @@ class SettingsVC: UIViewController,UITabBarDelegate {
                     else {
                         totalOutlet.text = UserDefaults.standard.string(forKey: "userStatus")!
                     }
-                  
                     
                     print(CGFloat((Int(userStatus)!*100)/Int(budgetGoalOutlet.text!)!))
                 }

@@ -13,7 +13,8 @@ class WeekCell: UITableViewCell {
     @IBOutlet weak var yearMonthDayLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
-        func setEntry(entries: [Entry]){
+    @IBOutlet weak var recurringImg: UIImageView!
+    func setEntry(entries: [Entry]){
             dayInWeekLabel.isHidden = true
             yearMonthDayLabel.isHidden = true
 //            dayInWeekLabel.text = String(entries[0].dayInWeek.prefix(3))
@@ -37,13 +38,19 @@ class WeekCell: UITableViewCell {
             categoryLabel.text = entries[0].category+" / "+entries[0].source
         if entries[0].type == "Expense" {
             amountLabel.textColor = UIColor(red: 0.98, green: 0.39, blue: 0.00, alpha: 1.00)
+            recurringImg.isHidden = true
 
         }
         else if entries[0].type == "Income" {
             amountLabel.textColor = UIColor(red: 0.24, green: 0.48, blue: 0.94, alpha: 1.00)
+            recurringImg.isHidden = true
 
         }
- 
+        if entries[0].recurring == "true" {
+            recurringImg.isHidden = false
+
+        }
+
     }
     
 }

@@ -113,7 +113,11 @@ class EntryFiller{
         }
         //let sortedArray = thebestentries.sorted(by: {$0[0].day > $1[0].day })
         // entries.removeAll()
+        
         entries = thebestentries
+        prepare_array(cEntries: entries)
+
+        
         
     }
     
@@ -148,6 +152,8 @@ class EntryFiller{
         //let sortedArray = thebestentries.sorted(by: {$0[0].day > $1[0].day })
         // entries.removeAll()
         entries = thebestentries
+        prepare_array(cEntries: entries)
+
         
     }
     // Current Day
@@ -182,9 +188,17 @@ class EntryFiller{
         thebestentries.append(hehe)
         entries = thebestentries
         
+        prepare_array(cEntries: entries)
+        
 
         
     }
+    
+    private func prepare_array(cEntries: [[Entry]])
+        {
+
+        entries = cEntries.filter({ $0.count != 0})
+        }
 }
 
 fileprivate extension Array where Element : Collection, Element.Index == Int {

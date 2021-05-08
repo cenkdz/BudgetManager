@@ -58,7 +58,9 @@ class TableRecurringVC: UIViewController, UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableRecurringCellVC
         cell.categorySourceOutlet.text = "Section \(indexPath.section) Row \(indexPath.row)"
-        let entry = entries[indexPath.section][indexPath.row]
+        
+        var entry = entries[indexPath.section][indexPath.row]
+         
         cell.setEntry(entries: [entry])
         return cell
     }
@@ -80,17 +82,27 @@ class TableRecurringVC: UIViewController, UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 94
     }
+    private func prepare_array(cEntries: [[Entry]])
+        {
+
+        entries = cEntries.filter({ $0.count != 0})
+        }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
             let entry = self.entries[indexPath.section][indexPath.row]
+            
             //deleteUserCategory(selectedEntryID: entry.categoryID)
             var changedEntries = self.entries
             changedEntries[indexPath.section].remove(at: indexPath.row)
             //changedEntries.remove(at: indexPath.section)
             self.firebaseMethods.deleteUserEntry(selectedEntryID: entry.id)
             self.entries = changedEntries
-            tableView.reloadData()
+            self.prepare_array(cEntries: self.entries)
+            DispatchQueue.main.async {
+                tableView.reloadData()
+            }
+            
         }
         delete.backgroundColor = UIColor.red
         let swipeActions = UISwipeActionsConfiguration(actions: [delete])

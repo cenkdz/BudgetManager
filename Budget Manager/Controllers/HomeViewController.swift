@@ -27,7 +27,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var userDatePlus: UIButton!
     @IBOutlet weak var userDateMinus: UIButton!
     var editCategory = ""
-    var selectedMode = "Today"
+    var selectedMode = "Daily"
     var SELECTEDCAT = ""
     
     var editAmount = ""
@@ -114,14 +114,14 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     
                     switch self.selectedMode {
                     
-                    case "Today":
+                    case "Daily":
                         self.entryFiller.thebest3()
                         self.setFinancialOutlets()
                         
                     case "Weekly":
                         self.entryFiller.thebest2()
                         self.setFinancialOutlets()
-                    case "Daily":
+                    case "Monthly":
                         self.entryFiller.thebest()
                         self.setFinancialOutlets()
                     case "Total":
@@ -130,6 +130,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     default:
                         print("ERROR")
                     }
+                    
                     self.tableView.reloadData()
 
                     
@@ -327,7 +328,15 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.performSegue(withIdentifier: "goToAllEditingVC", sender: self)
         }
         edit.backgroundColor = UIColor(red: 0.13, green: 0.17, blue: 0.40, alpha: 1.00)
-        let swipeActions = UISwipeActionsConfiguration(actions: [delete, edit])
+        
+        var swipeActions: UISwipeActionsConfiguration
+        if self.entryFiller.entries[indexPath.section][indexPath.row].recurring == "true" {
+            swipeActions = UISwipeActionsConfiguration(actions: [delete])
+
+        }else{
+            swipeActions = UISwipeActionsConfiguration(actions: [delete, edit])
+
+        }
         
         return swipeActions
     }

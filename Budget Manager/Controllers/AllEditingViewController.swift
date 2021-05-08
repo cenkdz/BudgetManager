@@ -27,7 +27,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     var entryID: Any!
     var source = "Category"
     var SELECTEDCAT = ""
-
+    
     var mainUserCategories: [String] = []
     var sources: [Source] = []
     var TYPE = ""
@@ -42,28 +42,32 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     var thebestcategories = [[Category]]()
     
     var USERSELECTEDCATEGORY: Category!
-
-
+    
+    var helper = HelperMethods()
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Selected User Action Is \(userAction)")
         self.hideKeyboardWhenTappedAround()
-
+        
         print("asd1\(TYPE)")
         print("asd2\(typeType)")
         print("asd3\(category)")
         print("asd4\(source)")
         print("asd5\(userAction)")
-    
-
+        
+        print("UID\(user!.uid)")
+        
+        
         tableViewOutlet.isHidden = true
         tableViewOutlet.delegate = self
         tableViewOutlet.dataSource = self
         print("Type is \(typeType)")
         print("TYPE is \(TYPE)")
         print("Id is\(entryID)")
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,7 +75,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         selectSourceButtonOutlet.setAttributedTitle(NSAttributedString(string: source), for: .normal)
         if TYPE == "Expense" {
             amountTextFieldOutlet.text = String(amount.dropFirst())
-//            addCustomCategorySourceOutlet.setTitle("Add Custom Category", for: .normal)
+            //            addCustomCategorySourceOutlet.setTitle("Add Custom Category", for: .normal)
         }
         else if TYPE == "Income" {
             amountTextFieldOutlet.text = amount
@@ -93,9 +97,9 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
             
         }
         
-//        let sortedDays = days.sorted {
-//            Int($0)! > Int($1)!
-//        }
+        //        let sortedDays = days.sorted {
+        //            Int($0)! > Int($1)!
+        //        }
         
         mainUserCategories = mainCategories
         
@@ -117,7 +121,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
                 let mainCat = cat.categoryMainName
                 
                 if cat.categoryMainName == main {
-                            hehe.append(cat)
+                    hehe.append(cat)
                 }
             }
             thebestcategories.append(hehe)
@@ -131,6 +135,10 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     
     
     @IBAction func unwindToAllEditingVC(_ sender: UIStoryboardSegue) {
+        categories.removeAll()
+        thebestcategories.removeAll()
+        hehe.removeAll()
+        firebaseCategories.removeAll()
         if sender.source is AddCategoryViewController {
             if let senderVC = sender.source as? AddCategoryViewController {
                 switch senderVC.type {
@@ -168,23 +176,23 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         firebaseCategories.removeAll()
         selectedButton = "CategoryButton"
         if categories.isEmpty {
-        self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryMainName,categorySubName,categoryType, uid) in
-            let category = Category(categoryID: categoryID, categoryMainName: categoryMainName,categorySubName:categorySubName, categoryIcon: categoryIcon, categoryType: categoryType, uid: uid)
-            self.categories = []
-            self.thebestcategories = []
-            self.hehe = []
-            if self.TYPE == "Expense"{
-            if category.categoryType == "Expense"{
-            self.firebaseCategories.append(category)
-            }
-            }else if self.TYPE == "Income"{
-                if category.categoryType == "Income"{
-                self.firebaseCategories.append(category)
+            self.getUserCategories(completionHandler: { (categoryID, categoryIcon, categoryMainName,categorySubName,categoryType, uid) in
+                let category = Category(categoryID: categoryID, categoryMainName: categoryMainName,categorySubName:categorySubName, categoryIcon: categoryIcon, categoryType: categoryType, uid: uid)
+                self.categories = []
+                self.thebestcategories = []
+                self.hehe = []
+                if self.TYPE == "Expense"{
+                    if category.categoryType == "Expense"{
+                        self.firebaseCategories.append(category)
+                    }
+                }else if self.TYPE == "Income"{
+                    if category.categoryType == "Income"{
+                        self.firebaseCategories.append(category)
+                    }
                 }
-                }
-            self.thebest()
-            self.tableViewOutlet.reloadData()
-        }, uid: self.user!.uid)
+                self.thebest()
+                self.tableViewOutlet.reloadData()
+            }, uid: self.user!.uid)
         }else{
             categories.removeAll()
             thebestcategories.removeAll()
@@ -196,7 +204,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
                 self.thebestcategories = []
                 self.hehe = []
                 if category.categoryType == "Expense"{
-                self.firebaseCategories.append(category)
+                    self.firebaseCategories.append(category)
                 }
                 self.thebest()
                 self.tableViewOutlet.reloadData()
@@ -208,7 +216,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         print("Select Source Pressed!")
         selectedButton = "SourceButton"
         sources = []
-
+        
         self.getUserSources(completionHandler: { (sourceID, sourceIcon, sourceName, uid) in
             let source = Source(sourceID: sourceID, sourceName: sourceName, sourceIcon: sourceIcon, uid: uid)
             self.sources.append(source)
@@ -216,9 +224,9 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
             
         }, uid: user!.uid)
         self.tableViewOutlet.isHidden = false
-
-
-
+        
+        
+        
     }
     @IBAction func addCustomCategorySourcePressed(_ sender: UIButton) {
         print("AddCustomCategorySource Pressed!")
@@ -228,19 +236,34 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     @IBAction func savePressed(_ sender: UIButton) {
         
-        switch userAction {
-        case "IncomeButton":
-            DispatchQueue.main.async {
-                self.addUserEntry()
-            }
-        case "ExpenseButton":
-            DispatchQueue.main.async {
-                self.addUserEntry() }
-        default:
-            DispatchQueue.main.async {
-                self.editEntry(completion: ())
+        print(selectCategoryButtonOutlet.titleLabel!.text!)
+        print(selectSourceButtonOutlet.titleLabel!.text!)
+        if selectCategoryButtonOutlet.titleLabel!.text! == "Select Category"{
+            helper.displayAlert(message: "Please select a category", title: "Warning",receiverController: self)
+
+        }else if selectSourceButtonOutlet.titleLabel!.text! == "Select Source"{
+            helper.displayAlert(message: "Please select a source", title: "Warning",receiverController: self)
+        }
+        else if amountTextFieldOutlet.text == ""{
+            helper.displayAlert(message: "Please enter amount", title: "Warning",receiverController: self)
+        }
+        
+        else{
+            switch userAction {
+            case "IncomeButton":
+                DispatchQueue.main.async {
+                    self.addUserEntry()
+                }
+            case "ExpenseButton":
+                DispatchQueue.main.async {
+                    self.addUserEntry() }
+            default:
+                DispatchQueue.main.async {
+                    self.editEntry(completion: ())
+                }
             }
         }
+        
         
         
     }
@@ -322,7 +345,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
             }
         }
         return count
-
+        
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
@@ -480,7 +503,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
                 if self.TYPE == "Expense" {
                     willBeNewAmount = "-" + willBeNewAmount!
                 }
-
+                
                 ref.updateData(["amount": willBeNewAmount])
                 ref.updateData(["category": String(self.selectCategoryButtonOutlet.currentAttributedTitle!.string)])
                 ref.updateData(["source": String(self.selectSourceButtonOutlet.currentAttributedTitle!.string)])
@@ -504,7 +527,7 @@ class AllEditingViewController: UIViewController, UITableViewDelegate, UITableVi
         var type = ""
         var amount = amountTextFieldOutlet.text!
         let date = Date()
-
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
         switch userAction {
